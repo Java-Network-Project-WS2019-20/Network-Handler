@@ -40,17 +40,13 @@ public class FileHandler {
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.parse(fileURI);
 
-		// if graph is small to medium use DOM if large use SAX
-		// fileURI.length() returns file size in bytes
-		if (fileURI.length() < 40000) graphmlParserUsingDOM(document);
-		else graphmlParserUsingSAX(document);
+		graphmlParserNodes(document);
+		graphmlParserEdges(document);
 
 	}
 	
 	
-	// use DOM if graph size is small to medium
-	public void graphmlParserUsingDOM(Document document) {
-		
+	public void graphmlParserNodes(Document document) {
 		// reading all nodes into nodesNL
 		NodeList nodesNL = document.getElementsByTagName("node");
 		
@@ -63,11 +59,13 @@ public class FileHandler {
 				nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
 			}
 		}
-		
-		
+	}
+	
+	
+	public void graphmlParserEdges(Document document) {
 		// reading all edges into edgesNL
-		NodeList edgesNL = document.getElementsByTagName("edge");
-		
+				NodeList edgesNL = document.getElementsByTagName("edge");
+				
 		//parsing edge information
 		for (int temp = 0; temp < edgesNL.getLength(); temp++) {
 			Node nEdge = edgesNL.item(temp);
@@ -80,13 +78,6 @@ public class FileHandler {
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
 			}
 		}
-		
-	}
-	
-	
-	// use SAX if graph size is large
-	public void graphmlParserUsingSAX(Document document) {
-		//TODO implement
 	}
 	
 
