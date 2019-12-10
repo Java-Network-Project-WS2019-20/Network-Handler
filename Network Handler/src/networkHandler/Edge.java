@@ -5,16 +5,14 @@ public class Edge {
 	private int source;
 	private int target;
 	private int weight;
-	
-	
-	public Edge (int edgeID, int source, int target, int weight) {
-		setEdgeID(edgeID);
-		setSource(source);
-		setTarget(target);
-		setWeight(weight);
+
+	public Edge(int edgeID, int source, int target, int weight) {
+		this.edgeID = edgeID;
+		this.source = source;
+		this.target = target;
+		this.weight = weight;
 	}
-	
-	
+
 	public int getEdgeID() { return edgeID; }
 	public void setEdgeID(int edgeID) { this.edgeID = edgeID; }
 

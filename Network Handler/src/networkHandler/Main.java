@@ -1,21 +1,29 @@
 package networkHandler;
 
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+
 public class Main {
 
-	public static void main(String[] args) {	
-		
-		// put as parameter path of the desired graphml file
-		GraphmlHandler gh = new GraphmlHandler("/home/boostr/Downloads/small_graph.graphml");
-		
-		gh.getNodeList().forEach(value -> System.out.println(value));
-		System.out.println("# of Nodes: " + gh.getNodeList().size());
-		
-		System.out.println();
-		
-		gh.getEdgeList().forEach(value -> System.out.println(value));
-		System.out.println("# of Edges: " + gh.getEdgeList().size());
+	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 
-	
+//		if (args.length < 1) {
+//			System.out.println("Please provide a file for processing!");
+//			return;
+//		}
+
+//		String fileName = args[0];
+		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\gra.xml";
+		FileHandler nFileHandler = new FileHandler();
+		nFileHandler.setFileURI(fileName);
+
+
+
+
+
+
 	}
 
 	

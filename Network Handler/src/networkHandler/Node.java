@@ -2,13 +2,12 @@ package networkHandler;
 
 public class Node {
 	private int id;
-	
-	
+
+
 	public Node(int id) {
-		setID(id);
+		this.id = id;
 	}
-	
-	
+
 	public int getID() { return id; }
 	public void setID(int id) { this.id = id; }
 	
