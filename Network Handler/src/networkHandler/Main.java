@@ -15,14 +15,14 @@ public class Main {
 //		}
 
 //		String fileName = args[0];
-		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\gra.xml";
+		String fileName = "/home/boostr/Downloads/small_graph.graphml";
 		FileHandler nFileHandler = new FileHandler();
 		nFileHandler.setFileURI(fileName);
 
-
-
-
-
+		nFileHandler.prepareParser();
+		
+		nFileHandler.getNodeList().forEach((n) -> System.out.println(n));
+		nFileHandler.getEdgeList().forEach((n) -> System.out.println(n));
 
 	}
 

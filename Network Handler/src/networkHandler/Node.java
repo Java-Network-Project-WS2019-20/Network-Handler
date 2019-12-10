@@ -15,7 +15,7 @@ public class Node {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Node ID: ").append(getID());
+		sb.append("NodeID: ").append(getID());
 		return sb.toString();
 	}
 
