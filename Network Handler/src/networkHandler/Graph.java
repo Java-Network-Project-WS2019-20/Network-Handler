@@ -48,8 +48,8 @@ public class Graph {
 		// Since graph is undirected, add an edge from source to target
 		// as well as target to source
 		for (Edge e : this.EdgeList) {
-			adjListArray[e.getSource()-1].add(e.getTarget()-1);
-			adjListArray[e.getTarget()-1].add(e.getSource()-1);
+			adjListArray[e.getSource()].add(e.getTarget());
+			adjListArray[e.getTarget()].add(e.getSource());
 		}
 		
 		// Mark all Nodes as not visited
