@@ -13,32 +13,41 @@ import java.util.ArrayList;
 
 
 public class FileHandler {
-	private File fileURI;
+	private File graphmlFile;
 	private ArrayList<networkHandler.Node> nodeList;
 	private ArrayList<Edge> edgeList;
 
+	
+	// standard constructor
 	public FileHandler() {
 
 		this.nodeList = new ArrayList<>();
 		this.edgeList = new ArrayList<>();
-		this.fileURI = null ;
+		this.graphmlFile = null ;
 
 	}
 
-	public void setFileURI(String filePath) {
-		this.fileURI = new File(filePath);
+	
+	// setter + getter
+	public void setGraphmlFile(String filePath) {
+		this.graphmlFile = new File(filePath);
 	}
 	
-	// for debugging
-	public ArrayList<networkHandler.Node> getNodeList() { return nodeList; }
-	public ArrayList<Edge> getEdgeList() { return edgeList; }
+	public ArrayList<networkHandler.Node> getNodeList() {
+		return nodeList;
+	}
+	
+	public ArrayList<Edge> getEdgeList() {
+		return edgeList;
+	}
 
 
+	// Instantiates the DocumentBuilderFactory for parsing
 	public void prepareParser() throws ParserConfigurationException, IOException, SAXException {
 
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.parse(fileURI);
+		Document document = builder.parse(graphmlFile);
 
 		graphmlParserNodes(document);
 		graphmlParserEdges(document);
@@ -46,6 +55,7 @@ public class FileHandler {
 	}
 	
 	
+	// parses only the nodes of the graph
 	public void graphmlParserNodes(Document document) {
 		// reading all nodes into nodesNL
 		NodeList nodesNL = document.getElementsByTagName("node");
@@ -62,6 +72,7 @@ public class FileHandler {
 	}
 	
 	
+	// parses only the edges of the graph
 	public void graphmlParserEdges(Document document) {
 		// reading all edges into edgesNL
 				NodeList edgesNL = document.getElementsByTagName("edge");
@@ -78,6 +89,23 @@ public class FileHandler {
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
 			}
 		}
+	}
+	
+	
+	// gather and write analysis of the graph
+	public void exportGraphmlAnalysis () throws ParserConfigurationException {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document document = builder.newDocument();
+		
+		// connectivity
+		// diameter
+		// shortestPath
+		// betweennessCentralityMeasure
+		//TODO
+		// 1. how many of each calculations? e.g. 28x shortest path
+		// 2. write solution of calculations to graphml file using loops	
+		
 	}
 	
 
