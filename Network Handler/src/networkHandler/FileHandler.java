@@ -92,6 +92,7 @@ public class FileHandler {
 	}
 	
 	
+	// preparing output of all calculations into a graphml file
 	// gather and write analysis of the graph
 	public void exportGraphmlAnalysis () throws ParserConfigurationException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

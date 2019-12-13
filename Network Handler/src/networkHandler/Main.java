@@ -15,14 +15,15 @@ public class Main {
 //		}
 
 //		String fileName = args[0];
-		String fileName = "D:\\Benutzer\\Desktop\\small_graph.graphml";
+//		String fileName = "D:\\Benutzer\\Desktop\\small_graph.graphml";
+		String fileName = "/home/boostr/Downloads/small_graph.graphml";
 		FileHandler nFileHandler = new FileHandler();
-		nFileHandler.setFileURI(fileName);
+		nFileHandler.setGraphmlFile(fileName);
 
 		nFileHandler.prepareParser();
 		
-		nFileHandler.getNodeList().forEach((n) -> System.out.println(n));
-		nFileHandler.getEdgeList().forEach((n) -> System.out.println(n));
+//		nFileHandler.getNodeList().forEach((n) -> System.out.println(n));
+//		nFileHandler.getEdgeList().forEach((n) -> System.out.println(n));
 		
 		Graph G = new Graph(nFileHandler.getEdgeList(),nFileHandler.getNodeList());
 		System.out.println(G.IsGraphConnected());
