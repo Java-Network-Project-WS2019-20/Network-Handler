@@ -19,6 +19,29 @@ public class Graph {
 		NSize = NodeList.size();
 	}
 	
+	public int getNodeListSize() {
+		return NSize;
+	}
+	
+	public int getEdgeListSize() {
+		return ESize;
+	}
+	
+	public void PrintAllNodes() {
+		for (Node n : NodeList) {
+			System.out.println(n.toString());
+		}
+	}
+	
+	public void PrintAllEdges() {
+		StringBuilder sb = new StringBuilder();
+		for (Edge e : EdgeList) {
+			sb.append("EdgeID: ").append(e.getEdgeID()).append("\n");		
+		}
+		System.out.println(sb);
+	}
+	
+	
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
 	// Using the Depth First Search Algorithm
@@ -63,6 +86,15 @@ public class Graph {
 				return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Number of nodes: ").append(getNodeListSize()).append("\n");
+		sb.append("Number of egdes: ").append(getEdgeListSize()).append("\n");
+		sb.append("Is connected? ").append(IsGraphConnected()).append("\n");
+		return sb.toString();
 	}
 	
 }
