@@ -11,3 +11,9 @@ Das dient der Übersicht und unterscheidung zwischen Klassen und Attributen
 Ich würde es daher im Scope der Methode deklarieren und der innerhalb aufgerufenen Methode DFSVisit als Parameter übergeben.
 Zusätzlich würde ich hier anstelle eines Arrays aus Listen eine Adjazenzmatrix vorschlagen,
 wobei ich mir hier gerade nicht sicher bin, ob das ganze dadurch einfacher wird. Wirkt für mich zumindest spontan ordentlicher.
+
+- Ersetzen der ArrayListen für Nodes/Edges durch eigene Klassen.
+Dies würde bei Funktionenaufruf für die Listen das Aneinanderketten von mehreren funktionen (foo.bar.etc.(...)) vermeiden (Bad practice)
+Hierbei könnten dann zusätzliche Methoden implementiert werden, die direkt entsprechende Werte für Nodes/Edges ausgeben.
+(Bsp.: Source Node einer Edge über eine Methode getSource(int edgeId))
+Das würde einfach insgesamt alles etwas aufräumen, nach meinem Eindruck.
