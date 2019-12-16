@@ -17,3 +17,7 @@ Dies würde bei Funktionenaufruf für die Listen das Aneinanderketten von mehrer
 Hierbei könnten dann zusätzliche Methoden implementiert werden, die direkt entsprechende Werte für Nodes/Edges ausgeben.
 (Bsp.: Source Node einer Edge über eine Methode getSource(int edgeId))
 Das würde einfach insgesamt alles etwas aufräumen, nach meinem Eindruck.
+
+- Es wäre möglicherweise hilfreich die Weights der Edges als Type Double zu speichern anstelle von int.
+Im shortest path muss ich mit 'infinity' arbeiten, was nur mit Double nutzbar ist. Momentan habe ich das über type casting gelöst,
+möglicherweise ist es aber auch vorteilhaft für andere Methoden es direkt als Double zu speichern.
