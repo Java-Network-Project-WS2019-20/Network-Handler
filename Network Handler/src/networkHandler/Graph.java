@@ -94,7 +94,7 @@ public class Graph {
 	 *	Returns the length of the path as a double value
 	 *	Returns Infinity, if no path exists
 	*/
-	public double shortestPathTwoNodes(int initialNodeId, int destinationNodeId) {
+	public double shortestPath(int initialNodeId, int destinationNodeId) {
 		//	Initialize an adjacency matrix for the graph
 		double[][] connections = new double[getNodeListSize()][getNodeListSize()];
 		//	Fill the adjacency matrix by iterating over the list of edges
