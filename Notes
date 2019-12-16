@@ -1,0 +1,23 @@
+Fabian:
+- Anzahl der Nodes/Edges als Attribut in Graph-Klasse abzuspeichern scheint mir redundant.
+Ich würde dies präferiert durch entsprechende Methoden getNodeCount/getEdgeCount ersetzen bzw getEdgeListSize/getNodeListSize entsprechend umbennenen.
+Diese würde ich schlicht einen Aufruf von EdgeList.size/NodeList.size durchführen lassen,
+die entsprechend Werte sind dort gespeichert und so zugänglich, daher besteht keine Notwendigkeit für ein gesondertes Attribut.
+
+- Klassen/Interfaces Uppercase, Attribute/Methoden Lowercase: EdgeList -> edgeList, NodeList -> nodeList.
+Das dient der Übersicht und unterscheidung zwischen Klassen und Attributen
+
+- Das Attribut adjListArray wird nur intern in einer Methode (isGraphConnected) verwendet, soweit ich das sehen kann.
+Ich würde es daher im Scope der Methode deklarieren und der innerhalb aufgerufenen Methode DFSVisit als Parameter übergeben.
+Zusätzlich würde ich hier anstelle eines Arrays aus Listen eine Adjazenzmatrix vorschlagen,
+wobei ich mir hier gerade nicht sicher bin, ob das ganze dadurch einfacher wird. Wirkt für mich zumindest spontan ordentlicher.
+
+- Ersetzen der ArrayListen für Nodes/Edges durch eigene Klassen.
+Dies würde bei Funktionenaufruf für die Listen das Aneinanderketten von mehreren funktionen (foo.bar.etc.(...)) vermeiden (Bad practice)
+Hierbei könnten dann zusätzliche Methoden implementiert werden, die direkt entsprechende Werte für Nodes/Edges ausgeben.
+(Bsp.: Source Node einer Edge über eine Methode getSource(int edgeId))
+Das würde einfach insgesamt alles etwas aufräumen, nach meinem Eindruck.
+
+- Es wäre möglicherweise hilfreich die Weights der Edges als Type Double zu speichern anstelle von int.
+Im shortest path muss ich mit 'infinity' arbeiten, was nur mit Double nutzbar ist. Momentan habe ich das über type casting gelöst,
+möglicherweise ist es aber auch vorteilhaft für andere Methoden es direkt als Double zu speichern.
