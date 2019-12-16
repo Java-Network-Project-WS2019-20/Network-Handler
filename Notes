@@ -1,23 +1,33 @@
 Fabian:
 - Anzahl der Nodes/Edges als Attribut in Graph-Klasse abzuspeichern scheint mir redundant.
-Ich würde dies präferiert durch entsprechende Methoden getNodeCount/getEdgeCount ersetzen bzw getEdgeListSize/getNodeListSize entsprechend umbennenen.
-Diese würde ich schlicht einen Aufruf von EdgeList.size/NodeList.size durchführen lassen,
-die entsprechend Werte sind dort gespeichert und so zugänglich, daher besteht keine Notwendigkeit für ein gesondertes Attribut.
+  Ich würde dies präferiert durch entsprechende Methoden getNodeCount/getEdgeCount ersetzen bzw getEdgeListSize/getNodeListSize entsprechend umbennenen.
+  Diese würde ich schlicht einen Aufruf von EdgeList.size/NodeList.size durchführen lassen,
+  die entsprechend Werte sind dort gespeichert und so zugänglich, daher besteht keine Notwendigkeit für ein gesondertes Attribut.
 
 - Klassen/Interfaces Uppercase, Attribute/Methoden Lowercase: EdgeList -> edgeList, NodeList -> nodeList.
-Das dient der Übersicht und unterscheidung zwischen Klassen und Attributen
+  Das dient der Übersicht und unterscheidung zwischen Klassen und Attributen
 
 - Das Attribut adjListArray wird nur intern in einer Methode (isGraphConnected) verwendet, soweit ich das sehen kann.
-Ich würde es daher im Scope der Methode deklarieren und der innerhalb aufgerufenen Methode DFSVisit als Parameter übergeben.
-Zusätzlich würde ich hier anstelle eines Arrays aus Listen eine Adjazenzmatrix vorschlagen,
-wobei ich mir hier gerade nicht sicher bin, ob das ganze dadurch einfacher wird. Wirkt für mich zumindest spontan ordentlicher.
+  Ich würde es daher im Scope der Methode deklarieren und der innerhalb aufgerufenen Methode DFSVisit als Parameter übergeben.
+  Zusätzlich würde ich hier anstelle eines Arrays aus Listen eine Adjazenzmatrix vorschlagen,
+  wobei ich mir hier gerade nicht sicher bin, ob das ganze dadurch einfacher wird. Wirkt für mich zumindest spontan ordentlicher.
 
 - Ersetzen der ArrayListen für Nodes/Edges durch eigene Klassen.
-Dies würde bei Funktionenaufruf für die Listen das Aneinanderketten von mehreren funktionen (foo.bar.etc.(...)) vermeiden (Bad practice)
-Hierbei könnten dann zusätzliche Methoden implementiert werden, die direkt entsprechende Werte für Nodes/Edges ausgeben.
-(Bsp.: Source Node einer Edge über eine Methode getSource(int edgeId))
-Das würde einfach insgesamt alles etwas aufräumen, nach meinem Eindruck.
+  Dies würde bei Funktionenaufruf für die Listen das Aneinanderketten von mehreren funktionen (foo.bar.etc.(...)) vermeiden (Bad practice)
+  Hierbei könnten dann zusätzliche Methoden implementiert werden, die direkt entsprechende Werte für Nodes/Edges ausgeben.
+  (Bsp.: Source Node einer Edge über eine Methode getSource(int edgeId))
+  Das würde einfach insgesamt alles etwas aufräumen, nach meinem Eindruck.
 
 - Es wäre möglicherweise hilfreich die Weights der Edges als Type Double zu speichern anstelle von int.
-Im shortest path muss ich mit 'infinity' arbeiten, was nur mit Double nutzbar ist. Momentan habe ich das über type casting gelöst,
-möglicherweise ist es aber auch vorteilhaft für andere Methoden es direkt als Double zu speichern.
+  Im shortest path muss ich mit 'infinity' arbeiten, was nur mit Double nutzbar ist. Momentan habe ich das über type casting gelöst,
+  möglicherweise ist es aber auch vorteilhaft für andere Methoden es direkt als Double zu speichern.
+
+- Die shortestPath Methode gibt momentan die Länge des Paths zurück, bzw 'infinity' wenn kein Pfad vorhanden ist.
+  Der return Value kommt als Double, über einen cast, kann ich das aber noch zu int wechseln, wenn nötig.
+  Dies würde allerdings keinen Wert von infinity mehr erlauben, möglich wäre ein negatives value?
+  Es wäre auch möglich zusätzlich den tatsächlichen Pfad zurück zu geben, hier war ich mir unsicher was letztendlich gefragt ist.
+  Für die centrality measure methode wäre es scheinbar nötig die Pfade tatsächlich nachverfolgen zu können.
+  Mir ist jetzt nur unklar, ob die länge dennoch gefragt ist und daher zwei methoden (eine für länge, eine für path) sinnvoll sind oder nicht.
+  Man könnte auch eine eigene Klasse für den Pfad entwickeln und diesen dann zurück geben, dann wäre nur eine Methode für beide Fälle nötig.
+  Ich würde alternativ noch eine methode schreiben, die sämtliche shortestPaths einer Node zu allen anderen zurück gibt, wobei hier der rückgabewert auch fragwürdig wäre.
+  oder Alternativ eine Methode, die einmal alle shortest paths für alle nodes berechnet. Das scheint ja für die letztendlich erwartete Ausgabe Datei gefragt zu sein.
