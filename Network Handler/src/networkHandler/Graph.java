@@ -108,15 +108,6 @@ public class Graph {
 			connections[source][target] = weight;
 			connections[target][source] = weight;
 		}
-		/*
-		//DEBUG REMOVE LATER
-		for(int i = 0; i < getNodeListSize(); i++) {
-			for(int j = 0; j < getNodeListSize(); j++) {
-				System.out.print(connections[i][j] + " ");
-			}
-			System.out.print("\n");
-		}
-		*/
 		/*	Initialize Map of unvisited Nodes 
 		 *	Keys are the Map IDs
 		 *	Values are the distances from the initial Node
@@ -145,8 +136,6 @@ public class Graph {
 			//	iterate over the adjacency matrix to find connected nodes
 			for(int i = 0; i < getNodeListSize(); i++) {
 				//	check whether a node is connected and unvisited
-				boolean a = connections[currentNodeId][i] > 0;
-				boolean b = unvisitedNodes.containsKey(i);
 				if((connections[currentNodeId][i] > 0) && unvisitedNodes.containsKey(i)) {
 					// 	calculate tentative distance to neighbor node
 					double tentativeDistance = unvisitedNodes.get(currentNodeId) + connections[currentNodeId][i];
