@@ -1,6 +1,8 @@
 package networkHandler;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.TreeMap;
 
 public class Graph {
 	private ArrayList<Edge> EdgeList = new ArrayList<Edge>();
@@ -86,6 +88,96 @@ public class Graph {
 				return false;
 		}
 		return true;
+	}
+	
+	/*	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
+	 *	Returns the length of the path as a double value
+	 *	Returns Infinity, if no path exists
+	*/
+	public double shortestPathTwoNodes(int initialNodeId, int destinationNodeId) {
+		//	Initialize an adjacency matrix for the graph
+		double[][] connections = new double[getNodeListSize()][getNodeListSize()];
+		//	Fill the adjacency matrix by iterating over the list of edges
+		for(int i = 0; i < getEdgeListSize(); i++) {
+			//	Get necessary values (source Node/target Node/weight) from next edge
+			Edge	edge	= EdgeList.get(i);
+			int		source	= edge.getSource();
+			int		target	= edge.getTarget();
+			double	weight	= (double) edge.getWeight();		
+			//	Write values into adjacency matrix
+			connections[source][target] = weight;
+			connections[target][source] = weight;
+		}
+		/*
+		//DEBUG REMOVE LATER
+		for(int i = 0; i < getNodeListSize(); i++) {
+			for(int j = 0; j < getNodeListSize(); j++) {
+				System.out.print(connections[i][j] + " ");
+			}
+			System.out.print("\n");
+		}
+		*/
+		/*	Initialize Map of unvisited Nodes 
+		 *	Keys are the Map IDs
+		 *	Values are the distances from the initial Node
+		 */
+		TreeMap<Integer, Double> unvisitedNodes = new TreeMap<Integer, Double>();
+		
+		/*	Fill Map 
+		 *	values are infinity, except for the initial node, which has value 0
+		 */
+		for(int i = 0; i < getNodeListSize(); i++) {
+			if(i == initialNodeId) {
+				unvisitedNodes.put(i, (double)0);
+			}else {
+				unvisitedNodes.put(i, Double.POSITIVE_INFINITY);
+			}
+		}
+		
+		//	initialize current node
+		int currentNodeId = initialNodeId;
+		
+		/*	run trough Dijkstra's Algorithm until either
+		 *  I.	The destination Node is the current Node
+		 *  II.	There are no more Nodes to check (no path possible)
+		 */
+		while(currentNodeId != destinationNodeId && unvisitedNodes.get(currentNodeId) != Double.POSITIVE_INFINITY) {
+			//	iterate over the adjacency matrix to find connected nodes
+			for(int i = 0; i < getNodeListSize(); i++) {
+				//	check whether a node is connected and unvisited
+				boolean a = connections[currentNodeId][i] > 0;
+				boolean b = unvisitedNodes.containsKey(i);
+				if((connections[currentNodeId][i] > 0) && unvisitedNodes.containsKey(i)) {
+					// 	calculate tentative distance to neighbor node
+					double tentativeDistance = unvisitedNodes.get(currentNodeId) + connections[currentNodeId][i];
+					//	compare current distance of neighbor node with tentative distance over current node
+					if(tentativeDistance < unvisitedNodes.get(i)) {
+						//	if tentative distance is smaller than current distance, replace current distance
+						unvisitedNodes.put(i, tentativeDistance);
+					}
+				}
+			}
+			//	remove current node from Map
+			unvisitedNodes.remove(currentNodeId);
+			//	search next node, which has the smallest current distance
+			
+			//	initialize "iterator"
+			int	nextNodeId = unvisitedNodes.firstKey();
+			currentNodeId	= nextNodeId;
+			//	iterate over the map keys
+			for(int i = 0; i < unvisitedNodes.size() - 1; i++) {
+				//	set next Node (to compare) to next higher key
+				nextNodeId = unvisitedNodes.higherKey(nextNodeId);	
+				//	compare values of next Node to current (smallest distance) node
+				if(unvisitedNodes.get(currentNodeId) > unvisitedNodes.get(nextNodeId)) {
+					//	replace current node by node with smaller distance
+					currentNodeId = nextNodeId;
+				}
+			}
+			
+		}
+		//	return the distance of the destination Node
+		return unvisitedNodes.get(destinationNodeId);
 	}
 	
 	@Override
