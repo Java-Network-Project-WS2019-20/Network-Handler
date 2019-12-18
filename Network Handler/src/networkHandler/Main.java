@@ -17,7 +17,8 @@ public class Main {
 //		String fileName = args[0];
 //		String fileName = "D:\\Benutzer\\Desktop\\Uni\\Java Project\\Graphen\\small_graph.graphml";
 //		String fileName = "/home/boostr/Downloads/small_graph.graphml";
-		String fileName = "C:\\Users\\Fabian\\Downloads\\medium_graph.graphml";
+//		String fileName = "C:\\Users\\Fabian\\Downloads\\medium_graph.graphml";
+		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
 		FileHandler nFileHandler = new FileHandler();
 		nFileHandler.setGraphmlFile(fileName);
 
@@ -28,14 +29,14 @@ public class Main {
 		
 		Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
 		System.out.println(G.toString());
-		G.PrintAllNodes();
-		G.PrintAllEdges();
+		G.printAllNodes();
+		G.printAllEdges();
 
 		
 		/*	Testing the shortest path algorithm
 		 * 	can be removed later
 		 */
-//		System.out.println(G.shortestPathTwoNodes(0, 49));
+		System.out.println(G.shortestPath(0, 14));
 		
 	}
 

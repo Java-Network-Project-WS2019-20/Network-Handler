@@ -4,7 +4,7 @@ public class Edge {
 	private int edgeID;
 	private int source;
 	private int target;
-	private int weight;
+	private double weight;
 
 	public Edge(int edgeID, int source, int target, int weight) {
 		this.edgeID = edgeID;
@@ -22,8 +22,8 @@ public class Edge {
 	public int getTarget() { return target; }
 	public void setTarget(int target) { this.target = target; }
 	
-	public int getWeight() { return weight; }
-	public void setWeight(int weight) { this.weight = weight; }
+	public double getWeight() { return weight; }
+	public void setWeight(double weight) { this.weight = weight; }
 	
 	
 	@Override

@@ -1,43 +1,37 @@
 package networkHandler;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
 public class Graph {
-	private ArrayList<Edge> EdgeList = new ArrayList<Edge>();
-	private ArrayList<Node> NodeList = new ArrayList<Node>();
-	int ESize; // Number of Edges
-	int NSize; // Number of Nodes
+	private ArrayList<Edge> edgeList;
+	private ArrayList<Node> nodeList;
+
 	
-	LinkedList<Integer>[] adjListArray; // A linked list of all adjacent Nodes for each Node
-	
+
 	// Constructor
 	Graph (ArrayList<Edge> EdgeList, ArrayList<Node> NodeList){
-		this.EdgeList = EdgeList;
-		this.NodeList = NodeList;
-		
-		ESize = EdgeList.size();
-		NSize = NodeList.size();
+		this.edgeList = EdgeList;
+		this.nodeList = NodeList;
 	}
 	
-	public int getNodeListSize() {
-		return NSize;
+	public int getNodeCount() {
+		return nodeList.size();
 	}
 	
-	public int getEdgeListSize() {
-		return ESize;
+	public int getEdgeCount() {
+		return edgeList.size();
 	}
 	
-	public void PrintAllNodes() {
-		for (Node n : NodeList) {
+	public void printAllNodes() {
+		for (Node n : nodeList) {
 			System.out.println(n.toString());
 		}
 	}
 	
-	public void PrintAllEdges() {
+	public void printAllEdges() {
 		StringBuilder sb = new StringBuilder();
-		for (Edge e : EdgeList) {
+		for (Edge e : edgeList) {
 			sb.append("EdgeID: ").append(e.getEdgeID()).append("\n");		
 		}
 		System.out.println(sb);
@@ -47,43 +41,46 @@ public class Graph {
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
 	// Using the Depth First Search Algorithm
-	public boolean[] DFSVisit(int v, boolean[] visited) {
+	public boolean[] dfsVisit(int v, boolean[] visited, LinkedList<Integer>[] adjListArray) {
 		// Mark the current node as visited
 		visited[v] = true;
 		// repeat for all the nodes
 		// adjacent to this node
 		for (int x : adjListArray[v]) {
-			if(!visited[x]) DFSVisit(x,visited);
+			if(!visited[x]) dfsVisit(x,visited,adjListArray);
 		}
 		return visited;
 	}
 	
 	// Method to calculate, whether a undirected Graph is connected
 	// Not minding the weight of the edges
-	public boolean IsGraphConnected() {
+	public boolean isGraphConnected() {
+
+		// A linked list of all adjacent Nodes for each Node
 		// Size of array is the number of Nodes
-		adjListArray = new LinkedList[NSize];
-		
+		LinkedList<Integer>[] adjListArray = new LinkedList[getNodeCount()];
+
+
 		// Create a new list for each Node
 		// so that adjacent nodes can be stored
-		for (int i = 0; i < NSize; i++) {
+		for (int i = 0; i < getNodeCount(); i++) {
 		adjListArray[i] = new LinkedList<Integer>();
 		}
 		// Adds all edges to the nodes
 		// Since graph is undirected, add an edge from source to target
 		// as well as target to source
-		for (Edge e : this.EdgeList) {
+		for (Edge e : this.edgeList) {
 			adjListArray[e.getSource()].add(e.getTarget());
 			adjListArray[e.getTarget()].add(e.getSource());
 		}
 		
 		// Mark all Nodes as not visited
-		boolean[] visited = new boolean[NSize];
+		boolean[] visited = new boolean[getNodeCount()];
 		// Calculate all reachable Nodes from Node 1
 		// If one Node is not reachable, it means the graph
 		// Is not connected
-		DFSVisit(0,visited);
-		for(int v = 0; v < NSize; v++) {
+		dfsVisit(0,visited,adjListArray);
+		for(int v = 0; v < getNodeCount(); v++) {
 			if(!visited[v])
 				return false;
 		}
@@ -96,14 +93,14 @@ public class Graph {
 	*/
 	public double shortestPath(int initialNodeId, int destinationNodeId) {
 		//	Initialize an adjacency matrix for the graph
-		double[][] connections = new double[getNodeListSize()][getNodeListSize()];
+		double[][] connections = new double[getNodeCount()][getNodeCount()];
 		//	Fill the adjacency matrix by iterating over the list of edges
-		for(int i = 0; i < getEdgeListSize(); i++) {
+		for(int i = 0; i < getEdgeCount(); i++) {
 			//	Get necessary values (source Node/target Node/weight) from next edge
-			Edge	edge	= EdgeList.get(i);
+			Edge	edge	= edgeList.get(i);
 			int		source	= edge.getSource();
 			int		target	= edge.getTarget();
-			double	weight	= (double) edge.getWeight();		
+			double	weight	= edge.getWeight();
 			//	Write values into adjacency matrix
 			connections[source][target] = weight;
 			connections[target][source] = weight;
@@ -112,12 +109,12 @@ public class Graph {
 		 *	Keys are the Map IDs
 		 *	Values are the distances from the initial Node
 		 */
-		TreeMap<Integer, Double> unvisitedNodes = new TreeMap<Integer, Double>();
+		TreeMap<Integer, Double> unvisitedNodes = new TreeMap<>();
 		
 		/*	Fill Map 
 		 *	values are infinity, except for the initial node, which has value 0
 		 */
-		for(int i = 0; i < getNodeListSize(); i++) {
+		for(int i = 0; i < getNodeCount(); i++) {
 			if(i == initialNodeId) {
 				unvisitedNodes.put(i, (double)0);
 			}else {
@@ -134,7 +131,7 @@ public class Graph {
 		 */
 		while(currentNodeId != destinationNodeId && unvisitedNodes.get(currentNodeId) != Double.POSITIVE_INFINITY) {
 			//	iterate over the adjacency matrix to find connected nodes
-			for(int i = 0; i < getNodeListSize(); i++) {
+			for(int i = 0; i < getNodeCount(); i++) {
 				//	check whether a node is connected and unvisited
 				if((connections[currentNodeId][i] > 0) && unvisitedNodes.containsKey(i)) {
 					// 	calculate tentative distance to neighbor node
@@ -172,9 +169,9 @@ public class Graph {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Number of nodes: ").append(getNodeListSize()).append("\n");
-		sb.append("Number of egdes: ").append(getEdgeListSize()).append("\n");
-		sb.append("Is connected? ").append(IsGraphConnected()).append("\n");
+		sb.append("Number of nodes: ").append(getNodeCount()).append("\n");
+		sb.append("Number of egdes: ").append(getEdgeCount()).append("\n");
+		sb.append("Is connected? ").append(isGraphConnected()).append("\n");
 		return sb.toString();
 	}
 	
