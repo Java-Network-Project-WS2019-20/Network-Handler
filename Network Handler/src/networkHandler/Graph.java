@@ -37,7 +37,6 @@ public class Graph {
 		System.out.println(sb);
 	}
 	
-	
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
 	// Using the Depth First Search Algorithm

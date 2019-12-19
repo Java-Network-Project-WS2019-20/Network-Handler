@@ -21,7 +21,7 @@ public class Main {
 //		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
 		FileHandler nFileHandler = new FileHandler();
 		nFileHandler.setGraphmlFile(fileName);
-
+		
 		nFileHandler.prepareParser();
 		
 		Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
