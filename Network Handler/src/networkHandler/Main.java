@@ -15,28 +15,25 @@ public class Main {
 //		}
 
 //		String fileName = args[0];
-//		String fileName = "D:\\Benutzer\\Desktop\\Uni\\Java Project\\Graphen\\small_graph.graphml";
+		String fileName = "C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml";
 //		String fileName = "/home/boostr/Downloads/small_graph.graphml";
 //		String fileName = "C:\\Users\\Fabian\\Downloads\\medium_graph.graphml";
-		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
+//		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
 		FileHandler nFileHandler = new FileHandler();
 		nFileHandler.setGraphmlFile(fileName);
 
 		nFileHandler.prepareParser();
 		
-//		nFileHandler.getNodeList().forEach((n) -> System.out.println(n));
-//		nFileHandler.getEdgeList().forEach((n) -> System.out.println(n));
-		
 		Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
 		System.out.println(G.toString());
-		G.printAllNodes();
-		G.printAllEdges();
-
+//		G.printAllNodes();
+//		G.printAllEdges();
+		System.out.println("Diameter: " + G.getDiameter());
 		
 		/*	Testing the shortest path algorithm
 		 * 	can be removed later
 		 */
-		System.out.println(G.shortestPath(0, 14));
+		//System.out.println(G.shortestPath(0, 14));
 		
 	}
 

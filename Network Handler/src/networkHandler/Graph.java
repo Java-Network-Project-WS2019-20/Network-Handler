@@ -86,7 +86,6 @@ public class Graph {
 		}
 		return true;
 	}
-	
 	/*	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
 	 *	Returns the length of the path as a double value
 	 *	Returns Infinity, if no path exists
@@ -165,6 +164,25 @@ public class Graph {
 		//	return the distance of the destination Node
 		return unvisitedNodes.get(destinationNodeId);
 	}
+	
+	//Method to get the Diameter of a Graph
+	public double getDiameter() { 
+		if(!isGraphConnected()){
+			return Double.POSITIVE_INFINITY;
+		}
+		double maxShortestPath = 0;
+		// calculate all the shortest paths in the Graph
+		// and check which one has the highest distance
+		for(int i = 0; i < getNodeCount(); i++) {
+			for(int n = i; n < getNodeCount(); n++) {
+				if(shortestPath(i,n) > maxShortestPath) {
+					maxShortestPath = shortestPath(i,n);
+				}
+			}
+		}
+		return maxShortestPath;
+	}
+	
 	
 	@Override
 	public String toString() {
