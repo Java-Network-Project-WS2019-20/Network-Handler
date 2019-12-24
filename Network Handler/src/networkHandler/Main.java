@@ -9,32 +9,32 @@ public class Main {
 
 	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //		String fileName = args[0];
-		String fileName = "C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml";
+//		String fileName = "C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml";
 //		String fileName = "/home/boostr/Downloads/small_graph.graphml";
 //		String fileName = "C:\\Users\\Fabian\\Downloads\\medium_graph.graphml";
 //		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
-		FileHandler nFileHandler = new FileHandler();
-		nFileHandler.setGraphmlFile(fileName);
-		
-		nFileHandler.prepareParser();
-		
-		Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
-		System.out.println(G.toString());
+//		FileHandler nFileHandler = new FileHandler();
+//		nFileHandler.setGraphmlFile(fileName);
+//		
+//		nFileHandler.prepareParser();
+//		
+//		Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
+//		System.out.println(G.toString());
 //		G.printAllNodes();
 //		G.printAllEdges();
-		System.out.println("Diameter: " + G.getDiameter());
+//		System.out.println("Diameter: " + G.getDiameter());
 		
 		/*	Testing the shortest path algorithm
 		 * 	can be removed later
 		 */
 		//System.out.println(G.shortestPath(0, 14));
-=======
+//=======
 		
 		// cla (command line arguments) passed for testing:
 		// /home/boost/Downloads/small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 16 -h
-//		try {
+		try {
 			if (args.length > 0) {
 					// start parsing cla
 				CommandLineHandler clHandler = new CommandLineHandler(args);
@@ -87,12 +87,12 @@ public class Main {
 				
 			
 				
-//			} else {
-//				throw new Exception();
-//			} 
-//		} catch (Exception e) {
-//			System.out.println("ERROR: Provide at least one argument."
-//					+ "\nUse -h or --help to print usage help.");
+			} else {
+				throw new Exception();
+			} 
+		} catch (Exception e) {
+			System.out.println("ERROR: Provide at least one argument."
+					+ "\nUse -h or --help to print usage help.");
 		}
 	
 		
@@ -120,7 +120,7 @@ public class Main {
 //		 * 	can be removed later
 //		 */
 //		System.out.println(G.shortestPath(5, 7));
->>>>>>> ddc06d7c29562bc29416d09e6b75f8b4c5b509a7
+//>>>>>>> ddc06d7c29562bc29416d09e6b75f8b4c5b509a7
 		
 	}
 

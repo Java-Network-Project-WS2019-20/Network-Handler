@@ -6,7 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/boost/Downloads/commons-cli-1.4-bin/commons-cli-1.4/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/boost/Downloads/commons-cli-1.4/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="commons-cli-1.4.jar" sourcepath="commons-cli-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
