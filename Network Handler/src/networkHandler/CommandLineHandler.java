@@ -19,6 +19,7 @@ public class CommandLineHandler {
 	private boolean shortestPath;
 	private int[] shortestPathNodeIDs;
 	private boolean allShortestPaths; 
+	private boolean graphProperties;
 
 	
 	// constructor
@@ -34,6 +35,7 @@ public class CommandLineHandler {
 		this.shortestPath = false;
 		this.shortestPathNodeIDs = new int[] {0, 0};
 		this.allShortestPaths = false;
+		this.graphProperties = false;
 	}
 	
 	
@@ -48,6 +50,7 @@ public class CommandLineHandler {
 	public boolean getShortestPath() { return shortestPath; }
 	public int[] getShortestPathNodeIDs() { return shortestPathNodeIDs; }
 	public boolean getAllShortestPaths() { return allShortestPaths; }
+	public boolean getGraphProperties() { return graphProperties; }
 
 
 	// handle the cla (command line arguments) in three stages:
@@ -89,6 +92,11 @@ public class CommandLineHandler {
 				.desc("Calculate all shprtest paths betweem all nodes.")
 				.build();
 		
+		Option option_G = Option.builder("G")
+				.longOpt("graph")
+				.desc("Display all properties of provided graph.")
+				.build();
+		
 		Option option_help = Option.builder("h")
 				.longOpt("help")
 				.desc("Prints this help text.")
@@ -101,6 +109,7 @@ public class CommandLineHandler {
 		options.addOption(option_d);
 		options.addOption(option_s);
 		options.addOption(option_S);
+		options.addOption(option_G);
 		options.addOption(option_help);
 		
 		
@@ -165,7 +174,12 @@ public class CommandLineHandler {
 		        	throw new ParseException("argument is not a number.");
 				}
 	    	}
-		    	
+		    
+	    	
+	    	if (cmd.hasOption('G')) {
+	    		graphProperties = true;
+	    	}
+	    	
 	    	
 	    	if (cmd.hasOption('S')) {
 	    		allShortestPaths = true;
@@ -187,7 +201,7 @@ public class CommandLineHandler {
 		    // if user provided command line arguments without any flag
 	        String[] remainder = cmd.getArgs();
 	        if(remainder.length > 1) {
-		        System.out.print("\nWARNING: Could not assign these arguments to any option: ");
+		        System.out.print("\nWARNING:	Could not assign these arguments to any option:	");
 		        for (int i=1; i < remainder.length; i++) {
 		            System.out.print(remainder[i]);
 		            System.out.print(" ");
@@ -198,11 +212,11 @@ public class CommandLineHandler {
 		    
 	    } catch (ParseException e) {
 	    	System.out.println("ERROR: You provided (a) incorrect option(s) and/or missing option value(s)."
-	    			+ "\nUse -h or --help to print usage help.");
+	    			+ "\n	Use -h or --help to print usage help.");
 		} catch (Exception b) {
 			System.out.println("ERROR: First argument needs to be .graphml file"
-					+ "\nProvide correct file name with path: /<filename>.graphml"
-					+ "\nGet help using -h or --help");
+					+ "\n	Provide correct file name with path: /<filename>.graphml"
+					+ "\n	Get help using -h or --help");
 		}
 	    
 	

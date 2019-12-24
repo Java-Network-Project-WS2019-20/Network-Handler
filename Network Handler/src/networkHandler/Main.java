@@ -4,15 +4,14 @@ import org.apache.commons.cli.ParseException;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 public class Main {
 
 	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
 
 //<<<<<<< HEAD
-//		String fileName = args[0];
 //		String fileName = "C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml";
-//		String fileName = "/home/boostr/Downloads/small_graph.graphml";
 //		String fileName = "C:\\Users\\Fabian\\Downloads\\medium_graph.graphml";
 //		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
 //		FileHandler nFileHandler = new FileHandler();
@@ -33,7 +32,7 @@ public class Main {
 //=======
 		
 		// cla (command line arguments) passed for testing:
-		// /home/boost/Downloads/small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 16 -h
+		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
 		try {
 			if (args.length > 0) {
 					// start parsing cla
@@ -58,21 +57,38 @@ public class Main {
 					System.out.println("Graph is connected: " + G.isGraphConnected());
 				}
 				
-				if(clHandler.getShortestPath() == true) {
-					//System.out for testing only
-					System.out.println(G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]));
+				
+				try {
+					if(clHandler.getShortestPath() == true) {
+						//System.out for testing only
+						System.out.println( "Shortest Path between: "
+								+ clHandler.getShortestPathNodeIDs()[0] + " and "
+								+ clHandler.getShortestPathNodeIDs()[1] + " = "
+								+ G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]));
+					}
+				} catch (NoSuchElementException nsee) {
+					System.out.println("ERROR: Can not calculate shortest path."
+							+ "\n	The Node ID you provided does not exist."
+							+ "\n	use -G or --graph to display Graph properties."
+							+ "\n	Use -h or --help to print usage help.");
 				}
+				
+				
+				if(clHandler.getDiameter() == true) {
+					System.out.println("Diameter: " + G.getDiameter());
+				}
+				
+				
+				if(clHandler.getGraphProperties() == true) {
+					System.out.println(G.toString());
+				}
+				
 				
 				//TODO
 //				if(clHandler.getAllShortestPaths() == true) {
 //					//start calculation of all shortest paths
 //				}
-				
-				//TODO
-//				if(clHandler.getDiameter() == true) {
-//					//start calculation of diameter
-//				}
-				
+						
 				//TODO
 //				if(clHandler.getBcm() == true) {
 //					System.out.println(clHandler.getBcmNodeID());
@@ -92,7 +108,7 @@ public class Main {
 			} 
 		} catch (Exception e) {
 			System.out.println("ERROR: Provide at least one argument."
-					+ "\nUse -h or --help to print usage help.");
+					+ "\n	Use -h or --help to print usage help.");
 		}
 	
 		
