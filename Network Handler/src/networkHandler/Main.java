@@ -4,6 +4,10 @@ import org.apache.commons.cli.ParseException;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
 public class Main {
@@ -84,11 +88,23 @@ public class Main {
 				}
 				
 				
-				//TODO
-//				if(clHandler.getAllShortestPaths() == true) {
-//					//start calculation of all shortest paths
-//				}
+				//TODO gibt es da eine bessere Lösung zu weitergabe der HashMap?
+				if(clHandler.getAllShortestPaths() == true) {
+					G.getAllShortestPaths();
+					
+					HashMap<Integer, ArrayList<Integer>> spMap = new HashMap(G.getShortestPathsMap());
+	
+					// iterate and display values
+					for(Entry<Integer, ArrayList<Integer>> entry : spMap.entrySet()) {
+						int key = entry.getKey();
+						ArrayList<Integer> values = entry.getValue();
 						
+						System.out.println("Key = " + key);
+						System.out.println("Values = " + values);
+					}
+				}
+					
+				
 				//TODO
 //				if(clHandler.getBcm() == true) {
 //					System.out.println(clHandler.getBcmNodeID());

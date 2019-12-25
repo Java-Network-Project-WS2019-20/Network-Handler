@@ -107,6 +107,10 @@ public class FileHandler {
 		// 1. how many of each calculations? e.g. 28x shortest path
 		// 2. write solution of calculations to graphml file using loops	
 		
+		
+		
+		
+		
 	}
 	
 

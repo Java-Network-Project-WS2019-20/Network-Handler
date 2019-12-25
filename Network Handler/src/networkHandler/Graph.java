@@ -1,12 +1,14 @@
 package networkHandler;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.TreeMap;
 
 public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
-
+	private HashMap<Integer, ArrayList<Integer>> shortestPathsMap = new HashMap<Integer, ArrayList<Integer>>();
 	
 
 	// Constructor
@@ -14,6 +16,11 @@ public class Graph {
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
 	}
+	
+	
+	//getter
+	public HashMap<Integer, ArrayList<Integer>> getShortestPathsMap() { return shortestPathsMap; }
+	
 	
 	public int getNodeCount() {
 		return nodeList.size();
@@ -180,6 +187,23 @@ public class Graph {
 			}
 		}
 		return maxShortestPath;
+	}
+	
+	
+	// Calculate all shortestPaths and put them into a HashMap
+	// return HashMap to forward them to the FileHandler for further processing
+	public HashMap<Integer, ArrayList<Integer>> getAllShortestPaths() {
+		for(int i = 0; i < getNodeCount(); i++) {
+			ArrayList<Integer> shortestPathMapValues = new ArrayList<>(); 	// saves ... 
+			
+			for(int n = i; n < getNodeCount(); n++) {
+				shortestPathMapValues.add(n);								// the corresponding node id's and ..
+				shortestPathMapValues.add((int) shortestPath(i,n));			// the outcome of shortestPath() calculation
+			}
+			
+			shortestPathsMap.put(i, shortestPathMapValues);					// saves the first node id and the corresponding values
+		}
+		return shortestPathsMap;
 	}
 	
 	
