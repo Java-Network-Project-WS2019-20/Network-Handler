@@ -14,54 +14,44 @@ public class Main {
 
 	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
 
-//<<<<<<< HEAD
-//		String fileName = "C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml";
-//		String fileName = "C:\\Users\\Fabian\\Downloads\\medium_graph.graphml";
-//		String fileName = "C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml";
-//		FileHandler nFileHandler = new FileHandler();
-//		nFileHandler.setGraphmlFile(fileName);
-//		
-//		nFileHandler.prepareParser();
-//		
-//		Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
-//		System.out.println(G.toString());
-//		G.printAllNodes();
-//		G.printAllEdges();
-//		System.out.println("Diameter: " + G.getDiameter());
 		
-		/*	Testing the shortest path algorithm
-		 * 	can be removed later
-		 */
-		//System.out.println(G.shortestPath(0, 14));
-//=======
+		// cla (command line arguments) you may use for testing:
 		
-		// cla (command line arguments) passed for testing:
+		// C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
+		// C:\\Users\\Fabian\\Downloads\\medium_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
+		// C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml -b 2 -c -d -s 1 14
 		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
+		
 		try {
-			if (args.length > 0) {
-					// start parsing cla
+			if (args.length > 0) {	// user must provide at least one argument = input filename
+				
+				// start parsing cla
 				CommandLineHandler clHandler = new CommandLineHandler(args);
 				clHandler.claParser();
 
-					// start parsing the graph
+				// start parsing the graph
 				FileHandler nFileHandler = new FileHandler();
-
 				if(clHandler.getInputFileName() != null) {
 					nFileHandler.setGraphmlFile(clHandler.getInputFileName());
 					nFileHandler.prepareParser();
 				}
 				
+				// create Graph object
 				Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
 //				System.out.println(G.toString());
 //				G.printAllNodes();
 //				G.printAllEdges();
 				
+				
+				// retrieving and forwarding results of cla parsing
+				
+				// check connectivity
 				if(clHandler.getConnectivity() == true) {
 					//System.out for testing only
 					System.out.println("Graph is connected: " + G.isGraphConnected());
 				}
 				
-				
+				// get shortestPath between two provided Nodes
 				try {
 					if(clHandler.getShortestPath() == true) {
 						//System.out for testing only
@@ -70,6 +60,7 @@ public class Main {
 								+ clHandler.getShortestPathNodeIDs()[1] + " = "
 								+ G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]));
 					}
+				// if user provides non existing Node ID's:
 				} catch (NoSuchElementException nsee) {
 					System.out.println("ERROR: Can not calculate shortest path."
 							+ "\n	The Node ID you provided does not exist."
@@ -77,31 +68,35 @@ public class Main {
 							+ "\n	Use -h or --help to print usage help.");
 				}
 				
-				
+				// check diameter
 				if(clHandler.getDiameter() == true) {
 					System.out.println("Diameter: " + G.getDiameter());
 				}
 				
-				
+				//TODO retrieve graph properties = nodes and edges 
 				if(clHandler.getGraphProperties() == true) {
 					System.out.println(G.toString());
 				}
 				
 				
-				//TODO gibt es da eine bessere Lösung zu weitergabe der HashMap?
+				//TODO update: use multiMap
+				// get all shortest paths between every node
 				if(clHandler.getAllShortestPaths() == true) {
-					G.getAllShortestPaths();
+//					G.getAllShortestPaths();
 					
-					HashMap<Integer, ArrayList<Integer>> spMap = new HashMap(G.getShortestPathsMap());
+//					HashMap<Integer, ArrayList<Integer>> spMap = new HashMap(G.getAllShortestPaths());
 	
-					// iterate and display values
-					for(Entry<Integer, ArrayList<Integer>> entry : spMap.entrySet()) {
-						int key = entry.getKey();
-						ArrayList<Integer> values = entry.getValue();
-						
-						System.out.println("Key = " + key);
-						System.out.println("Values = " + values);
-					}
+					GraphWriter gw = new GraphWriter("C:\\Users\\boost\\Downloads\\test.graphml");
+					gw.setSpMap(G.getAllShortestPaths());
+					gw.exportGraphmlAnalysis();
+//					// iterate and display values
+//					for(Entry<Integer, ArrayList<Integer>> entry : spMap.entrySet()) {
+//						int key = entry.getKey();
+//						ArrayList<Integer> values = entry.getValue();
+//						
+//						System.out.println("Key = " + key);
+//						System.out.println("Values = " + values);
+//					}
 				}
 					
 				
@@ -152,7 +147,7 @@ public class Main {
 //		 * 	can be removed later
 //		 */
 //		System.out.println(G.shortestPath(5, 7));
-//>>>>>>> ddc06d7c29562bc29416d09e6b75f8b4c5b509a7
+
 		
 	}
 

@@ -1,10 +1,5 @@
 package networkHandler;
 
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -17,7 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
@@ -102,41 +96,6 @@ public class FileHandler {
 		}
 	}
 	
-	
-	// preparing output of all calculations and attributes into a new graphml file
-	public void exportGraphmlAnalysis () {
-		
-		// 1. creating a document
-        Document document = new Document();
-       
-        // 2. creating root, node, child of node elements
-        Element root = new Element("allShortestPaths");
-        Element shortestPathElement = new Element("sPath")
-							        		.setAttribute("source", "n0")
-							        		.setAttribute("target", "n4");
-        Element dataElement = new Element("data")
-				        					.setAttribute("key", "sp_result")
-				        					.setText("4");
-       
-        // 3. adding children to parents to root
-        shortestPathElement.addContent(dataElement);
-        root.addContent(shortestPathElement); // Add the child to the root element
-        document.setContent(root); // add the root element as
-
-        // 4. saving the document to specified file
-        try {
-            XMLOutputter outputter = new XMLOutputter();
-            outputter.setFormat(Format.getPrettyFormat());
-            outputter.output(document, new FileWriter("C:\\Users\\boost\\Downloads\\test_graph.graphml"));
-        
-            System.out.println(".graphml file created.");
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }	
-	}
-	
-
 	
 }
 
