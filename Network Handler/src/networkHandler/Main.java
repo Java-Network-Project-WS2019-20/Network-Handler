@@ -22,13 +22,15 @@ public class Main {
 		// C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml -b 2 -c -d -s 1 14
 		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
 		
-		try {
+//		try {
 			if (args.length > 0) {	// user must provide at least one argument = input filename
+				
 				
 				// start parsing cla
 				CommandLineHandler clHandler = new CommandLineHandler(args);
 				clHandler.claParser();
 
+				
 				// start parsing the graph
 				FileHandler nFileHandler = new FileHandler();
 				if(clHandler.getInputFileName() != null) {
@@ -36,12 +38,10 @@ public class Main {
 					nFileHandler.prepareParser();
 				}
 				
+				
 				// create Graph object
 				Graph G = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
-//				System.out.println(G.toString());
-//				G.printAllNodes();
-//				G.printAllEdges();
-				
+	
 				
 				// retrieving and forwarding results of cla parsing
 				
@@ -73,18 +73,30 @@ public class Main {
 					System.out.println("Diameter: " + G.getDiameter());
 				}
 				
-				//TODO retrieve graph properties = nodes and edges 
+				// prints out # of nodes and edges
 				if(clHandler.getGraphProperties() == true) {
 					System.out.println(G.toString());
 				}
 				
-				
-				//TODO update: use multiMap
 				// get all shortest paths between every node
 				if(clHandler.getAllShortestPaths() == true) {
 					G.getAllShortestPaths();
+					//TODO System.out.
 				}
-					
+				
+				// creates new .graphml file with all attributes and calculations
+				if(clHandler.getOutputFileName() != null) {
+					GraphWriter gw = new GraphWriter(clHandler.getOutputFileName());
+					gw.setNodeList(nFileHandler.getNodeList());
+					gw.setEdgeList(nFileHandler.getEdgeList());
+					gw.setConnectivity(G.isGraphConnected());
+					gw.setDiameter((int) G.getDiameter());
+					gw.setSpMap(G.getAllShortestPaths());
+					gw.exportGraphmlAnalysis();
+				}
+				
+				
+				
 				
 				//TODO
 //				if(clHandler.getBcm() == true) {
@@ -92,21 +104,16 @@ public class Main {
 //					//start calculation of BCM
 //				}
 				
-				//TODO
-				if(clHandler.getOutputFileName() != null) {
-					GraphWriter gw = new GraphWriter(clHandler.getOutputFileName());
-					gw.setSpMap(G.getShortestPathsMap());
-					gw.exportGraphmlAnalysis();
-				}
-				
 			
 				
-			} else {
-				throw new Exception();
-			} 
-		} catch (Exception e) {
-			System.out.println("ERROR: Provide at least one argument."
-					+ "\n	Use -h or --help to print usage help.");
+				
+				
+//			} else {
+//				throw new Exception();
+//			} 
+//		} catch (Exception e) {
+//			System.out.println("ERROR: Provide at least one argument."
+//					+ "\n	Use -h or --help to print usage help.");
 		}
 	
 		

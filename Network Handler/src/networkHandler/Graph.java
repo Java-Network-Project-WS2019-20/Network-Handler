@@ -211,9 +211,6 @@ public class Graph {
 		//		1. ArrayList = Target node ID's
 		//		2. ArrayList = Shortest path calculation results
 		
-//	    ArrayList<Integer> targetNodes = new ArrayList<Integer>();
-//	    ArrayList<Integer> spResults = new ArrayList<Integer>();
-		
 		for(int i = 0; i < getNodeCount(); i++) {
 			for(int n = i; n < getNodeCount(); n++) {
 				ArrayList<Integer> targetNodes = new ArrayList<Integer>();
@@ -225,10 +222,6 @@ public class Graph {
 			    // Put both ArrayLists into multiMap for same key
 				shortestPathsMap.put(i, targetNodes );
 				shortestPathsMap.put(i, spResults);
-				
-//				int result;
-//				System.out.print(n);
-//				System.out.print(result = (int) shortestPath(i,n));
 			}
 		}
 		
