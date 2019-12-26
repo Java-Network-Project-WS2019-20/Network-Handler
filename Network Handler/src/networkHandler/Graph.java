@@ -21,8 +21,8 @@ public class Graph {
 	}
 	
 	
-	//TODO getter shortestPathsMap
-	
+	// getter shortestPathsMap
+	public MultiValuedMap<Integer, ArrayList<Integer>> getShortestPathsMap() { return shortestPathsMap; }
 
 	
 	public int getNodeCount() {
@@ -211,15 +211,20 @@ public class Graph {
 		//		1. ArrayList = Target node ID's
 		//		2. ArrayList = Shortest path calculation results
 		
-	    ArrayList<Integer> targetNodes = new ArrayList<Integer>();
-	    ArrayList<Integer> spResults = new ArrayList<Integer>();
+//	    ArrayList<Integer> targetNodes = new ArrayList<Integer>();
+//	    ArrayList<Integer> spResults = new ArrayList<Integer>();
 		
 		for(int i = 0; i < getNodeCount(); i++) {
 			for(int n = i; n < getNodeCount(); n++) {
+				ArrayList<Integer> targetNodes = new ArrayList<Integer>();
+			    ArrayList<Integer> spResults = new ArrayList<Integer>();
+				
+				targetNodes.add(n);
+				spResults.add((int) shortestPath(i,n));
 				
 			    // Put both ArrayLists into multiMap for same key
-				shortestPathsMap.put(i, targetNodes.add(n) );
-				shortestPathsMap.put(i, spResults.add((int) shortestPath(i,n)) );
+				shortestPathsMap.put(i, targetNodes );
+				shortestPathsMap.put(i, spResults);
 				
 //				int result;
 //				System.out.print(n);

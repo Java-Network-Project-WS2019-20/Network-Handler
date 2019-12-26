@@ -22,7 +22,7 @@ public class Main {
 		// C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml -b 2 -c -d -s 1 14
 		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
 		
-		try {
+//		try {
 			if (args.length > 0) {	// user must provide at least one argument = input filename
 				
 				// start parsing cla
@@ -82,21 +82,7 @@ public class Main {
 				//TODO update: use multiMap
 				// get all shortest paths between every node
 				if(clHandler.getAllShortestPaths() == true) {
-//					G.getAllShortestPaths();
-					
-//					HashMap<Integer, ArrayList<Integer>> spMap = new HashMap(G.getAllShortestPaths());
-	
-					GraphWriter gw = new GraphWriter("C:\\Users\\boost\\Downloads\\test.graphml");
-					gw.setSpMap(G.getAllShortestPaths());
-					gw.exportGraphmlAnalysis();
-//					// iterate and display values
-//					for(Entry<Integer, ArrayList<Integer>> entry : spMap.entrySet()) {
-//						int key = entry.getKey();
-//						ArrayList<Integer> values = entry.getValue();
-//						
-//						System.out.println("Key = " + key);
-//						System.out.println("Values = " + values);
-//					}
+					G.getAllShortestPaths();
 				}
 					
 				
@@ -107,19 +93,20 @@ public class Main {
 //				}
 				
 				//TODO
-//				if(clHandler.getOutputFileName() != null) {
-//					// start all calculations
-//					// print all attributes and calculations into new .graphml file
-//				}
+				if(clHandler.getOutputFileName() != null) {
+					GraphWriter gw = new GraphWriter(clHandler.getOutputFileName());
+					gw.setSpMap(G.getShortestPathsMap());
+					gw.exportGraphmlAnalysis();
+				}
 				
 			
 				
-			} else {
-				throw new Exception();
-			} 
-		} catch (Exception e) {
-			System.out.println("ERROR: Provide at least one argument."
-					+ "\n	Use -h or --help to print usage help.");
+//			} else {
+//				throw new Exception();
+//			} 
+//		} catch (Exception e) {
+//			System.out.println("ERROR: Provide at least one argument."
+//					+ "\n	Use -h or --help to print usage help.");
 		}
 	
 		
