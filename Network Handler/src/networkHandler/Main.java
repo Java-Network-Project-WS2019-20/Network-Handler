@@ -22,7 +22,7 @@ public class Main {
 		// C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml -b 2 -c -d -s 1 14
 		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
 		
-//		try {
+		try {
 			if (args.length > 0) {	// user must provide at least one argument = input filename
 				
 				// start parsing cla
@@ -101,12 +101,12 @@ public class Main {
 				
 			
 				
-//			} else {
-//				throw new Exception();
-//			} 
-//		} catch (Exception e) {
-//			System.out.println("ERROR: Provide at least one argument."
-//					+ "\n	Use -h or --help to print usage help.");
+			} else {
+				throw new Exception();
+			} 
+		} catch (Exception e) {
+			System.out.println("ERROR: Provide at least one argument."
+					+ "\n	Use -h or --help to print usage help.");
 		}
 	
 		
