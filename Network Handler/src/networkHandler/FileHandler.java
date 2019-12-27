@@ -1,14 +1,19 @@
 package networkHandler;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
+
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 
@@ -18,7 +23,7 @@ public class FileHandler {
 	private ArrayList<Edge> edgeList;
 
 	
-	// standard constructor
+	// constructor
 	public FileHandler() {
 
 		this.nodeList = new ArrayList<>();
@@ -92,23 +97,5 @@ public class FileHandler {
 	}
 	
 	
-	// preparing output of all calculations into a graphml file
-	// gather and write analysis of the graph
-	public void exportGraphmlAnalysis () throws ParserConfigurationException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document = builder.newDocument();
-		
-		// connectivity
-		// diameter
-		// shortestPath
-		// betweennessCentralityMeasure
-		//TODO
-		// 1. how many of each calculations? e.g. 28x shortest path
-		// 2. write solution of calculations to graphml file using loops	
-		
-	}
-	
-
 }
 

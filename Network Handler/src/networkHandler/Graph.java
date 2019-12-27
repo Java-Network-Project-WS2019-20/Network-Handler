@@ -1,19 +1,29 @@
 package networkHandler;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.TreeMap;
+
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 
 public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
+	private MultiValuedMap<Integer, ArrayList<Integer>> shortestPathsMap = new ArrayListValuedHashMap<>();
 
 	
-
 	// Constructor
 	Graph (ArrayList<Edge> EdgeList, ArrayList<Node> NodeList){
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
 	}
+	
+	
+	// getter shortestPathsMap
+	public MultiValuedMap<Integer, ArrayList<Integer>> getShortestPathsMap() { return shortestPathsMap; }
+
 	
 	public int getNodeCount() {
 		return nodeList.size();
@@ -36,6 +46,8 @@ public class Graph {
 		}
 		System.out.println(sb);
 	}
+	
+	
 	
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
@@ -85,6 +97,9 @@ public class Graph {
 		}
 		return true;
 	}
+	
+	
+	
 	/*	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
 	 *	Returns the length of the path as a double value
 	 *	Returns Infinity, if no path exists
@@ -164,6 +179,8 @@ public class Graph {
 		return unvisitedNodes.get(destinationNodeId);
 	}
 	
+	
+	
 	//Method to get the Diameter of a Graph
 	public double getDiameter() { 
 		if(!isGraphConnected()){
@@ -182,6 +199,36 @@ public class Graph {
 		return maxShortestPath;
 	}
 	
+
+	
+	// Calculate all shortestPaths and put them into a multiMap
+	// return multiMap to forward them to the GraphWriter for further processing
+	public MultiValuedMap<Integer, ArrayList<Integer>> getAllShortestPaths() {
+		
+		// MultiMap consists of:
+		//	keys = source node ID's
+		//	values = two ArrayLists containing:
+		//		1. ArrayList = Target node ID's
+		//		2. ArrayList = Shortest path calculation results
+		
+		for(int i = 0; i < getNodeCount(); i++) {
+			for(int n = i; n < getNodeCount(); n++) {
+				ArrayList<Integer> targetNodes = new ArrayList<Integer>();
+			    ArrayList<Integer> spResults = new ArrayList<Integer>();
+				
+				targetNodes.add(n);
+				spResults.add((int) shortestPath(i,n));
+				
+			    // Put both ArrayLists into multiMap for same key
+				shortestPathsMap.put(i, targetNodes );
+				shortestPathsMap.put(i, spResults);
+			}
+		}
+		
+		return shortestPathsMap;
+	}
+
+		
 	
 	@Override
 	public String toString() {
