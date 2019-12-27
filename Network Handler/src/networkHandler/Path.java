@@ -1,7 +1,8 @@
 package networkHandler;
 import java.util.ArrayList;
 
-public class Path {
+//	Note: this class has a natural ordering that is inconsistent with equals.
+public class Path implements Comparable<Path>{
 	
 //	Attributes
 	
@@ -69,6 +70,19 @@ public class Path {
 	//	length of path
 	public	double	getLength() {
 		return length;
+	}
+
+	@Override
+	public int compareTo(Path that) {
+		if(this.length == that.length) {
+			return 0;
+		}else {
+			if(this.length < that.length) {
+				return -1;
+			}else {
+				return 1;
+			}
+		}
 	}
 	
 	
