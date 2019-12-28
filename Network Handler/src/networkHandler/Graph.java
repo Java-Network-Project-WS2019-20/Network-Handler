@@ -461,6 +461,25 @@ public class Graph {
 		return paths;
 	}
 	
+	/*	Method to calculate the shortest paths between all Nodes by using Dijkstra's algorithm
+	 *	Returns a list of paths sorted by initial node first, destination node second
+	 */
+	public ArrayList<Path> shortestPaths(){
+		//	initialize list of all paths
+		ArrayList<Path> allPaths = new ArrayList<Path>();
+		
+		//	iterate over the list of nodes
+		for(int i = 0; i < getNodeCount(); i++) {
+			//	get list of all shortest paths with node i as initial node
+			ArrayList<Path> pathsOfI = shortestPaths(i);
+			//	add paths to list of all paths
+			pathsOfI.forEach(path -> allPaths.add(path));
+		}
+		
+		//	return the list of all paths
+		return allPaths;
+	}
+	
 	//Method to get the Diameter of a Graph
 	public double getDiameter() { 
 		if(!isGraphConnected()){
