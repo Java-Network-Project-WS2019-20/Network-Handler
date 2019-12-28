@@ -387,10 +387,7 @@ public class Graph {
 		//	create a path object for each node
 		for(int destinationNodeId = 0; destinationNodeId < getNodeCount(); destinationNodeId++) {
 			//	check if destination is also initial node
-			if(destinationNodeId == initialNodeId) {
-				//	if initial and destination node are the same, a null value is added to the list
-				paths.add(null);
-			}else {
+			if(destinationNodeId != initialNodeId) {
 				//	initialize list of Nodes on the path represented by their IDs
 				ArrayList<Integer> NodesOnPath = new ArrayList<Integer>();
 				//	initialize list of Edges on the path represented by their IDs
