@@ -104,20 +104,35 @@ public class Graph {
 	 *	Returns the length of the path as a double value
 	 *	Returns Infinity, if no path exists
 	*/
-	public double shortestPath(int initialNodeId, int destinationNodeId) {
-		//	Initialize an adjacency matrix for the graph
-		double[][] connections = new double[getNodeCount()][getNodeCount()];
+	public Path shortestPath(int initialNodeId, int destinationNodeId) {
+		
+		/*	Initialize an adjacency matrix for the graph
+		 * 	This matrix stores the Edge IDs of corresponding Nodes
+		 * 	A positive (>= 0) entry shows an existing Edge between Nodes
+		 */
+		int[][] connections = new int[getNodeCount()][getNodeCount()];
+		
+		/*	Fill the matrix with value -1
+		 * 	This step of initialization is necessary, since the standard initialization value of 0 would be a valid entry
+		 * 	-1 is therefore used to mark "empty" entries
+		 */
+		for(int i = 0; i < getNodeCount(); i++) {
+			for(int j = 0; j < getNodeCount(); j++) {
+				connections[i][j] = -1;
+			}
+		}
+		
 		//	Fill the adjacency matrix by iterating over the list of edges
 		for(int i = 0; i < getEdgeCount(); i++) {
 			//	Get necessary values (source Node/target Node/weight) from next edge
 			Edge	edge	= edgeList.get(i);
 			int		source	= edge.getSource();
 			int		target	= edge.getTarget();
-			double	weight	= edge.getWeight();
 			//	Write values into adjacency matrix
-			connections[source][target] = weight;
-			connections[target][source] = weight;
+			connections[source][target] = i;
+			connections[target][source] = i;
 		}
+		
 		/*	Initialize Map of unvisited Nodes 
 		 *	Keys are the Map IDs
 		 *	Values are the distances from the initial Node
@@ -125,7 +140,7 @@ public class Graph {
 		TreeMap<Integer, Double> unvisitedNodes = new TreeMap<>();
 		
 		/*	Fill Map 
-		 *	values are infinity, except for the initial node, which has value 0
+		 *	values are set to infinity, except for the initial node, which has value 0
 		 */
 		for(int i = 0; i < getNodeCount(); i++) {
 			if(i == initialNodeId) {
@@ -134,6 +149,13 @@ public class Graph {
 				unvisitedNodes.put(i, Double.POSITIVE_INFINITY);
 			}
 		}
+		
+		/*	Initialize Map of parent Nodes
+		 * 	The parent Node means the Node right before on the path
+		 * 	Keys are the Nodes
+		 * 	Values are the parent Nodes
+		 */
+		TreeMap<Integer,Integer> parentNodes = new TreeMap<>();
 		
 		//	initialize current node
 		int currentNodeId = initialNodeId;
@@ -146,23 +168,32 @@ public class Graph {
 			//	iterate over the adjacency matrix to find connected nodes
 			for(int i = 0; i < getNodeCount(); i++) {
 				//	check whether a node is connected and unvisited
-				if((connections[currentNodeId][i] > 0) && unvisitedNodes.containsKey(i)) {
+				if((connections[currentNodeId][i] > -1) && unvisitedNodes.containsKey(i)) {
+					//	get connecting edge
+					Edge currentEdge = edgeList.get(connections[currentNodeId][i]);
+					//	get weight of edge
+					double weight = currentEdge.getWeight();
 					// 	calculate tentative distance to neighbor node
-					double tentativeDistance = unvisitedNodes.get(currentNodeId) + connections[currentNodeId][i];
+					double tentativeDistance = unvisitedNodes.get(currentNodeId) + weight;
 					//	compare current distance of neighbor node with tentative distance over current node
 					if(tentativeDistance < unvisitedNodes.get(i)) {
 						//	if tentative distance is smaller than current distance, replace current distance
 						unvisitedNodes.put(i, tentativeDistance);
+						//	add/replace entry for parent node
+						parentNodes.put(i, currentNodeId);
 					}
 				}
 			}
+			
 			//	remove current node from Map
 			unvisitedNodes.remove(currentNodeId);
+		
 			//	search next node, which has the smallest current distance
 			
 			//	initialize "iterator"
 			int	nextNodeId = unvisitedNodes.firstKey();
 			currentNodeId	= nextNodeId;
+			
 			//	iterate over the map keys
 			for(int i = 0; i < unvisitedNodes.size() - 1; i++) {
 				//	set next Node (to compare) to next higher key
@@ -175,8 +206,77 @@ public class Graph {
 			}
 			
 		}
-		//	return the distance of the destination Node
-		return unvisitedNodes.get(destinationNodeId);
+		
+		//	create return value
+		
+		//	initialize list of Nodes on the path represented by their IDs
+		ArrayList<Integer> NodesOnPath = new ArrayList<Integer>();
+		//	initialize list of Edges on the path represented by their IDs
+		ArrayList<Integer> EdgesOnPath = new ArrayList<Integer>();
+		//	get the calculated length of the path
+		double length = unvisitedNodes.get(destinationNodeId);
+		/*	check the length
+		 * 	a value of infinity means there exists no path between the nodes
+		 */
+		if(length != Double.POSITIVE_INFINITY) {
+			//	if the nodes have a path between them, a corresponding path object is created
+			
+			//	create the list of Nodes on the path
+			
+			/*	initialize a temporary list of the nodes
+			 * 	since the parent node represents the Node before a Node on a path, the path is build backwards first
+			 */
+			ArrayList<Integer> NodesOnPathTemp = new ArrayList<Integer>();
+			//	add the destination node as start
+			NodesOnPathTemp.add(destinationNodeId);
+			//	initialize the next node to check for a parent node
+			int nextNode = destinationNodeId;
+			//	follow parent nodes to the initial node
+			while(nextNode != initialNodeId) {
+				//	get parent node Id
+				int parentId = parentNodes.get(nextNode);
+				//	add parent node to list of nodes on path
+				NodesOnPathTemp.add(parentId);
+				//	set next Node to current parent Node
+				nextNode = parentId;
+			}
+			//	fill list with Node IDs in correct order
+			for(int i = NodesOnPathTemp.size() - 1; i >= 0; i--) {
+				NodesOnPath.add(NodesOnPathTemp.get(i));
+			}
+			
+			//	create list of edges on the path
+			
+			//	iterate over the list of nodes to get corresponding edges
+			for(int i = 0; i < NodesOnPath.size() - 1; i++) {
+				//	get Node IDs
+				int nodeId1 = NodesOnPath.get(i);
+				int nodeId2 = NodesOnPath.get(i+1);
+				//	find Edge ID in adjacency matrix
+				int edgeId = connections[nodeId1][nodeId2];
+				//	add edge to list 
+				EdgesOnPath.add(edgeId);
+			}
+			
+
+		}else {
+			/*	if there is no path between the nodes,
+			 *	the list of Nodes only contains the initial and the destination Node.
+			 *	The list of Edges is empty.
+			 *	The length is set to infinity.
+			 */
+
+			//	add initial Node ID to the list
+			NodesOnPath.add(initialNodeId);
+			//	add destination Node ID to the list
+			NodesOnPath.add(destinationNodeId);
+			
+		}
+		//	create Path Object
+		Path path = new Path(NodesOnPath, EdgesOnPath, length);
+		//	return result
+		return path;
+		
 	}
 	
 	
