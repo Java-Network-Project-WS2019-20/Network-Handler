@@ -480,6 +480,7 @@ public class Graph {
 		return allPaths;
 	}
 	
+	//	TODO remove/change (old) method implementation
 	/* old implementation of getDiameter
 	 * this was not usable with the new version of the shortestPath method
 	 
