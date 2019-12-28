@@ -534,12 +534,14 @@ public class Graph {
 		//		2. ArrayList = Shortest path calculation results
 		
 		for(int i = 0; i < getNodeCount(); i++) {
-			for(int n = i; n < getNodeCount(); n++) {
+			ArrayList<Path> paths = shortestPaths(i);
+			for(int n = i + 1; n < getNodeCount(); n++) {
 				ArrayList<Integer> targetNodes = new ArrayList<Integer>();
 			    ArrayList<Integer> spResults = new ArrayList<Integer>();
 				
 				targetNodes.add(n);
-				spResults.add((int) shortestPath(i,n));
+				int length = (int) paths.get(n-1).getLength();
+				spResults.add(length);
 				
 			    // Put both ArrayLists into multiMap for same key
 				shortestPathsMap.put(i, targetNodes );
