@@ -480,6 +480,9 @@ public class Graph {
 		return allPaths;
 	}
 	
+	/* old implementation of getDiameter
+	 * this was not usable with the new version of the shortestPath method
+	 
 	//Method to get the Diameter of a Graph
 	public double getDiameter() { 
 		if(!isGraphConnected()){
@@ -497,8 +500,33 @@ public class Graph {
 		}
 		return maxShortestPath;
 	}
+	*/
+	//	Method to get the Diameter of the graph
+	public double	getDiameter() {
+		//	check for connectivity of the graph
+		if(!isGraphConnected()) {
+			/*	if the graph is not connected, the diameter is defined as infinite
+			 * therefore infinity is returned
+			 */
+			return Double.POSITIVE_INFINITY;
+		}else {
+			//	get list of shortest paths
+			ArrayList<Path> paths = shortestPaths();
+			//	initialize longest path in list with first path in list
+			Path longestPath = paths.get(0);
+			//	iterate over list of paths
+			for(int i = 1; i < paths.size(); i++) {
+				//	compare i-th path to current longest path
+				if(paths.get(i).compareTo(longestPath) > 0) {
+					//	if the i-th path is longer, replace the current longest path
+					longestPath = paths.get(i);
+				}
+			}
+			//	return length of longest path
+			return longestPath.getLength();
+		}
+	}
 	
-
 	
 	// Calculate all shortestPaths and put them into a multiMap
 	// return multiMap to forward them to the GraphWriter for further processing
