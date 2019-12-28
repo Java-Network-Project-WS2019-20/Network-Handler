@@ -58,8 +58,9 @@ public class Main {
 						System.out.println( "Shortest Path between: "
 								+ clHandler.getShortestPathNodeIDs()[0] + " and "
 								+ clHandler.getShortestPathNodeIDs()[1] + " = "
-								+ G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]));
+								+ G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]).getLength());
 					}
+			
 				// if user provides non existing Node ID's:
 				} catch (NoSuchElementException nsee) {
 					System.out.println("ERROR: Can not calculate shortest path."

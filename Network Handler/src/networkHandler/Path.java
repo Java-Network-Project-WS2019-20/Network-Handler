@@ -26,7 +26,9 @@ public class Path implements Comparable<Path>{
 	
 	//	given all values
 	Path(ArrayList<Integer> nodes, ArrayList<Integer> edges, double length){
+		this.nodes = new ArrayList<Integer>();
 		this.nodes.addAll(nodes);
+		this.edges = new ArrayList<Integer>();
 		this.edges.addAll(edges);
 		this.length = length;
 	}

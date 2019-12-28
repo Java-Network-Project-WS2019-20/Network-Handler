@@ -201,9 +201,9 @@ public class Graph {
 		//	create return value
 		
 		//	initialize list of Nodes on the path represented by their IDs
-		ArrayList<Integer> NodesOnPath = new ArrayList<Integer>();
+		ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
 		//	initialize list of Edges on the path represented by their IDs
-		ArrayList<Integer> EdgesOnPath = new ArrayList<Integer>();
+		ArrayList<Integer> edgesOnPath = new ArrayList<Integer>();
 		//	get the calculated length of the path
 		double length = unvisitedNodes.get(destinationNodeId);
 		/*	check the length
@@ -217,9 +217,9 @@ public class Graph {
 			/*	initialize a temporary list of the nodes
 			 * 	since the parent node represents the Node before a Node on a path, the path is build backwards first
 			 */
-			ArrayList<Integer> NodesOnPathTemp = new ArrayList<Integer>();
+			ArrayList<Integer> nodesOnPathTemp = new ArrayList<Integer>();
 			//	add the destination node as start
-			NodesOnPathTemp.add(destinationNodeId);
+			nodesOnPathTemp.add(destinationNodeId);
 			//	initialize the next node to check for a parent node
 			int nextNode = destinationNodeId;
 			//	follow parent nodes to the initial node
@@ -227,26 +227,26 @@ public class Graph {
 				//	get parent node Id
 				int parentId = parentNodes.get(nextNode);
 				//	add parent node to list of nodes on path
-				NodesOnPathTemp.add(parentId);
+				nodesOnPathTemp.add(parentId);
 				//	set next Node to current parent Node
 				nextNode = parentId;
 			}
 			//	fill list with Node IDs in correct order
-			for(int i = NodesOnPathTemp.size() - 1; i >= 0; i--) {
-				NodesOnPath.add(NodesOnPathTemp.get(i));
+			for(int i = nodesOnPathTemp.size() - 1; i >= 0; i--) {
+				nodesOnPath.add(nodesOnPathTemp.get(i));
 			}
 			
 			//	create list of edges on the path
 			
 			//	iterate over the list of nodes to get corresponding edges
-			for(int i = 0; i < NodesOnPath.size() - 1; i++) {
+			for(int i = 0; i < nodesOnPath.size() - 1; i++) {
 				//	get Node IDs
-				int nodeId1 = NodesOnPath.get(i);
-				int nodeId2 = NodesOnPath.get(i+1);
+				int nodeId1 = nodesOnPath.get(i);
+				int nodeId2 = nodesOnPath.get(i+1);
 				//	find Edge ID in adjacency matrix
 				int edgeId = connections[nodeId1][nodeId2];
 				//	add edge to list 
-				EdgesOnPath.add(edgeId);
+				edgesOnPath.add(edgeId);
 			}
 			
 
@@ -258,13 +258,13 @@ public class Graph {
 			 */
 
 			//	add initial Node ID to the list
-			NodesOnPath.add(initialNodeId);
+			nodesOnPath.add(initialNodeId);
 			//	add destination Node ID to the list
-			NodesOnPath.add(destinationNodeId);
+			nodesOnPath.add(destinationNodeId);
 			
 		}
 		//	create Path Object
-		Path path = new Path(NodesOnPath, EdgesOnPath, length);
+		Path path = new Path(nodesOnPath, edgesOnPath, length);
 		//	return result
 		return path;
 		
@@ -303,10 +303,16 @@ public class Graph {
 		}
 		
 		/*	Initialize Map of unvisited Nodes 
-		 *	Keys are the Map IDs
+		 *	Keys are the Node IDs
 		 *	Values are the distances from the initial Node
 		 */
 		TreeMap<Integer, Double> unvisitedNodes = new TreeMap<>();
+		
+		/*	Initialize Map of visited Nodes
+		 * 	Keys are the Node IDs
+		 * 	Values are the calculated distances from the initial Node
+		 */
+		TreeMap<Integer, Double> visitedNodes = new TreeMap<>();
 		
 		/*	Fill Map 
 		 *	values are set to infinity, except for the initial node, which has value 0
@@ -329,8 +335,8 @@ public class Graph {
 		//	initialize current node
 		int currentNodeId = initialNodeId;
 		
-		//	run trough Dijkstra's Algorithm until there are no more Nodes to check (no path possible)
-		while(unvisitedNodes.get(currentNodeId) != Double.POSITIVE_INFINITY) {
+		//	run trough Dijkstra's Algorithm until there are no more Nodes to check or only nodes where no path is possible
+		while(!unvisitedNodes.isEmpty() && unvisitedNodes.get(currentNodeId) != Double.POSITIVE_INFINITY) {
 			//	iterate over the adjacency matrix to find connected nodes
 			for(int i = 0; i < getNodeCount(); i++) {
 				//	check whether a node is connected and unvisited
@@ -351,26 +357,30 @@ public class Graph {
 				}
 			}
 			
-			//	remove current node from Map
+			//	add current node to map of visited nodes
+			visitedNodes.put(currentNodeId, unvisitedNodes.get(currentNodeId));
+			//	remove current node from map of unvisited nodes
 			unvisitedNodes.remove(currentNodeId);
-		
+			
 			//	search next node, which has the smallest current distance
 			
-			//	initialize "iterator"
-			int	nextNodeId = unvisitedNodes.firstKey();
-			currentNodeId	= nextNodeId;
-			
-			//	iterate over the map keys
-			for(int i = 0; i < unvisitedNodes.size() - 1; i++) {
-				//	set next Node (to compare) to next higher key
-				nextNodeId = unvisitedNodes.higherKey(nextNodeId);	
-				//	compare values of next Node to current (smallest distance) node
-				if(unvisitedNodes.get(currentNodeId) > unvisitedNodes.get(nextNodeId)) {
-					//	replace current node by node with smaller distance
-					currentNodeId = nextNodeId;
+			//	ensure existence of another node to check
+			if(!unvisitedNodes.isEmpty()) {
+				//	initialize "iterator"
+				int	nextNodeId = unvisitedNodes.firstKey();
+				currentNodeId	= nextNodeId;
+				
+				//	iterate over the map keys
+				for(int i = 0; i < unvisitedNodes.size() - 1; i++) {
+					//	set next Node (to compare) to next higher key
+					nextNodeId = unvisitedNodes.higherKey(nextNodeId);	
+					//	compare values of next Node to current (smallest distance) node
+					if(unvisitedNodes.get(currentNodeId) > unvisitedNodes.get(nextNodeId)) {
+						//	replace current node by node with smaller distance
+						currentNodeId = nextNodeId;
+					}
 				}
 			}
-			
 		}
 		
 		//	create return value
@@ -383,11 +393,11 @@ public class Graph {
 			//	check if destination is also initial node
 			if(destinationNodeId != initialNodeId) {
 				//	initialize list of Nodes on the path represented by their IDs
-				ArrayList<Integer> NodesOnPath = new ArrayList<Integer>();
+				ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
 				//	initialize list of Edges on the path represented by their IDs
-				ArrayList<Integer> EdgesOnPath = new ArrayList<Integer>();
+				ArrayList<Integer> edgesOnPath = new ArrayList<Integer>();
 				//	get the calculated length of the path
-				double length = unvisitedNodes.get(destinationNodeId);
+				double length = visitedNodes.get(destinationNodeId);
 				/*	check the length
 				 * 	a value of infinity means there exists no path between the nodes
 				 */
@@ -399,9 +409,9 @@ public class Graph {
 					/*	initialize a temporary list of the nodes
 					 * 	since the parent node represents the Node before a Node on a path, the path is build backwards first
 					 */
-					ArrayList<Integer> NodesOnPathTemp = new ArrayList<Integer>();
+					ArrayList<Integer> nodesOnPathTemp = new ArrayList<Integer>();
 					//	add the destination node as start
-					NodesOnPathTemp.add(destinationNodeId);
+					nodesOnPathTemp.add(destinationNodeId);
 					//	initialize the next node to check for a parent node
 					int nextNode = destinationNodeId;
 					//	follow parent nodes to the initial node
@@ -409,26 +419,26 @@ public class Graph {
 						//	get parent node Id
 						int parentId = parentNodes.get(nextNode);
 						//	add parent node to list of nodes on path
-						NodesOnPathTemp.add(parentId);
+						nodesOnPathTemp.add(parentId);
 						//	set next Node to current parent Node
 						nextNode = parentId;
 					}
 					//	fill list with Node IDs in correct order
-					for(int i = NodesOnPathTemp.size() - 1; i >= 0; i--) {
-						NodesOnPath.add(NodesOnPathTemp.get(i));
+					for(int i = nodesOnPathTemp.size() - 1; i >= 0; i--) {
+						nodesOnPath.add(nodesOnPathTemp.get(i));
 					}
 					
 					//	create list of edges on the path
 					
 					//	iterate over the list of nodes to get corresponding edges
-					for(int i = 0; i < NodesOnPath.size() - 1; i++) {
+					for(int i = 0; i < nodesOnPath.size() - 1; i++) {
 						//	get Node IDs
-						int nodeId1 = NodesOnPath.get(i);
-						int nodeId2 = NodesOnPath.get(i+1);
+						int nodeId1 = nodesOnPath.get(i);
+						int nodeId2 = nodesOnPath.get(i+1);
 						//	find Edge ID in adjacency matrix
 						int edgeId = connections[nodeId1][nodeId2];
 						//	add edge to list 
-						EdgesOnPath.add(edgeId);
+						edgesOnPath.add(edgeId);
 					}
 					
 		
@@ -440,13 +450,13 @@ public class Graph {
 					 */
 		
 					//	add initial Node ID to the list
-					NodesOnPath.add(initialNodeId);
+					nodesOnPath.add(initialNodeId);
 					//	add destination Node ID to the list
-					NodesOnPath.add(destinationNodeId);
+					nodesOnPath.add(destinationNodeId);
 					
 				}
 				//	create Path Object
-				Path path = new Path(NodesOnPath, EdgesOnPath, length);
+				Path path = new Path(nodesOnPath, edgesOnPath, length);
 				//	add path to list of paths
 				paths.add(path);
 			}
