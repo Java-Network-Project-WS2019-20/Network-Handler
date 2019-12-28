@@ -72,8 +72,12 @@ public class Path implements Comparable<Path>{
 		return length;
 	}
 
-	@Override
-	public int compareTo(Path that) {
+//	comparing methods
+	
+	/*	compare Paths by length
+	 *	equality in this respect does not correspond to equality of Paths
+	 */
+	public	int		compareTo(Path that) {
 		if(this.length == that.length) {
 			return 0;
 		}else {
@@ -85,5 +89,17 @@ public class Path implements Comparable<Path>{
 		}
 	}
 	
+	//	method to check equality of Paths
+	public	boolean	equals(Path that) {
+		if(this.length == that.length && this.getNumberOfEdges() == that.getNumberOfEdges() && this.getNumberOfNodes() == that.getNumberOfNodes()) {
+			if(this.nodes.containsAll(that.nodes) && this.edges.containsAll(that.edges)) {
+				return true;
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
 	
 }
