@@ -11,7 +11,6 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
-	private MultiValuedMap<Integer, ArrayList<Integer>> shortestPathsMap = new ArrayListValuedHashMap<>();
 
 	
 	// Constructor
@@ -19,11 +18,6 @@ public class Graph {
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
 	}
-	
-	
-	// getter shortestPathsMap
-	public MultiValuedMap<Integer, ArrayList<Integer>> getShortestPathsMap() { return shortestPathsMap; }
-
 	
 	public int getNodeCount() {
 		return nodeList.size();
@@ -532,7 +526,7 @@ public class Graph {
 	// Calculate all shortestPaths and put them into a multiMap
 	// return multiMap to forward them to the GraphWriter for further processing
 	public MultiValuedMap<Integer, ArrayList<Integer>> getAllShortestPaths() {
-		
+		MultiValuedMap<Integer, ArrayList<Integer>> shortestPathsMap = new ArrayListValuedHashMap<>();
 		// MultiMap consists of:
 		//	keys = source node ID's
 		//	values = two ArrayLists containing:
