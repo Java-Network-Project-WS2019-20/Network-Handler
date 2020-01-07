@@ -12,25 +12,39 @@ public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
 	private MultiValuedMap<Integer, ArrayList<Integer>> shortestPathsMap = new ArrayListValuedHashMap<>();
-
+	private int numberOfNodes;
+	private int numberOfEdges;
+	private boolean connectivity;
+	private double diameter;
 	
 	// Constructor
 	Graph (ArrayList<Edge> EdgeList, ArrayList<Node> NodeList){
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
+		this.numberOfNodes = NodeList.size();
+		this.numberOfEdges = EdgeList.size();
+		this.connectivity = this.isGraphConnected();
+		this.diameter = this.diameter();
+		this.getAllShortestPaths();
 	}
-	
 	
 	// getter shortestPathsMap
 	public MultiValuedMap<Integer, ArrayList<Integer>> getShortestPathsMap() { return shortestPathsMap; }
 
-	
 	public int getNodeCount() {
-		return nodeList.size();
+		return numberOfNodes;
 	}
 	
 	public int getEdgeCount() {
-		return edgeList.size();
+		return numberOfEdges;
+	}
+	
+	public boolean getConnectivity() {
+		return connectivity;
+	}
+	
+	public double getDiameter() {
+		return diameter;
 	}
 	
 	public void printAllNodes() {
@@ -46,8 +60,6 @@ public class Graph {
 		}
 		System.out.println(sb);
 	}
-	
-	
 	
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
@@ -70,8 +82,8 @@ public class Graph {
 		// A linked list of all adjacent Nodes for each Node
 		// Size of array is the number of Nodes
 		LinkedList<Integer>[] adjListArray = new LinkedList[getNodeCount()];
-
-
+		
+		
 		// Create a new list for each Node
 		// so that adjacent nodes can be stored
 		for (int i = 0; i < getNodeCount(); i++) {
@@ -98,12 +110,11 @@ public class Graph {
 		return true;
 	}
 	
-	
-	
 	/*	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
 	 *	Returns the length of the path as a double value
 	 *	Returns Infinity, if no path exists
 	*/
+	
 	public double shortestPath(int initialNodeId, int destinationNodeId) {
 		//	Initialize an adjacency matrix for the graph
 		double[][] connections = new double[getNodeCount()][getNodeCount()];
@@ -179,10 +190,8 @@ public class Graph {
 		return unvisitedNodes.get(destinationNodeId);
 	}
 	
-	
-	
 	//Method to get the Diameter of a Graph
-	public double getDiameter() { 
+	public double diameter() { 
 		if(!isGraphConnected()){
 			return Double.POSITIVE_INFINITY;
 		}
@@ -198,8 +207,6 @@ public class Graph {
 		}
 		return maxShortestPath;
 	}
-	
-
 	
 	// Calculate all shortestPaths and put them into a multiMap
 	// return multiMap to forward them to the GraphWriter for further processing
