@@ -83,6 +83,21 @@ public class Path implements Comparable<Path>{
 		return length;
 	}
 
+//	setter methods
+	
+	//	set length
+	public	void	setLength(double length) {
+		this.length = length;
+	}
+	
+	//	extend the path with another node
+	public	void	extend(double length, int NodeId) {
+		//	set new path length
+		this.setLength(length);
+		//	add Node ID to list
+		this.nodes.add(NodeId);
+	}
+	
 //	comparing methods
 	
 	/*	compare Paths by length
