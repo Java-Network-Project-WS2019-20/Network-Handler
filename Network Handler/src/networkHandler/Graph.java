@@ -28,7 +28,6 @@ public class Graph {
 		this.numberOfEdges = EdgeList.size();
 		this.connectivity = this.isGraphConnected();
 		this.diameter = this.diameter();
-		this.getAllShortestPaths();
 	}
 	
 	public int getNodeCount() {
