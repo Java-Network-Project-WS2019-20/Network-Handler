@@ -1,9 +1,12 @@
 package networkHandler;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -264,7 +267,8 @@ public class Graph {
 			
 		}
 		//	create Path Object
-		Path path = new Path(nodesOnPath, edgesOnPath, length);
+		//	TODO fix path construction
+		Path path = new Path(nodesOnPath, /*edgesOnPath,*/ length);
 		//	return result
 		return path;
 		
@@ -306,76 +310,83 @@ public class Graph {
 		 *	Keys are the Node IDs
 		 *	Values are the distances from the initial Node
 		 */
-		TreeMap<Integer, Double> unvisitedNodes = new TreeMap<>();
+		TreeMap<Integer, Double> unvisitedNodesMap = new TreeMap<>();
 		
 		/*	Initialize Map of visited Nodes
 		 * 	Keys are the Node IDs
 		 * 	Values are the calculated distances from the initial Node
 		 */
-		TreeMap<Integer, Double> visitedNodes = new TreeMap<>();
+		TreeMap<Integer, Double> visitedNodesMap = new TreeMap<>();
 		
 		/*	Fill Map 
 		 *	values are set to infinity, except for the initial node, which has value 0
 		 */
 		for(int i = 0; i < getNodeCount(); i++) {
 			if(i == initialNodeId) {
-				unvisitedNodes.put(i, (double)0);
+				unvisitedNodesMap.put(i, (double)0);
 			}else {
-				unvisitedNodes.put(i, Double.POSITIVE_INFINITY);
+				unvisitedNodesMap.put(i, Double.POSITIVE_INFINITY);
 			}
 		}
 		
 		/*	Initialize Map of parent Nodes
 		 * 	The parent Node means the Node right before on the path
 		 * 	Keys are the Nodes
-		 * 	Values are the parent Nodes
+		 * 	Values are the (lists of) parent Nodes
 		 */
-		TreeMap<Integer,Integer> parentNodes = new TreeMap<>();
+		TreeMap<Integer,TreeSet<Integer>> parentNodesMap = new TreeMap<>();
 		
 		//	initialize current node
 		int currentNodeId = initialNodeId;
 		
 		//	run trough Dijkstra's Algorithm until there are no more Nodes to check or only nodes where no path is possible
-		while(!unvisitedNodes.isEmpty() && unvisitedNodes.get(currentNodeId) != Double.POSITIVE_INFINITY) {
+		while(!unvisitedNodesMap.isEmpty() && unvisitedNodesMap.get(currentNodeId) != Double.POSITIVE_INFINITY) {
 			//	iterate over the adjacency matrix to find connected nodes
 			for(int i = 0; i < getNodeCount(); i++) {
 				//	check whether a node is connected and unvisited
-				if((connections[currentNodeId][i] > -1) && unvisitedNodes.containsKey(i)) {
+				if((connections[currentNodeId][i] > -1) && unvisitedNodesMap.containsKey(i)) {
 					//	get connecting edge
 					Edge currentEdge = edgeList.get(connections[currentNodeId][i]);
 					//	get weight of edge
 					double weight = currentEdge.getWeight();
 					// 	calculate tentative distance to neighbor node
-					double tentativeDistance = unvisitedNodes.get(currentNodeId) + weight;
+					double tentativeDistance = unvisitedNodesMap.get(currentNodeId) + weight;
 					//	compare current distance of neighbor node with tentative distance over current node
-					if(tentativeDistance < unvisitedNodes.get(i)) {
+					if(tentativeDistance < unvisitedNodesMap.get(i)) {
 						//	if tentative distance is smaller than current distance, replace current distance
-						unvisitedNodes.put(i, tentativeDistance);
-						//	add/replace entry for parent node
-						parentNodes.put(i, currentNodeId);
+						unvisitedNodesMap.put(i, tentativeDistance);
+						//	add/replace entry for parent node List
+						TreeSet<Integer> parents = new TreeSet<Integer>();
+						parents.add(currentNodeId);
+						parentNodesMap.put(i, parents);
+					}
+					if(tentativeDistance == unvisitedNodesMap.get(i)) {
+						//	if tentative distance is equal to the current distance, another possible parent is found an added to the list of parents
+						TreeSet<Integer> parents = parentNodesMap.get(i);
+						parents.add(currentNodeId);
 					}
 				}
 			}
 			
 			//	add current node to map of visited nodes
-			visitedNodes.put(currentNodeId, unvisitedNodes.get(currentNodeId));
+			visitedNodesMap.put(currentNodeId, unvisitedNodesMap.get(currentNodeId));
 			//	remove current node from map of unvisited nodes
-			unvisitedNodes.remove(currentNodeId);
+			unvisitedNodesMap.remove(currentNodeId);
 			
 			//	search next node, which has the smallest current distance
 			
 			//	ensure existence of another node to check
-			if(!unvisitedNodes.isEmpty()) {
+			if(!unvisitedNodesMap.isEmpty()) {
 				//	initialize "iterator"
-				int	nextNodeId = unvisitedNodes.firstKey();
+				int	nextNodeId = unvisitedNodesMap.firstKey();
 				currentNodeId	= nextNodeId;
 				
 				//	iterate over the map keys
-				for(int i = 0; i < unvisitedNodes.size() - 1; i++) {
+				for(int i = 0; i < unvisitedNodesMap.size() - 1; i++) {
 					//	set next Node (to compare) to next higher key
-					nextNodeId = unvisitedNodes.higherKey(nextNodeId);	
+					nextNodeId = unvisitedNodesMap.higherKey(nextNodeId);	
 					//	compare values of next Node to current (smallest distance) node
-					if(unvisitedNodes.get(currentNodeId) > unvisitedNodes.get(nextNodeId)) {
+					if(unvisitedNodesMap.get(currentNodeId) > unvisitedNodesMap.get(nextNodeId)) {
 						//	replace current node by node with smaller distance
 						currentNodeId = nextNodeId;
 					}
@@ -383,86 +394,67 @@ public class Graph {
 			}
 		}
 		
-		//	create return value
+	/*	Initialize map of child Nodes
+	 * 	While the parents represent the node before on the path, children represent the next node on the path
+	 * 	This Map behaves inversely to the mapping of parents
+	 * 	The parents are the keys, the lists of children are the values
+	 * 	this mapping is required for easier recursive creation of the path objects
+	 */
+		TreeMap<Integer, TreeSet<Integer>> childNodesMap = new TreeMap<>();
 		
-		//	initialize list of paths
-		ArrayList<Path> paths = new ArrayList<Path>();
-		
-		//	create a path object for each node
-		for(int destinationNodeId = 0; destinationNodeId < getNodeCount(); destinationNodeId++) {
-			//	check if destination is also initial node
-			if(destinationNodeId != initialNodeId) {
-				//	initialize list of Nodes on the path represented by their IDs
-				ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
-				//	initialize list of Edges on the path represented by their IDs
-				ArrayList<Integer> edgesOnPath = new ArrayList<Integer>();
-				//	get the calculated length of the path
-				double length = visitedNodes.get(destinationNodeId);
-				/*	check the length
-				 * 	a value of infinity means there exists no path between the nodes
-				 */
-				if(length != Double.POSITIVE_INFINITY) {
-					//	if the nodes have a path between them, a corresponding path object is created
-					
-					//	create the list of Nodes on the path
-					
-					/*	initialize a temporary list of the nodes
-					 * 	since the parent node represents the Node before a Node on a path, the path is build backwards first
-					 */
-					ArrayList<Integer> nodesOnPathTemp = new ArrayList<Integer>();
-					//	add the destination node as start
-					nodesOnPathTemp.add(destinationNodeId);
-					//	initialize the next node to check for a parent node
-					int nextNode = destinationNodeId;
-					//	follow parent nodes to the initial node
-					while(nextNode != initialNodeId) {
-						//	get parent node Id
-						int parentId = parentNodes.get(nextNode);
-						//	add parent node to list of nodes on path
-						nodesOnPathTemp.add(parentId);
-						//	set next Node to current parent Node
-						nextNode = parentId;
-					}
-					//	fill list with Node IDs in correct order
-					for(int i = nodesOnPathTemp.size() - 1; i >= 0; i--) {
-						nodesOnPath.add(nodesOnPathTemp.get(i));
-					}
-					
-					//	create list of edges on the path
-					
-					//	iterate over the list of nodes to get corresponding edges
-					for(int i = 0; i < nodesOnPath.size() - 1; i++) {
-						//	get Node IDs
-						int nodeId1 = nodesOnPath.get(i);
-						int nodeId2 = nodesOnPath.get(i+1);
-						//	find Edge ID in adjacency matrix
-						int edgeId = connections[nodeId1][nodeId2];
-						//	add edge to list 
-						edgesOnPath.add(edgeId);
-					}
-					
-		
-				}else {
-					/*	if there is no path between the nodes,
-					 *	the list of Nodes only contains the initial and the destination Node.
-					 *	The list of Edges is empty.
-					 *	The length is set to infinity.
-					 */
-		
-					//	add initial Node ID to the list
-					nodesOnPath.add(initialNodeId);
-					//	add destination Node ID to the list
-					nodesOnPath.add(destinationNodeId);
-					
+	//	fill map of child nodes
+		//	initialize iterator over set of keys(children) of map of parent nodes
+		Iterator<Integer> keySetIterator = parentNodesMap.keySet().iterator();
+		//	iterate over children
+		while(keySetIterator.hasNext()) {
+			//	set next child to check
+			int nextChildId = keySetIterator.next();
+			//	add entry in map of children for each parent of child
+			parentNodesMap.get(nextChildId).forEach(parentId -> {
+				//	check if key(parent) is already mapped
+				if(childNodesMap.containsKey(parentId)) {
+					//	if key(parent) is already mapped, add child to list of children
+					childNodesMap.get(parentId).add(nextChildId);
+				}else{
+					//	if key(parent) is not mapped, initialize list of children
+					TreeSet<Integer> childrenIds = new TreeSet<Integer>();
+					//	add first child to list
+					childrenIds.add(nextChildId);
+					//	map lit of children to parent
+					childNodesMap.put(parentId, childrenIds);
 				}
-				//	create Path Object
-				Path path = new Path(nodesOnPath, edgesOnPath, length);
-				//	add path to list of paths
-				paths.add(path);
-			}
+			});
 		}
-		//	return list of paths
-		return paths;
+		
+		ArrayList<Path> listOfAllPaths = createPaths(visitedNodesMap, childNodesMap, initialNodeId, new ArrayList<Path>());
+		return listOfAllPaths;
+
+	}
+	
+	public	ArrayList<Path>	createPaths(TreeMap<Integer, Double> mapOfDistances, TreeMap<Integer, TreeSet<Integer>> mapOfChildIds, int currentNodeId, ArrayList<Path> pathsToCurrentNode) {
+		ArrayList<Path> pathsEndingInCurrentNode = new ArrayList<Path>();
+		ArrayList<Path> pathsContainingCurrentNode;
+		if(pathsToCurrentNode.isEmpty()) {
+			ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
+			nodesOnPath.add(currentNodeId);
+			Path initialPath = new Path(nodesOnPath, 0);
+			pathsEndingInCurrentNode.add(initialPath);
+			pathsContainingCurrentNode = new ArrayList<Path>();
+		}else{
+			pathsToCurrentNode.forEach(path ->{
+				Path extendedPath = new Path(path);
+				extendedPath.extend(mapOfDistances.get(currentNodeId), currentNodeId);
+				pathsEndingInCurrentNode.add(extendedPath);
+			});
+			pathsContainingCurrentNode = new ArrayList<Path>(pathsEndingInCurrentNode);
+		}
+		
+		if (mapOfChildIds.containsKey(currentNodeId)) {
+			mapOfChildIds.get(currentNodeId).forEach(childId -> {
+				pathsContainingCurrentNode.addAll(createPaths(mapOfDistances, mapOfChildIds, childId, pathsEndingInCurrentNode));
+			});
+		}
+		return pathsContainingCurrentNode;
 	}
 	
 	/*	Method to calculate the shortest paths between all Nodes by using Dijkstra's algorithm
