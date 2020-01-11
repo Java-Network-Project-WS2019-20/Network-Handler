@@ -427,6 +427,21 @@ public class Graph {
 		}
 		//	call createPaths method to create all paths given the parent-child relation of the nodes
 		ArrayList<Path> listOfAllPaths = createPaths(visitedNodesMap, childNodesMap, initialNodeId, new ArrayList<Path>());
+		
+		/*	TODO: check if the following is actually necessary for the output. it does not make a difference for further calculations. diameter might depend on it but can also handle a check for connectivity instead
+		 * 	add paths for all not connected nodes
+		 * 	these paths have infinte length
+		 */
+		Iterator<Integer> unvisitedNodesIterator = unvisitedNodesMap.keySet().iterator();
+		while(unvisitedNodesIterator.hasNext()) {
+			int disconnectedNodeId = unvisitedNodesIterator.next();
+			ArrayList<Integer> pathNodeList = new ArrayList<Integer>();
+			pathNodeList.add(initialNodeId);
+			pathNodeList.add(disconnectedNodeId);
+			listOfAllPaths.add(new Path(pathNodeList, Double.POSITIVE_INFINITY));
+		}
+		
+		
 		//	return the resulting list of paths
 		return listOfAllPaths;
 
