@@ -277,7 +277,7 @@ public class Graph {
 	/*	Method to calculate the shortest paths between an initial Node and all other Nodes by using Dijkstra's algorithm
 	 * 	Returns a list of the paths, sorted by destination Node IDs
 	 */
-	public ArrayList<Path> shortestPaths(int initialNodeId){
+	public ArrayList<ArrayList<Path>> shortestPaths(int initialNodeId){
 
 		/*	Initialize an adjacency matrix for the graph
 		 * 	This matrix stores the Edge IDs of corresponding Nodes
@@ -441,9 +441,16 @@ public class Graph {
 			listOfAllPaths.add(new Path(pathNodeList, Double.POSITIVE_INFINITY));
 		}
 		
+		ArrayList<ArrayList<Path>> sortedListOfAllPaths = new ArrayList<ArrayList<Path>>();
+		for(int i = 0; i < getNodeCount(); i++) {
+			sortedListOfAllPaths.add(new ArrayList<Path>());
+		}
+		for(int i = 0; i < listOfAllPaths.size(); i++) {
+			sortedListOfAllPaths.get(listOfAllPaths.get(i).getDestinationNode()).add(listOfAllPaths.get(i));
+		}
 		
 		//	return the resulting list of paths
-		return listOfAllPaths;
+		return sortedListOfAllPaths;
 
 	}
 	
@@ -499,21 +506,20 @@ public class Graph {
 	/*	Method to calculate the shortest paths between all Nodes by using Dijkstra's algorithm
 	 *	Returns a list of paths sorted by initial node first, destination node second
 	 */
-	public ArrayList<Path> shortestPaths(){
+	public ArrayList<ArrayList<ArrayList<Path>>> shortestPaths(){
 		//	initialize list of all paths
-		ArrayList<Path> allPaths = new ArrayList<Path>();
+		ArrayList<ArrayList<ArrayList<Path>>> allPaths = new ArrayList<ArrayList<ArrayList<Path>>>();
 		
 		//	iterate over the list of nodes
 		for(int i = 0; i < getNodeCount(); i++) {
 			//	get list of all shortest paths with node i as initial node
-			ArrayList<Path> pathsOfI = shortestPaths(i);
-			//	add paths to list of all paths
-			pathsOfI.forEach(path -> allPaths.add(path));
+			allPaths.add(shortestPaths(i));
 		}
 		
 		//	return the list of all paths
 		return allPaths;
 	}
+	
 	
 	//	TODO remove/change (old) method implementation
 	/* old implementation of getDiameter
@@ -547,15 +553,19 @@ public class Graph {
 			return Double.POSITIVE_INFINITY;
 		}else {
 			//	get list of shortest paths
-			ArrayList<Path> paths = shortestPaths();
+			ArrayList<ArrayList<ArrayList<Path>>> paths = shortestPaths();
 			//	initialize longest path in list with first path in list
-			Path longestPath = paths.get(0);
+			Path longestPath = paths.get(0).get(1).get(0);
 			//	iterate over list of paths
-			for(int i = 1; i < paths.size(); i++) {
-				//	compare i-th path to current longest path
-				if(paths.get(i).compareTo(longestPath) > 0) {
-					//	if the i-th path is longer, replace the current longest path
-					longestPath = paths.get(i);
+			for(int i = 0; i < paths.size(); i++) {
+				for(int j = i + 1; j < paths.get(i).size(); j++) {
+					for(int k = 0; k < paths.get(i).get(j).size(); k++) {
+						//	compare i-th path to current longest path
+						if(paths.get(i).get(j).get(k).compareTo(longestPath) > 0) {
+							//	if the i-th path is longer, replace the current longest path
+							longestPath = paths.get(i).get(j).get(k);
+						}
+					}
 				}
 			}
 			//	return length of longest path
@@ -566,32 +576,32 @@ public class Graph {
 	
 	// Calculate all shortestPaths and put them into a multiMap
 	// return multiMap to forward them to the GraphWriter for further processing
-	public MultiValuedMap<Integer, ArrayList<Integer>> getAllShortestPaths() {
-		MultiValuedMap<Integer, ArrayList<Integer>> shortestPathsMap = new ArrayListValuedHashMap<>();
-		// MultiMap consists of:
-		//	keys = source node ID's
-		//	values = two ArrayLists containing:
-		//		1. ArrayList = Target node ID's
-		//		2. ArrayList = Shortest path calculation results
-		
-		for(int i = 0; i < getNodeCount(); i++) {
-			ArrayList<Path> paths = shortestPaths(i);
-			for(int n = i + 1; n < getNodeCount(); n++) {
-				ArrayList<Integer> targetNodes = new ArrayList<Integer>();
-			    ArrayList<Integer> spResults = new ArrayList<Integer>();
-				
-				targetNodes.add(n);
-				int length = (int) paths.get(n-1).getLength();
-				spResults.add(length);
-				
-			    // Put both ArrayLists into multiMap for same key
-				shortestPathsMap.put(i, targetNodes );
-				shortestPathsMap.put(i, spResults);
-			}
-		}
-		
-		return shortestPathsMap;
-	}
+//	public MultiValuedMap<Integer, ArrayList<Integer>> getAllShortestPaths() {
+//		MultiValuedMap<Integer, ArrayList<Integer>> shortestPathsMap = new ArrayListValuedHashMap<>();
+//		// MultiMap consists of:
+//		//	keys = source node ID's
+//		//	values = two ArrayLists containing:
+//		//		1. ArrayList = Target node ID's
+//		//		2. ArrayList = Shortest path calculation results
+//		
+//		for(int i = 0; i < getNodeCount(); i++) {
+//			ArrayList<Path> paths = shortestPaths(i);
+//			for(int n = i + 1; n < getNodeCount(); n++) {
+//				ArrayList<Integer> targetNodes = new ArrayList<Integer>();
+//			    ArrayList<Integer> spResults = new ArrayList<Integer>();
+//				
+//				targetNodes.add(n);
+//				int length = (int) paths.get(n-1).getLength();
+//				spResults.add(length);
+//				
+//			    // Put both ArrayLists into multiMap for same key
+//				shortestPathsMap.put(i, targetNodes );
+//				shortestPathsMap.put(i, spResults);
+//			}
+//		}
+//		
+//		return shortestPathsMap;
+//	}
 
 		
 	
