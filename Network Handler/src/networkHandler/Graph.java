@@ -15,19 +15,36 @@ public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
 
+	private int numberOfNodes;
+	private int numberOfEdges;
+	private boolean connectivity;
+	private double diameter;
 	
 	// Constructor
 	Graph (ArrayList<Edge> EdgeList, ArrayList<Node> NodeList){
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
+		this.numberOfNodes = NodeList.size();
+		this.numberOfEdges = EdgeList.size();
+		this.connectivity = this.isGraphConnected();
+		this.diameter = this.diameter();
+		this.getAllShortestPaths();
 	}
 	
 	public int getNodeCount() {
-		return nodeList.size();
+		return numberOfNodes;
 	}
 	
 	public int getEdgeCount() {
-		return edgeList.size();
+		return numberOfEdges;
+	}
+	
+	public boolean getConnectivity() {
+		return connectivity;
+	}
+	
+	public double getDiameter() {
+		return diameter;
 	}
 	
 	public void printAllNodes() {
@@ -43,8 +60,6 @@ public class Graph {
 		}
 		System.out.println(sb);
 	}
-	
-	
 	
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
@@ -67,8 +82,7 @@ public class Graph {
 		// A linked list of all adjacent Nodes for each Node
 		// Size of array is the number of Nodes
 		LinkedList<Integer>[] adjListArray = new LinkedList[getNodeCount()];
-
-
+		
 		// Create a new list for each Node
 		// so that adjacent nodes can be stored
 		for (int i = 0; i < getNodeCount(); i++) {
@@ -95,8 +109,6 @@ public class Graph {
 		return true;
 	}
 	
-	
-	
 	//	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
 	public Path shortestPath(int initialNodeId, int destinationNodeId) {
 		
@@ -115,7 +127,7 @@ public class Graph {
 				connections[i][j] = -1;
 			}
 		}
-		
+
 		//	Fill the adjacency matrix by iterating over the list of edges
 		for(int i = 0; i < getEdgeCount(); i++) {
 			//	Get necessary values (source Node/target Node/weight) from next edge
@@ -260,6 +272,9 @@ public class Graph {
 		
 	}
 	
+
+
+
 	/*	Method to calculate the shortest paths between an initial Node and all other Nodes by using Dijkstra's algorithm
 	 * 	Returns a list of the paths, sorted by destination Node IDs
 	 */
@@ -279,6 +294,7 @@ public class Graph {
 			for(int j = 0; j < getNodeCount(); j++) {
 				connections[i][j] = -1;
 			}
+
 		}
 		
 		//	Fill the adjacency matrix by iterating over the list of edges
@@ -379,6 +395,7 @@ public class Graph {
 				}
 			}
 		}
+
 		
 	/*	Initialize map of child Nodes
 	 * 	While the parents represent the node before on the path, children represent the next node on the path
@@ -519,7 +536,7 @@ public class Graph {
 	}
 	
 	//	Method to get the Diameter of the graph
-	public double	getDiameter() {
+	public double	diameter() {
 		//	check for connectivity of the graph
 		if(!isGraphConnected()) {
 			/*	if the graph is not connected, the diameter is defined as infinite
