@@ -58,8 +58,9 @@ public class Main {
 						System.out.println( "Shortest Path between: "
 								+ clHandler.getShortestPathNodeIDs()[0] + " and "
 								+ clHandler.getShortestPathNodeIDs()[1] + " = "
-								+ G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]));
+								+ G.shortestPath(clHandler.getShortestPathNodeIDs()[0], clHandler.getShortestPathNodeIDs()[1]).getLength());
 					}
+			
 				// if user provides non existing Node ID's:
 				} catch (NoSuchElementException nsee) {
 					System.out.println("ERROR: Can not calculate shortest path."
@@ -80,7 +81,7 @@ public class Main {
 				
 				// get all shortest paths between every node
 				if(clHandler.getAllShortestPaths() == true) {
-					G.getAllShortestPaths();
+					G.shortestPaths();
 					//TODO System.out.
 				}
 				
@@ -91,7 +92,7 @@ public class Main {
 					gw.setEdgeList(nFileHandler.getEdgeList());
 					gw.setConnectivity(G.isGraphConnected());
 					gw.setDiameter((int) G.getDiameter());
-					gw.setSpMap(G.getAllShortestPaths());
+					gw.setShortestPathList(G.shortestPaths());
 					gw.exportGraphmlAnalysis();
 				}
 				

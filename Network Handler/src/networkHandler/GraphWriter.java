@@ -18,7 +18,7 @@ public class GraphWriter {
 	private int bcm;
 	private boolean connectivity;
 	private int diameter;
-	private MultiValuedMap<Integer, ArrayList<Integer>> spMap;
+	private ArrayList<ArrayList<ArrayList<Path>>> shortestPathList;
 	private ArrayList<Edge> edgeList;
 	private ArrayList<networkHandler.Node> nodeList;
 
@@ -30,7 +30,7 @@ public class GraphWriter {
 		this.bcm = 0;
 		this.connectivity = false;
 		this.diameter = 0;
-		this.spMap = new ArrayListValuedHashMap<>();
+		this.shortestPathList = new ArrayList<ArrayList<ArrayList<Path>>>();
 		this.edgeList = new ArrayList<Edge>();
 		this.nodeList = new ArrayList<networkHandler.Node>();
 	}
@@ -41,7 +41,7 @@ public class GraphWriter {
 	public void setBcm(int bcm) { this.bcm = bcm; }
 	public void setConnectivity(boolean connectivity) { this.connectivity = connectivity; }
 	public void setDiameter(int diameter) { this.diameter = diameter; }
-	public void setSpMap(MultiValuedMap<Integer, ArrayList<Integer>> shortestPathMap) { this.spMap = shortestPathMap; }
+	public void setShortestPathList(ArrayList<ArrayList<ArrayList<Path>>> shortestPathsList) { this.shortestPathList = shortestPathsList; }
 	public void setNodeList(ArrayList<networkHandler.Node> nodeList) { this.nodeList = nodeList; }
 	public void setEdgeList(ArrayList<Edge> edgeList) { this.edgeList = edgeList; }
 	
@@ -96,44 +96,41 @@ public class GraphWriter {
  		}
  		
         // 2.c. creating shortest path elements
-        		// Retrieving data of multiMap containing shortest paths data
-        		// Iterate through the key set
- 		Set<Integer> keys = spMap.keySet();
- 
- 		for (Integer key : keys) {
 
-				// Retrieving both ArrayList of one key
-				// by iterating through the key values
-			Iterator<ArrayList<Integer>> it = spMap.get(key).iterator();
-			
-				// Populating ArrayLists with the key values
-			ArrayList<Integer> multiMapKeyTargets = new ArrayList<Integer>();
-			ArrayList<Integer> multiMapKeySpResults = new ArrayList<Integer>();
-			
-			while (it.hasNext()) {
-				multiMapKeyTargets.addAll(it.next());
-				multiMapKeySpResults.addAll(it.next());
-			}
-			
-				// adding source, target, sp_result values by iterating through ArrayLists in 2nd loop
-			for (int i = 0; i < multiMapKeyTargets.size(); i++) { 
-				
-				shortestPathElement = new Element("sPath");
-	 	 		dataElement = new Element("data");
-	 			
-	 	 			// adding source value
-	 			shortestPathElement.setAttribute("source", "n" +  key.toString());
-				
-	 				// adding target, sp_result values
-				shortestPathElement.setAttribute("target",  "n" + multiMapKeyTargets.get(i).toString());  
-				dataElement.setAttribute("key", "sp_result").setText(multiMapKeySpResults.get(i).toString());
-	            
-					// adding created node elements to root
-				shortestPathElement.addContent(dataElement);
-				allShortestPathsElement.addContent(shortestPathElement);
-			}  
- 		}
-        
+        for(int sourceId = 0; sourceId < shortestPathList.size(); sourceId++) {
+        	for(int targetId = 0; targetId < shortestPathList.get(sourceId).size(); targetId++) {
+        		for(int i = 0; i < shortestPathList.get(sourceId).get(targetId).size(); i++) {
+        			//	get Path 
+        			Path currentShortestPath = shortestPathList.get(sourceId).get(targetId).get(i);
+        			
+        			shortestPathElement = new Element("shortestPath");
+        			dataElement = new Element("data");
+        			
+        			//	adding source value
+        			shortestPathElement.setAttribute("source", "n" + sourceId);
+        			
+        			//	adding target value
+        			shortestPathElement.setAttribute("target", "n" + targetId);
+        			
+        			//	adding length value
+        			dataElement.setAttribute("key", "length").setText(String.valueOf(currentShortestPath.getLength()));
+        			shortestPathElement.addContent(dataElement);
+        			
+        			//	adding segment values
+        			if(currentShortestPath.getLength() != Double.POSITIVE_INFINITY) {
+	        			for(int j = 0; j < currentShortestPath.getNumberOfNodes(); j++) {
+	        				dataElement = new Element("data");
+	        				dataElement.setAttribute("key", "segment" + j).setText("n" + currentShortestPath.getNode(j));
+	        				//	adding created node elements to root
+	        				shortestPathElement.addContent(dataElement);
+	        			}
+        			}
+        			
+        			//	shortestPathElement.addContent(dataElement);
+        			allShortestPathsElement.addContent(shortestPathElement);
+        		}
+        	}
+        }
 
         // 3. adding all children to parents to root
  		graphElement.addContent(connectivityElement);
