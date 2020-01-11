@@ -81,7 +81,7 @@ public class Main {
 				
 				// get all shortest paths between every node
 				if(clHandler.getAllShortestPaths() == true) {
-					G.getAllShortestPaths();
+					G.shortestPaths();
 					//TODO System.out.
 				}
 				
@@ -92,7 +92,7 @@ public class Main {
 					gw.setEdgeList(nFileHandler.getEdgeList());
 					gw.setConnectivity(G.isGraphConnected());
 					gw.setDiameter((int) G.getDiameter());
-					gw.setSpMap(G.getAllShortestPaths());
+					gw.setShortestPathList(G.shortestPaths());
 					gw.exportGraphmlAnalysis();
 				}
 				
