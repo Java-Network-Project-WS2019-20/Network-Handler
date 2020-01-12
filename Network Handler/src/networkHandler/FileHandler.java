@@ -42,7 +42,7 @@ public class FileHandler {
 
 
 	/**
-	 * This methods creates a parsable document by using {@code DocumentBuilderFactory},
+	 * This method creates a parsable document by using {@code DocumentBuilderFactory},
 	 * {@code DocumentBuilder} and {@code Document}. The parsable document is specified with the filepath of the
 	 * graphml file which has to be parsed.
 	 * @throws ParserConfigurationException
@@ -73,8 +73,6 @@ public class FileHandler {
 		graphmlParserNodes(document);
 		graphmlParserEdges(document);
 
-
-
 	}
 
 
@@ -97,6 +95,7 @@ public class FileHandler {
 				nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
 			}
 		}
+		
 	}
 
 
@@ -106,6 +105,7 @@ public class FileHandler {
 	 */
 	
 	public void graphmlParserEdges(Document document) {
+		
 		// reading all edges into edgesNL
 				NodeList edgesNL = document.getElementsByTagName("edge");
 				
@@ -121,6 +121,7 @@ public class FileHandler {
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
 			}
 		}
+		
 	}
 	
 	

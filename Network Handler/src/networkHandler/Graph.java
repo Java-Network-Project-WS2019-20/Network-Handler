@@ -14,7 +14,6 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
-
 	private int numberOfNodes;
 	private int numberOfEdges;
 	private boolean connectivity;
@@ -30,6 +29,8 @@ public class Graph {
 		this.diameter = this.diameter();
 	}
 	
+	
+	// getter - setter
 	public int getNodeCount() {
 		return numberOfNodes;
 	}
@@ -46,6 +47,16 @@ public class Graph {
 		return diameter;
 	}
 	
+	public ArrayList<Node> getNodeList() {
+		return nodeList;
+	}
+	
+	public ArrayList<Edge> getEdgeList() {
+		return edgeList;
+	}
+	
+	
+	
 	public void printAllNodes() {
 		for (Node n : nodeList) {
 			System.out.println(n.toString());
@@ -59,6 +70,8 @@ public class Graph {
 		}
 		System.out.println(sb);
 	}
+	
+	
 	
 	// Method to calculate, which nodes are reachable
 	// From a certain node v
@@ -569,7 +582,6 @@ public class Graph {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Number of nodes: ").append(getNodeCount()).append("\n");
 		sb.append("Number of egdes: ").append(getEdgeCount()).append("\n");
-		sb.append("Is connected? ").append(isGraphConnected()).append("\n");
 		return sb.toString();
 	}
 	

@@ -2,52 +2,31 @@ package networkHandler;
 
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
 
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-
 public class GraphWriter {
 	private String outputFileName;
-	private int bcm;
-	private boolean connectivity;
-	private int diameter;
+	private Graph graph;
 	private ArrayList<ArrayList<ArrayList<Path>>> shortestPathList;
-	private ArrayList<Edge> edgeList;
-	private ArrayList<networkHandler.Node> nodeList;
-
+	
 	
 	
 	// constructor
-	public GraphWriter(String outputFileName) {
+	public GraphWriter(String outputFileName, Graph graph) {
 		this.outputFileName = outputFileName;
-		this.bcm = 0;
-		this.connectivity = false;
-		this.diameter = 0;
-		this.shortestPathList = new ArrayList<ArrayList<ArrayList<Path>>>();
-		this.edgeList = new ArrayList<Edge>();
-		this.nodeList = new ArrayList<networkHandler.Node>();
+		this.graph = graph;
+		this.shortestPathList = graph.shortestPaths();
 	}
 	
 	
-	
-	// setter
-	public void setBcm(int bcm) { this.bcm = bcm; }
-	public void setConnectivity(boolean connectivity) { this.connectivity = connectivity; }
-	public void setDiameter(int diameter) { this.diameter = diameter; }
-	public void setShortestPathList(ArrayList<ArrayList<ArrayList<Path>>> shortestPathsList) { this.shortestPathList = shortestPathsList; }
-	public void setNodeList(ArrayList<networkHandler.Node> nodeList) { this.nodeList = nodeList; }
-	public void setEdgeList(ArrayList<Edge> edgeList) { this.edgeList = edgeList; }
-	
-	
+
 	// write all calculations and attributes of the parsed graph into new file
-	public void exportGraphmlAnalysis () {
+	// A. create all elements of the document
+	public void exportGraphmlAnalysis() {
 		
 		// 1. creating a document
         Document document = new Document();
@@ -60,9 +39,9 @@ public class GraphWriter {
         		.setAttribute("id", "G")
         		.setAttribute("edgedefault", "undirected");
         Element connectivityElement = new Element("connectivity")
-        		.setAttribute("connected", String.valueOf(connectivity));
+        		.setAttribute("connected", String.valueOf( graph.getConnectivity() ));
         Element diameterElement = new Element("diameter")
-        		.setAttribute("diameter", String.valueOf(diameter));
+        		.setAttribute("diameter", String.valueOf( graph.getDiameter() ));
         Element nodesElement = new Element("nodes");
         Element nodeElement;
         Element edgesElement = new Element("edges");
@@ -72,31 +51,30 @@ public class GraphWriter {
  		Element dataElement;
         
  		// 2.a. creating node elements
- 		for (int i=0; i < nodeList.size(); i++) {
+ 		for (int i=0; i < graph.getNodeCount(); i++) {
  			nodeElement = new Element("node")
- 					.setAttribute("id", "n" + String.valueOf(nodeList.get(i).getID()))
+ 					.setAttribute("id", "n" + String.valueOf(graph.getNodeList().get(i).getID()))
  					.addContent(dataElement = new Element("data")
  						.setAttribute("key", "v_id")
- 						.setText(String.valueOf(nodeList.get(i).getID())));
+ 						.setText(String.valueOf(graph.getNodeList().get(i).getID())));
  			nodesElement.addContent(nodeElement);
  		}
  		
  		// 2.b creating edge elements
- 		for (int i=0; i < edgeList.size(); i++) {
+ 		for (int i=0; i < graph.getEdgeCount(); i++) {
  			edgeElement = new Element("edge")
- 					.setAttribute("source", "n" + String.valueOf(edgeList.get(i).getSource()))
- 					.setAttribute("target", "n" + String.valueOf(edgeList.get(i).getTarget()))
+ 					.setAttribute("source", "n" + String.valueOf(graph.getEdgeList().get(i).getSource()))
+ 					.setAttribute("target", "n" + String.valueOf(graph.getEdgeList().get(i).getTarget()))
  					.addContent(dataElement = new Element("data")
  						.setAttribute("key", "e_id")
- 						.setText(String.valueOf(edgeList.get(i).getEdgeID())))
+ 						.setText(String.valueOf(graph.getEdgeList().get(i).getEdgeID())))
  					.addContent(dataElement = new Element("data")
 						.setAttribute("key", "e_weight")
-						.setText(String.valueOf((int) edgeList.get(i).getWeight())));
+						.setText(String.valueOf((int) graph.getEdgeList().get(i).getWeight())));
  			edgesElement.addContent(edgeElement);
  		}
  		
         // 2.c. creating shortest path elements
-
         for(int sourceId = 0; sourceId < shortestPathList.size(); sourceId++) {
         	for(int targetId = 0; targetId < shortestPathList.get(sourceId).size(); targetId++) {
         		for(int i = 0; i < shortestPathList.get(sourceId).get(targetId).size(); i++) {
@@ -155,15 +133,25 @@ public class GraphWriter {
 									.setAttribute("attr.name", "weight")
 									.setAttribute("attr.type", "double"))
 					.addContent(keyElement = new Element("key")
-									.setAttribute("id", "sp_result")
-									.setAttribute("for", "sPath")
-									.setAttribute("attr.name", "result")
+									.setAttribute("id", "length")
+									.setAttribute("for", "shortestPath")
+									.setAttribute("attr.name", "length")
+									.setAttribute("attr.type", "double"))
+			 		.addContent(keyElement = new Element("key")
+									.setAttribute("id", "segment")
+									.setAttribute("for", "shortestPath")
+									.setAttribute("attr.name", "segment")
 									.setAttribute("attr.type", "double"));
  		rootElement.addContent(graphElement);
  
         document.setContent(rootElement);
 
-        // 4. saving the document to specified file
+        writeToOutputfile(document);
+	}
+        
+        
+    // B. write document to new file   
+	private void writeToOutputfile(Document document) {
         try {
             XMLOutputter outputter = new XMLOutputter();
             outputter.setFormat(Format.getPrettyFormat());
@@ -174,8 +162,8 @@ public class GraphWriter {
         } catch (Exception e) {
             e.printStackTrace();
         }   	
-	} // completing method exportGraphmlAnalysis()
+	} 
 
 	
-} // completing class body
+}
 
