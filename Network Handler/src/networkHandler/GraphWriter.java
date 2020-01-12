@@ -8,6 +8,11 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+/**
+ * This class implements the output of all calculations done over a graph into a new file.
+ * @author Sebastian Monok
+ *
+ */
 public class GraphWriter {
 	private String outputFileName;
 	private Graph graph;
@@ -15,7 +20,11 @@ public class GraphWriter {
 	
 	
 	
-	// constructor
+	/**
+	 * This constructs a GraphWriter which writes all graph attributes and calculations over it into a new file.
+	 * @param outputFileName The output filename (and path) of the new file
+	 * @param graph The graph on which all calculations will be calculated
+	 */
 	public GraphWriter(String outputFileName, Graph graph) {
 		this.outputFileName = outputFileName;
 		this.graph = graph;
@@ -23,9 +32,10 @@ public class GraphWriter {
 	}
 	
 	
-
-	// write all calculations and attributes of the parsed graph into new file
-	// A. create all elements of the document
+	
+	/**
+	 * This Method creates new graphml file by using the external library jdom-2.0.6.
+	 */
 	public void exportGraphmlAnalysis() {
 		
 		// 1. creating a document
@@ -150,7 +160,7 @@ public class GraphWriter {
 	}
         
         
-    // B. write document to new file   
+    // write document to new file
 	private void writeToOutputfile(Document document) {
         try {
             XMLOutputter outputter = new XMLOutputter();

@@ -14,7 +14,6 @@ public class Main {
 		try {
 			if (args.length > 0) {	// user must provide at least one argument = input filename to start parsing graph
 				
-				
 				// start parsing cla
 				CommandLineHandler clHandler = new CommandLineHandler(args);
 				clHandler.claParser();	

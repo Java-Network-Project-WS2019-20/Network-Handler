@@ -11,22 +11,40 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+/**
+ * This class implements a parser for command line arguments.
+ * @author Sebastian Monok
+ *
+ */
 public class CommandLineHandler {
 	private String[] claArgs;
 	private Graph graph;
 	
 	
 	
-	// constructor
+	/**
+	 * This constructs the parser of command line arguments.
+	 * Program arguments / command line arguments are passed to this constructor.
+	 * @param args The provided command line arguments
+	 */
 	public CommandLineHandler(String[] args) {
 		this.claArgs = args;
 	}
 
 
 	
-	// handle the cla (command line arguments) in three stages:
-	// 1. definition stage: creating the options
+	/**
+	 * This method parses the command line arguments by using the external library commons-cli-1.4.
+	 * It calls the parsing of the graph and the export of the graph calculations into a new file.
+	 * 
+	 * This method handles the command line arguments in three stages:
+	 * 1. Definition stage: creating the options
+	 * 2. Parsing stage: creating the parser
+	 * 3. Interrogation stage: check whether options available and call methods accordingly 
+	 */
 	public void claParser() {
+		
+		// 1. Definition stage: creating the options
 		Option option_a = Option.builder("a")
 	    		.hasArg()
 	    		.argName("outputfile.graphml")
@@ -100,7 +118,7 @@ public class CommandLineHandler {
 	}
 	
 	
-	// 3. interrogation stage: check whether options available and passing on
+	// 3. interrogation stage: check whether options available and call methods accordingly
 	private void claParserInterrogation(Options options, CommandLine cmd) {
 		
 		try {
@@ -255,7 +273,7 @@ public class CommandLineHandler {
 	
 	
 	// help text of options -h, --help
-	void printHelp(Options options) {
+	private void printHelp(Options options) {
 		System.out.println("\n---------------------------------------------");
     	String header = "Start parsing by providing input file name:\n" + 
     					"$> java Main <inputfile.graphml>	adding Options:\n";
