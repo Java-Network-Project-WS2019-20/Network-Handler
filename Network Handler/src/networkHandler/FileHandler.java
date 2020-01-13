@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
 
 /**
  * Class is used to handle the provided graphml file from the user. The main task of this class
@@ -28,14 +27,6 @@ public class FileHandler {
 	/**
 	 * Points to the provided graphml file from the user.
 	 */
-=======
-/**
- * This class implements a parser for graphml files.
- * @author Sebastian Monok, Khalid Butt
- *
- */
-public class FileHandler {
->>>>>>> 229e1c4ddcd73c8ac6fcb1f6df19e84d33855ecf
 	private File graphmlFile;
 
 	/**
@@ -49,32 +40,20 @@ public class FileHandler {
 	private ArrayList<Edge> edgeList;
 
 	
-	
-	/**
-	 * This constructs a parser of the graphml file.
-	 */
 	public FileHandler() {
-<<<<<<< HEAD
 
 		//Init
-=======
->>>>>>> 229e1c4ddcd73c8ac6fcb1f6df19e84d33855ecf
 		this.nodeList = new ArrayList<>();
 		this.edgeList = new ArrayList<>();
 		this.graphmlFile = null ;
+
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Specify the filepath of the graphml file.
 	 * @param filePath
 	 * Parameter is the filepath which is provided by the user of the graphml file
 	 */
-=======
-	
-	
-	// setter - getter
->>>>>>> 229e1c4ddcd73c8ac6fcb1f6df19e84d33855ecf
 	public void setGraphmlFile(String filePath) {
 		this.graphmlFile = new File(filePath);
 	}
@@ -96,21 +75,12 @@ public class FileHandler {
 	}
 
 
-	
 	/**
-<<<<<<< HEAD
 	 * Create a parsable document. The Document object is specified with the filepath of the
 	 * graphml file which is provided by the user. The graphml file is then passed to {@link FileHandler#graphmlParserEdges(Document)}
 	 * and {@link FileHandler#graphmlParserEdges(Document)} to parse the document for the nodes and edges.
-=======
-	 * This method creates a parsable document by using {@code DocumentBuilderFactory},
-	 * {@code DocumentBuilder} and {@code Document}. The parsable document is specified with the filepath of the
-	 * graphml file which has to be parsed.
-	 * @throws ParserConfigurationException
-	 * @throws IOException
-	 * @throws SAXException
->>>>>>> 229e1c4ddcd73c8ac6fcb1f6df19e84d33855ecf
 	 */
+
 	public void prepareParser(){
 
 		//Create a parsable document
@@ -138,7 +108,6 @@ public class FileHandler {
 
 	}
 
-<<<<<<< HEAD
 
 	/**
 	 * Parse Document object for nodes and save them into an ArrayList.
@@ -148,10 +117,6 @@ public class FileHandler {
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
 	public void graphmlParserNodes(Document document) {
-=======
-	// parses only the nodes
-	private void graphmlParserNodes(Document document) {
->>>>>>> 229e1c4ddcd73c8ac6fcb1f6df19e84d33855ecf
 
 		// reading all nodes into nodesNL
 		NodeList nodesNL = document.getElementsByTagName("node");
@@ -165,10 +130,8 @@ public class FileHandler {
 				nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
 			}
 		}
-		
 	}
 
-<<<<<<< HEAD
 
 	/**
 	 * Parse Document object for edges and saves them into an ArrayList.
@@ -178,12 +141,6 @@ public class FileHandler {
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
 	public void graphmlParserEdges(Document document) {
-=======
-	
-	// parses only the edges
-	private void graphmlParserEdges(Document document) {
-		
->>>>>>> 229e1c4ddcd73c8ac6fcb1f6df19e84d33855ecf
 		// reading all edges into edgesNL
 				NodeList edgesNL = document.getElementsByTagName("edge");
 				
@@ -199,7 +156,6 @@ public class FileHandler {
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
 			}
 		}
-		
 	}
 	
 	
