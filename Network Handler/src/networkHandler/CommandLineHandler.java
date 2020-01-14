@@ -121,71 +121,84 @@ public class CommandLineHandler {
 	// 3. interrogation stage: check whether options available and call methods accordingly
 	private void claParserInterrogation(Options options, CommandLine cmd) {
 		
-		try {
 			
-			// if first provided argument is .graphml file
-			// start parsing the graph
+		// if first provided argument is .graphml file start parsing the graph
+		try { 
 			if( claArgs[0].contains(".graphml") ) {
-				
-				//TODO	check if file exists ( maybe at the FileHandler )
-				
 				String inputFileName = claArgs[0];	// set inputFileName = first provided cla		
-				parseGraph(inputFileName);
-				
+				parseGraph(inputFileName);	
 			} else if ( claArgs[0].contains("help") || ( (claArgs[0].endsWith("h")) && (cmd.hasOption('h')) ) ) {
 				printHelp(options);		// if single argument is -h or --help print help text
 				System.exit(0);			// and exit
 			} else {
-				throw new Exception();	// if user did not provide any arguments OR provided wrong arguments
-			}
+				throw new IllegalArgumentException();	// if user did not provide proper .graphml file 
+			}											// OR provided wrong arguments
+		} catch (IllegalArgumentException e) {
+			System.out.println("ERROR: First argument needs to be .graphml file"
+					+ "\n	Provide correct file name with path: /<filename>.graphml"
+					+ "\n	Get help using -h or --help");
+		}
 		
-			
-			// if user provided -a call GraphWriter
-		    if (cmd.hasOption("a")) {
-		    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graph);
-		    	gw.exportGraphmlAnalysis();
-		    }
 		
-		    
-		    // if user provided -b print BCM to sys.out
-		    // test if value of 'b' is digit	    
-		    if (cmd.hasOption("b")) {
+		// if user provided -a call GraphWriter
+	    if (cmd.hasOption("a")) {
+	    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graph);
+	    	gw.exportGraphmlAnalysis();
+	    }
+	
+	    
+	    // if user provided -b print BCM to sys.out
+	    // test if value of 'b' is digit	    
+	    if (cmd.hasOption("b")) {
+	    	try {
 		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
-//			        int bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
-		    		
-		    		// TODO print out BCM
-		    		
-			    } else {
-		        	throw new ParseException("argument is not a number.");
+				    try {
+
+//				    	int bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
+				    	// TODO call BCM calculation - throws NoSuchElementException if non existing node id is provided
+				    	
+					// if user provides non existing Node ID:
+					} catch (NoSuchElementException nsee) {
+						System.out.println("ERROR: Can not calculate BCM."
+								+ "\n	The Node ID you provided does not exist."
+								+ "\n	use -G or --graph to display Graph properties."
+								+ "\n	Use -h or --help to print usage help.");
+					}
+				} else {
+					throw new NumberFormatException(cmd.getOptionValue('b'));
 				}
-		    }
+	    	} catch (NumberFormatException e) {
+	    		System.out.println("ERROR: Can not calculate BCM."
+						+ "\n	Wrong number format."
+						+ "\n	Use -h or --help to print usage help.");
+	    	}
+	    }
 	    
 		    
-		    // if user provided -c print connectivity to sys.out
-		    if (cmd.hasOption('c')) {
-		        System.out.println("Graph is connected: " + graph.isGraphConnected());
-		    }
-		
-		    
-		    // if user provided -d print diameter to sys.out
-		    if (cmd.hasOption('d')) {
-		    	System.out.println("Diameter: " + graph.getDiameter());
-		    }
-		
-		
-		    // if user provided -s calculate shortest path between two given nodes and print to sys.out
-		    // test if both values of 's' are digits		    
-			if (cmd.hasOption('s')) {
+	    // if user provided -c print connectivity to sys.out
+	    if (cmd.hasOption('c')) {
+	        System.out.println("Graph is connected: " + graph.isGraphConnected());
+	    }
+	
+	    
+	    // if user provided -d print diameter to sys.out
+	    if (cmd.hasOption('d')) {
+	    	System.out.println("Diameter: " + graph.getDiameter());
+	    }
+	
+	
+	    // if user provided -s calculate shortest path between two given nodes and print to sys.out
+	    // test if both values of 's' are digits		    
+		if (cmd.hasOption('s')) {
+			try {
 				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
 			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
-			       
 					try {
 						System.out.println( "Shortest Path between: "
 								+ cmd.getOptionValues("s")[0] + " and "
 								+ cmd.getOptionValues("s")[1] + " = "
 								+ graph.shortestPath( Integer.parseInt(cmd.getOptionValues("s")[0]),
-														Integer.parseInt(cmd.getOptionValues("s")[1]) ).getLength() );
-						
+														Integer.parseInt(cmd.getOptionValues("s")[1]) ).getLength() );	
 					// if user provides non existing Node ID's:
 					} catch (NoSuchElementException nsee) {
 						System.out.println("ERROR: Can not calculate shortest path."
@@ -193,70 +206,67 @@ public class CommandLineHandler {
 								+ "\n	use -G or --graph to display Graph properties."
 								+ "\n	Use -h or --help to print usage help.");
 					}
-			        
 			    } else {
-		        	throw new ParseException("argument is not a number.");
+		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
 				}
+			} catch (NumberFormatException e) {
+				System.out.println("ERROR: Can not calculate shortest path."
+						+ "\n	Wrong number format."
+						+ "\n	Use -h or --help to print usage help.");
 			}
-		    
-			
-			// if user provided -G print graph to sys.out
-			if (cmd.hasOption('G')) {
-				System.out.println(graph);
-			}
-			
-			
-			// if user provided -S calculate all shortest paths and print to sys.out
-			if (cmd.hasOption('S')) {
-				ArrayList<ArrayList<ArrayList<Path>>> shortestPathList = new ArrayList<ArrayList<ArrayList<Path>>>(graph.shortestPaths());
-				
-				for(int sourceId = 0; sourceId < shortestPathList.size(); sourceId++) {
-		        	for(int targetId = 0; targetId < shortestPathList.get(sourceId).size(); targetId++) {
-		        		for(int i = 0; i < shortestPathList.get(sourceId).get(targetId).size(); i++) {
-		        			Path currentShortestPath = shortestPathList.get(sourceId).get(targetId).get(i);
-		        			
-		        			// source + target
-		        			System.out.print("source: " + "n" + sourceId);
-		        			System.out.print("	target: " + "n" + targetId);
-		        			
-		        			// length
-		        			System.out.println("	length:" + currentShortestPath.getLength());
-		        			
-		        			// segment values
-		        			if(currentShortestPath.getLength() != Double.POSITIVE_INFINITY) {
-			        			for(int j = 0; j < currentShortestPath.getNumberOfNodes(); j++) {
-			        				System.out.println("segment: n" + currentShortestPath.getNode(j));
-			        			}
-		        			}
-		        		}
-		        	}
-		        }
-			}
-			
-		
-			// if user provided -h or --help print help text
-		    if (cmd.hasOption("help") || cmd.hasOption('h')) {
-		    	 printHelp(options);
-		    }
-		
-		    
-		    // if user provided command line arguments without any flag
-		    String[] remainder = cmd.getArgs();
-		    if(remainder.length > 1) {
-		        System.out.println("\nWARNING: Could not assign argument(s) to any option:");
-		        for (int i=1; i < remainder.length; i++) {
-		            System.out.print(remainder[i]);
-		            System.out.print(" ");
-		        }
-		        System.out.println();
-		    }
+		}
 	    
-		} catch (Exception b) {
-			System.out.println("ERROR: First argument needs to be .graphml file"
-					+ "\n	Provide correct file name with path: /<filename>.graphml"
-					+ "\n	Get help using -h or --help");
+		
+		// if user provided -G print graph to sys.out
+		if (cmd.hasOption('G')) {
+			System.out.println(graph);
 		}
 		
+		
+		// if user provided -S calculate all shortest paths and print to sys.out
+		if (cmd.hasOption('S')) {
+			ArrayList<ArrayList<ArrayList<Path>>> shortestPathList = new ArrayList<ArrayList<ArrayList<Path>>>(graph.shortestPaths());
+			
+			for(int sourceId = 0; sourceId < shortestPathList.size(); sourceId++) {
+	        	for(int targetId = 0; targetId < shortestPathList.get(sourceId).size(); targetId++) {
+	        		for(int i = 0; i < shortestPathList.get(sourceId).get(targetId).size(); i++) {
+	        			Path currentShortestPath = shortestPathList.get(sourceId).get(targetId).get(i);
+	        			
+	        			// source + target
+	        			System.out.print("source: " + "n" + sourceId);
+	        			System.out.print("	target: " + "n" + targetId);
+	        			
+	        			// length
+	        			System.out.println("	length:" + currentShortestPath.getLength());
+	        			
+	        			// segment values
+	        			if(currentShortestPath.getLength() != Double.POSITIVE_INFINITY) {
+		        			for(int j = 0; j < currentShortestPath.getNumberOfNodes(); j++) {
+		        				System.out.println("segment: n" + currentShortestPath.getNode(j));
+		        			}
+	        			}
+	        		}
+	        	}
+	        }
+		}
+		
+	
+		// if user provided -h or --help print help text
+	    if (cmd.hasOption("help") || cmd.hasOption('h')) {
+	    	 printHelp(options);
+	    }
+	
+	    
+	    // if user provided command line arguments without any flag
+	    String[] remainder = cmd.getArgs();
+	    if(remainder.length > 1) {
+	        System.out.println("\nWARNING: Could not assign argument(s) to any option:");
+	        for (int i=1; i < remainder.length; i++) {
+	            System.out.print(remainder[i]);
+	            System.out.print(" ");
+	        }
+	        System.out.println();
+	    }	
 	}
 	
 	
@@ -264,7 +274,7 @@ public class CommandLineHandler {
 	private void parseGraph(String inputFileName) {
 		// start parsing the graph
 		FileHandler nFileHandler = new FileHandler();
-		nFileHandler.setGraphmlFile(claArgs[0]);
+		nFileHandler.setGraphmlFile(inputFileName);
 		nFileHandler.prepareParser();
 
 		// instantiate Graph object

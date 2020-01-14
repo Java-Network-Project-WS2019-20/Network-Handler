@@ -1,7 +1,11 @@
 package networkHandler;
 
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -37,6 +41,9 @@ public class GraphWriter {
 	 * This Method creates new graphml file by using the external library jdom-2.0.6.
 	 */
 	public void exportGraphmlAnalysis() {
+		
+		// check if provided output file already exists
+		checkFileExists();
 		
 		// 1. creating a document
         Document document = new Document();
@@ -120,6 +127,7 @@ public class GraphWriter {
         	}
         }
 
+        
         // 3. adding all children to parents to root
  		graphElement.addContent(connectivityElement);
  		graphElement.addContent(diameterElement);
@@ -161,19 +169,52 @@ public class GraphWriter {
         
         
     // write document to new file
-	private void writeToOutputfile(Document document) {
-        try {
-            XMLOutputter outputter = new XMLOutputter();
-            outputter.setFormat(Format.getPrettyFormat());
-            outputter.output(document, new FileWriter(outputFileName));
+	private void writeToOutputfile(Document document) {     
+        XMLOutputter outputter = new XMLOutputter();
+        outputter.setFormat(Format.getPrettyFormat());
         
-            System.out.println("File created: " + outputFileName);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }   	
+        try {
+			outputter.output(document, new FileWriter(outputFileName));
+		} catch (IOException e) {
+			System.out.println("ERROR: Can not create file at specified path.");
+			System.exit(0);
+		}
+  
+        System.out.println("File created: " + outputFileName);      	
 	} 
 
+	
+	// check if file already exists
+	private void checkFileExists() {
+		File outputFileExist = new File(outputFileName);
+		Scanner in = new Scanner(System.in);
+    	
+		try {
+	        if (outputFileExist.exists()) {
+	        	throw new FileAlreadyExistsException(outputFileName);	
+	        }
+        } catch (FileAlreadyExistsException e1) {
+        	System.out.print("WARNING: File already exists. Continue? YES/NO/RENAME: ");
+        	String userDecision = in.nextLine();
+        	
+        	if (userDecision.equalsIgnoreCase("YES")) {
+        		// continue
+        	} else if (userDecision.equalsIgnoreCase("RENAME")) {
+        		// rename outputFileName to newFileName
+        		System.out.print("Enter new file name and path: ");
+            	String newFileName = in.nextLine();
+        		
+            	this.outputFileName = newFileName;
+        		System.out.println("New file name: " + newFileName);
+        	} else {
+        		// else exit
+        		System.exit(0);
+        	}
+        } finally {
+        	in.close();
+        }
+	}
+	
 	
 }
 

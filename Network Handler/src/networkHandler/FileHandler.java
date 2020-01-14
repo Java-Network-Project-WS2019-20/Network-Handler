@@ -97,10 +97,14 @@ public class FileHandler {
 		try {
 			document = builder.parse(graphmlFile);
 		} catch (SAXException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println("ERROR: File content is not allowed.");
+			System.exit(0);	
 		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//			e.printStackTrace();
+			System.out.println("ERROR: Can not open/find file.");
+			System.exit(0);
+		}		
 
 		//Pass the parsable document to nodeParser and edgeParser method
 		graphmlParserNodes(document);

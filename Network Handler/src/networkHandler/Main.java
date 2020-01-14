@@ -2,7 +2,7 @@ package networkHandler;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoArgumentException {
 
 		// cla (command line arguments) for testing:
 		
@@ -11,20 +11,22 @@ public class Main {
 		// C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml -b 2 -c -d -s 1 14
 		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
 		
-		try {
-			if (args.length > 0) {	// user must provide at least one argument = input filename to start parsing graph
+		
+		// user must provide at least one argument = input filename to start parsing graph
+//		try {
+			if (args.length > 0) {	
 				
 				// start parsing cla
 				CommandLineHandler clHandler = new CommandLineHandler(args);
 				clHandler.claParser();	
 				
 			} else {
-				throw new Exception();
+				throw new NoArgumentException();
 			} 
-		} catch (Exception e) {
-			System.out.println("ERROR: Provide at least one argument."
-					+ "\n	Use -h or --help to print usage help.");
-		}
+//		} catch (NoArgumentException e) {
+//			System.out.println("ERROR: Provide at least one argument."
+//					+ "\n	Use -h or --help to print usage help.");
+//		}
 	
 		
 		
