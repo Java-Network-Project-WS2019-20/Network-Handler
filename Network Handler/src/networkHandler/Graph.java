@@ -20,7 +20,6 @@ public class Graph {
 	private boolean connectivity;
 	private double diameter;
 	
-	// Constructor
 	Graph (ArrayList<Edge> EdgeList, ArrayList<Node> NodeList){
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
@@ -46,12 +45,18 @@ public class Graph {
 		return diameter;
 	}
 	
+	/**
+	 * Print all nodes on console
+	 */
 	public void printAllNodes() {
 		for (Node n : nodeList) {
 			System.out.println(n.toString());
 		}
 	}
 	
+	/**
+	 * Print all edges on console
+	 */
 	public void printAllEdges() {
 		StringBuilder sb = new StringBuilder();
 		for (Edge e : edgeList) {
@@ -60,9 +65,13 @@ public class Graph {
 		System.out.println(sb);
 	}
 	
-	// Method to calculate, which nodes are reachable
-	// From a certain node v
-	// Using the Depth First Search Algorithm
+	/**
+	 * Recursively calculates all reachable nodes from a starting node
+	 * @param v 			starting node
+	 * @param visited 		all reachable nodes
+	 * @param adjListArray	adjacent nodes for each node
+	 * @return 				all reachable nodes
+	 */
 	public boolean[] dfsVisit(int v, boolean[] visited, LinkedList<Integer>[] adjListArray) {
 		// Mark the current node as visited
 		visited[v] = true;
@@ -74,8 +83,10 @@ public class Graph {
 		return visited;
 	}
 	
-	// Method to calculate, whether a undirected Graph is connected
-	// Not minding the weight of the edges
+	/**
+	 * Calculates whether a undirected Graph is connected or not
+	 * @return true if given Graph is connected
+	 */
 	public boolean isGraphConnected() {
 
 		// A linked list of all adjacent Nodes for each Node
@@ -534,7 +545,9 @@ public class Graph {
 		return allPaths;
 	}
 	
-	//	Method to get the Diameter of the graph
+	/**
+	 * @return the diameter of given Graph
+	 */
 	public double	diameter() {
 		//	check for connectivity of the graph
 		if(!isGraphConnected()) {
