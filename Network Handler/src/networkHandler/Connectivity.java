@@ -41,11 +41,12 @@ public class Connectivity extends GraphProperty<Boolean>{
 		// If one Node is not reachable, it means the graph
 		// Is not connected
 		dfsVisit(0,visited,adjListArray);
+		this.value = true;
 		for(int v = 0; v < this.graph.getNodeCount(); v++) {
 			if(!visited[v])
-				this.value = false;
+				this.value = false;				
 		}
-		this.value = true;
+
 	}
 	
 	// Method to calculate, which nodes are reachable
