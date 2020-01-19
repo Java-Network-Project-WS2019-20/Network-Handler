@@ -1,7 +1,9 @@
 package networkHandler;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -18,7 +20,7 @@ import org.apache.commons.cli.ParseException;
  */
 public class CommandLineHandler {
 	private String[] claArgs;
-	private Graph graph;
+	private GraphHandler graphHandler;
 	
 	
 	
@@ -142,7 +144,8 @@ public class CommandLineHandler {
 		
 		// if user provided -a call GraphWriter
 	    if (cmd.hasOption("a")) {
-	    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graph);
+	    	graphHandler.calculateAllGraphProperties();
+	    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graphHandler);
 	    	gw.exportGraphmlAnalysis();
 	    }
 	
@@ -153,10 +156,10 @@ public class CommandLineHandler {
 	    	try {
 		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
 				    try {
-
-//				    	int bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
-				    	// TODO call BCM calculation - throws NoSuchElementException if non existing node id is provided
-				    	
+				    	int bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
+				    	graphHandler.setBetweennessCentralityMeasureParameter(bcmNodeID);
+				    	graphHandler.calculateSingleBetweennessCentralityMeasure();
+				    	System.out.println("Betweenness Centrality Measure of Node n" + bcmNodeID + " is " + graphHandler.getSingleBetweennessCentralityMeasure());
 					// if user provides non existing Node ID:
 					} catch (NoSuchElementException nsee) {
 						System.out.println("ERROR: Can not calculate BCM."
@@ -177,13 +180,15 @@ public class CommandLineHandler {
 		    
 	    // if user provided -c print connectivity to sys.out
 	    if (cmd.hasOption('c')) {
-	        System.out.println("Graph is connected: " + graph.isGraphConnected());
+	    	graphHandler.calculateConnectivity();
+	        System.out.println("Graph is connected: " + graphHandler.getConnectivity());
 	    }
 	
 	    
 	    // if user provided -d print diameter to sys.out
 	    if (cmd.hasOption('d')) {
-	    	System.out.println("Diameter: " + graph.getDiameter());
+	    	graphHandler.calculateDiameter();
+	    	System.out.println("Diameter: " + graphHandler.getDiameter());
 	    }
 	
 	
@@ -194,11 +199,12 @@ public class CommandLineHandler {
 				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
 			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
 					try {
+						graphHandler.setSingleShortestPathParameters(cmd.getOptionValues("s")[0].charAt(0), cmd.getOptionValues("s")[1].charAt(0));
+						graphHandler.calculateSingleShortestPath();
 						System.out.println( "Shortest Path between: "
 								+ cmd.getOptionValues("s")[0] + " and "
 								+ cmd.getOptionValues("s")[1] + " = "
-								+ graph.shortestPath( Integer.parseInt(cmd.getOptionValues("s")[0]),
-														Integer.parseInt(cmd.getOptionValues("s")[1]) ).getLength() );	
+								+ graphHandler.getSingleShortestPath().getLength());	
 					// if user provides non existing Node ID's:
 					} catch (NoSuchElementException nsee) {
 						System.out.println("ERROR: Can not calculate shortest path."
@@ -219,35 +225,31 @@ public class CommandLineHandler {
 		
 		// if user provided -G print graph to sys.out
 		if (cmd.hasOption('G')) {
-			System.out.println(graph);
+			System.out.println(graphHandler.getGraph());
 		}
 		
 		
 		// if user provided -S calculate all shortest paths and print to sys.out
 		if (cmd.hasOption('S')) {
-			ArrayList<ArrayList<ArrayList<Path>>> shortestPathList = new ArrayList<ArrayList<ArrayList<Path>>>(graph.shortestPaths());
-			
-			for(int sourceId = 0; sourceId < shortestPathList.size(); sourceId++) {
-	        	for(int targetId = 0; targetId < shortestPathList.get(sourceId).size(); targetId++) {
-	        		for(int i = 0; i < shortestPathList.get(sourceId).get(targetId).size(); i++) {
-	        			Path currentShortestPath = shortestPathList.get(sourceId).get(targetId).get(i);
-	        			
-	        			// source + target
-	        			System.out.print("source: " + "n" + sourceId);
-	        			System.out.print("	target: " + "n" + targetId);
-	        			
-	        			// length
-	        			System.out.println("	length:" + currentShortestPath.getLength());
-	        			
-	        			// segment values
-	        			if(currentShortestPath.getLength() != Double.POSITIVE_INFINITY) {
-		        			for(int j = 0; j < currentShortestPath.getNumberOfNodes(); j++) {
-		        				System.out.println("segment: n" + currentShortestPath.getNode(j));
-		        			}
-	        			}
-	        		}
-	        	}
-	        }
+			graphHandler.calculateAllShortestPaths();
+			TreeSet<Path> shortestPathList = graphHandler.getShortestPathsList();
+			Iterator<Path>	pathIterator = shortestPathList.iterator();
+			while(pathIterator.hasNext()) {
+				Path currentPath = pathIterator.next();
+				//	source + target
+				System.out.print("source: n" + currentPath.getOriginNode());
+				System.out.print(" target: n" + currentPath.getDestinationNode());
+				
+				//	length
+				System.out.println(" length: " + currentPath.getLength());
+				
+				//	segment values
+				if(currentPath.getLength() != Double.POSITIVE_INFINITY) {
+					for(int i = 0; i < currentPath.getNumberOfNodes(); i++) {
+						System.out.println("segment: n" + currentPath.getNode(i));
+					}
+				}
+			}
 		}
 		
 	
@@ -278,7 +280,8 @@ public class CommandLineHandler {
 		nFileHandler.prepareParser();
 
 		// instantiate Graph object
-		graph = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
+		Graph graph = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
+		graphHandler = new GraphHandler(graph);
 	}
 	
 	
