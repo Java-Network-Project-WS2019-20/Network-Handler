@@ -82,20 +82,41 @@ public class Path implements Comparable<Path>{
 	 *	equality in this respect does not correspond to equality of Paths
 	 */
 	public	int		compareTo(Path that) {
-		if(this.length == that.length) {
+		if(this.getOriginNode() == that.getOriginNode() && this.getDestinationNode() == that.getDestinationNode()) {
+			if(this.getNumberOfNodes() < that.getNumberOfNodes()) {
+				return -1;
+			}else if (this.getNumberOfNodes() > that.getNumberOfNodes()){
+				return 1;
+			}else {
+				for(int i = 0; i < this.getNumberOfNodes(); i++) {
+					if(this.getNode(i) < that.getNode(i)) {
+						return -1;
+					}else if(this.getNode(i) > that.getNode(i)){
+						return 1;
+					}
+				}
+			}
 			return 0;
 		}else {
-			if(this.length < that.length) {
-				return -1;
-			}else {
-				return 1;
+			if(this.getOriginNode() == that.getOriginNode()) {
+				if(this.getDestinationNode() < that.getDestinationNode()) {
+					return -1;
+				}else {
+					return 1;
+				}
+			}else{
+				if(this.getOriginNode() < that.getOriginNode()) {
+					return -1;
+				}else {
+					return 1;
+				}
 			}
 		}
 	}
 	
 	//	method to check equality of Paths
 	public	boolean	equals(Path that) {
-		return this.length == that.length  && this.getNumberOfNodes() == that.getNumberOfNodes() && this.nodes.containsAll(that.nodes);
+		return (this.length == that.length  && this.getNumberOfNodes() == that.getNumberOfNodes() && this.nodes.containsAll(that.nodes));
 	}
 	
 }
