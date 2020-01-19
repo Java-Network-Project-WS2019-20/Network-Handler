@@ -5,7 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -20,7 +22,8 @@ import org.jdom2.output.XMLOutputter;
 public class GraphWriter {
 	private String outputFileName;
 	private Graph graph;
-	private ArrayList<ArrayList<ArrayList<Path>>> shortestPathList;
+	private TreeSet<Path> shortestPathList;
+	private	GraphHandler graphHandler;
 	
 	
 	
@@ -29,10 +32,12 @@ public class GraphWriter {
 	 * @param outputFileName The output filename (and path) of the new file
 	 * @param graph The graph on which all calculations will be calculated
 	 */
-	public GraphWriter(String outputFileName, Graph graph) {
+	public GraphWriter(String outputFileName, GraphHandler graphHandler) {
 		this.outputFileName = outputFileName;
-		this.graph = graph;
-		this.shortestPathList = graph.shortestPaths();
+		this.graphHandler = graphHandler;
+		this.graph = graphHandler.getGraph();
+		this.shortestPathList = graphHandler.getShortestPathsList();
+		
 	}
 	
 	
@@ -56,9 +61,9 @@ public class GraphWriter {
         		.setAttribute("id", "G")
         		.setAttribute("edgedefault", "undirected");
         Element connectivityElement = new Element("connectivity")
-        		.setAttribute("connected", String.valueOf( graph.getConnectivity() ));
+        		.setAttribute("connected", String.valueOf( graphHandler.getConnectivity() ));
         Element diameterElement = new Element("diameter")
-        		.setAttribute("diameter", String.valueOf( graph.getDiameter() ));
+        		.setAttribute("diameter", String.valueOf( graphHandler.getDiameter() ));
         Element nodesElement = new Element("nodes");
         Element nodeElement;
         Element edgesElement = new Element("edges");
@@ -73,7 +78,9 @@ public class GraphWriter {
  					.setAttribute("id", "n" + String.valueOf(graph.getNodeList().get(i).getID()))
  					.addContent(dataElement = new Element("data")
  						.setAttribute("key", "v_id")
- 						.setText(String.valueOf(graph.getNodeList().get(i).getID())));
+ 						.setText(String.valueOf(graph.getNodeList().get(i).getID())))
+ 						.setAttribute("key", "n_bcm")
+ 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasures().get(i)));
  			nodesElement.addContent(nodeElement);
  		}
  		
@@ -92,42 +99,36 @@ public class GraphWriter {
  		}
  		
         // 2.c. creating shortest path elements
-        for(int sourceId = 0; sourceId < shortestPathList.size(); sourceId++) {
-        	for(int targetId = 0; targetId < shortestPathList.get(sourceId).size(); targetId++) {
-        		for(int i = 0; i < shortestPathList.get(sourceId).get(targetId).size(); i++) {
-        			//	get Path 
-        			Path currentShortestPath = shortestPathList.get(sourceId).get(targetId).get(i);
-        			
-        			shortestPathElement = new Element("shortestPath");
-        			dataElement = new Element("data");
-        			
-        			//	adding source value
-        			shortestPathElement.setAttribute("source", "n" + sourceId);
-        			
-        			//	adding target value
-        			shortestPathElement.setAttribute("target", "n" + targetId);
-        			
-        			//	adding length value
-        			dataElement.setAttribute("key", "length").setText(String.valueOf(currentShortestPath.getLength()));
-        			shortestPathElement.addContent(dataElement);
-        			
-        			//	adding segment values
-        			if(currentShortestPath.getLength() != Double.POSITIVE_INFINITY) {
-	        			for(int j = 0; j < currentShortestPath.getNumberOfNodes(); j++) {
-	        				dataElement = new Element("data");
-	        				dataElement.setAttribute("key", "segment" + j).setText("n" + currentShortestPath.getNode(j));
-	        				//	adding created node elements to root
-	        				shortestPathElement.addContent(dataElement);
-	        			}
-        			}
-        			
-        			//	shortestPathElement.addContent(dataElement);
-        			allShortestPathsElement.addContent(shortestPathElement);
-        		}
-        	}
-        }
-
-        
+ 		Iterator<Path>	pathIterator = shortestPathList.iterator();
+ 		while(pathIterator.hasNext()) {
+ 			Path currentPath = pathIterator.next();
+			shortestPathElement = new Element("shortestPath");
+			dataElement = new Element("data");
+			
+			//	adding source value
+			shortestPathElement.setAttribute("source", "n" + currentPath.getOriginNode());
+			
+			//	adding target value
+			shortestPathElement.setAttribute("target", "n" + currentPath.getDestinationNode());
+			
+			//	adding length value
+			dataElement.setAttribute("key", "length").setText(String.valueOf(currentPath.getLength()));
+			shortestPathElement.addContent(dataElement);
+			
+			//	adding segment values
+			if(currentPath.getLength() != Double.POSITIVE_INFINITY) {
+    			for(int j = 0; j < currentPath.getNumberOfNodes(); j++) {
+    				dataElement = new Element("data");
+    				dataElement.setAttribute("key", "segment" + j).setText("n" + currentPath.getNode(j));
+    				//	adding created node elements to root
+    				shortestPathElement.addContent(dataElement);
+    			}
+			}
+			
+			//	shortestPathElement.addContent(dataElement);
+			allShortestPathsElement.addContent(shortestPathElement);
+ 		}
+                
         // 3. adding all children to parents to root
  		graphElement.addContent(connectivityElement);
  		graphElement.addContent(diameterElement);
