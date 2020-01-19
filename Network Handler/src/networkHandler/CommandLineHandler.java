@@ -199,7 +199,7 @@ public class CommandLineHandler {
 				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
 			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
 					try {
-						graphHandler.setSingleShortestPathParameters(cmd.getOptionValues("s")[0].charAt(0), cmd.getOptionValues("s")[1].charAt(0));
+						graphHandler.setSingleShortestPathParameters(Integer.parseInt(cmd.getOptionValues("s")[0]), Integer.parseInt(cmd.getOptionValues("s")[1]));
 						graphHandler.calculateSingleShortestPath();
 						System.out.println( "Shortest Path between: "
 								+ cmd.getOptionValues("s")[0] + " and "
