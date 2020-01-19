@@ -1,6 +1,6 @@
 package networkHandler;
 
-import java.util.ArrayList;
+
 import java.util.TreeSet;
 
 public class Diameter extends GraphProperty<Double> {
