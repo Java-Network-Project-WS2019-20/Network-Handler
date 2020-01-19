@@ -7,66 +7,21 @@ import java.util.TreeSet;
 
 public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 
-	//	Constructor
+//	Constructor
 	public	ShortestPathList(Graph graph) {
 		super(graph);
 	}
 	
-	//	alternative getter method
+//	alternative getter method
 	public TreeSet<Path> getListOfShortestPaths(){
 		return this.getValue();
 	}
 	
-	/*	Method to recursively create shortest paths.
-	 * 	the method takes in a map of distances of nodes from a initial node, a map of child IDs which references parent nodes with child nodes, a current node and a list of paths leading to the current node
-	 * 	the maps are used to create new paths and determine whether further paths have to be created, while the list of paths leading into a node is used to determine, which paths need to be extended by the current node
-	 * 	
-	 */
-	public	ArrayList<Path>	createPaths(TreeMap<Integer, Double> mapOfDistances, TreeMap<Integer, TreeSet<Integer>> mapOfChildIds, int currentNodeId, ArrayList<Path> pathsToCurrentNode) {
-		//	initialize a list of paths containing all paths, which end in the current node (of the current iteration)
-		ArrayList<Path> pathsEndingInCurrentNode = new ArrayList<Path>();
-		//	initialize a list of paths containing all paths, which contain the current node (of the current iteration)
-		ArrayList<Path> pathsContainingCurrentNode;
-		//	check whether the current node ist the initial node for the recursive creation
-		if(pathsToCurrentNode.isEmpty()) {
-			//	if there are no paths leading into the node, it is the initial node. therefore an initial path needs to be created, which is the basis for all paths
-			//	initialize the list of nodes for the initial path
-			ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
-			//	add the initial node to the list of nodes
-			nodesOnPath.add(currentNodeId);
-			//	create the initial path(which contains only the initial node and has length 0). this path will not be contained in the list of all paths
-			Path initialPath = new Path(nodesOnPath, 0);
-			//	the initial path is added to the list of paths ending in the current path. this is required so it can be extended later on by further recursion.
-			pathsEndingInCurrentNode.add(initialPath);
-			//	 the list of paths containing the current node is initialized as an empty list, so the initial path is not added to the return value.
-			pathsContainingCurrentNode = new ArrayList<Path>();
-		}else{
-			//	if there are paths leading into the current node, these paths need to be extended by the current node. this is done for each path.
-			pathsToCurrentNode.forEach(path ->{
-				//	a new path is initialized as a copy of the path leading into the current node
-				Path extendedPath = new Path(path);
-				//	the new path is extended by the current node and the length is updated accordingly
-				extendedPath.extend(mapOfDistances.get(currentNodeId), currentNodeId);
-				//	the list of paths ending in the current node is updated to contain the newly created path
-				pathsEndingInCurrentNode.add(extendedPath);
-			});
-			//	 all paths ending in the current node are added to the newly created list of all path containing the node. this list will be further extended by all paths which are extensions of the just created paths.
-			pathsContainingCurrentNode = new ArrayList<Path>(pathsEndingInCurrentNode);
-		}
-		
-		//	the mapping of child nodes is checked for further children of the current node.
-		if (mapOfChildIds.containsKey(currentNodeId)) {
-			//	if the node has child nodes, their paths have to be created as well for each child with each path, that ended in the current node
-			mapOfChildIds.get(currentNodeId).forEach(childId -> {
-				//	the method calls itself recursively to create the paths for the children. for paths leading to the children, the list of paths ending in the current node is used. after creation, these paths are added to the overall list of paths containing the current node.
-				pathsContainingCurrentNode.addAll(createPaths(mapOfDistances, mapOfChildIds, childId, pathsEndingInCurrentNode));
-			});
-		}
-		//	the list of all paths containing the current node is returned
-		return pathsContainingCurrentNode;
-	}
 
-	//	implementation of inherited abstract method form GraphProperty class
+//	implementation of inherited abstract method form GraphProperty class
+	/*	Method to calculate the shortest paths between all Nodes by using Dijkstra's algorithm
+	 *	Returns a list of paths sorted by initial node first, destination node second
+	 */
 	public	void	calculate() {
 		/*	Initialize an adjacency matrix for the graph
 		 * 	This matrix stores the Edge IDs of corresponding Nodes
@@ -250,4 +205,53 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 
 	}
 	
+	/*	Method to recursively create shortest paths.
+	 * 	the method takes in a map of distances of nodes from a initial node, a map of child IDs which references parent nodes with child nodes, a current node and a list of paths leading to the current node
+	 * 	the maps are used to create new paths and determine whether further paths have to be created, while the list of paths leading into a node is used to determine, which paths need to be extended by the current node
+	 * 	
+	 */
+	public	ArrayList<Path>	createPaths(TreeMap<Integer, Double> mapOfDistances, TreeMap<Integer, TreeSet<Integer>> mapOfChildIds, int currentNodeId, ArrayList<Path> pathsToCurrentNode) {
+		//	initialize a list of paths containing all paths, which end in the current node (of the current iteration)
+		ArrayList<Path> pathsEndingInCurrentNode = new ArrayList<Path>();
+		//	initialize a list of paths containing all paths, which contain the current node (of the current iteration)
+		ArrayList<Path> pathsContainingCurrentNode;
+		//	check whether the current node ist the initial node for the recursive creation
+		if(pathsToCurrentNode.isEmpty()) {
+			//	if there are no paths leading into the node, it is the initial node. therefore an initial path needs to be created, which is the basis for all paths
+			//	initialize the list of nodes for the initial path
+			ArrayList<Integer> nodesOnPath = new ArrayList<Integer>();
+			//	add the initial node to the list of nodes
+			nodesOnPath.add(currentNodeId);
+			//	create the initial path(which contains only the initial node and has length 0). this path will not be contained in the list of all paths
+			Path initialPath = new Path(nodesOnPath, 0);
+			//	the initial path is added to the list of paths ending in the current path. this is required so it can be extended later on by further recursion.
+			pathsEndingInCurrentNode.add(initialPath);
+			//	 the list of paths containing the current node is initialized as an empty list, so the initial path is not added to the return value.
+			pathsContainingCurrentNode = new ArrayList<Path>();
+		}else{
+			//	if there are paths leading into the current node, these paths need to be extended by the current node. this is done for each path.
+			pathsToCurrentNode.forEach(path ->{
+				//	a new path is initialized as a copy of the path leading into the current node
+				Path extendedPath = new Path(path);
+				//	the new path is extended by the current node and the length is updated accordingly
+				extendedPath.extend(mapOfDistances.get(currentNodeId), currentNodeId);
+				//	the list of paths ending in the current node is updated to contain the newly created path
+				pathsEndingInCurrentNode.add(extendedPath);
+			});
+			//	 all paths ending in the current node are added to the newly created list of all path containing the node. this list will be further extended by all paths which are extensions of the just created paths.
+			pathsContainingCurrentNode = new ArrayList<Path>(pathsEndingInCurrentNode);
+		}
+		
+		//	the mapping of child nodes is checked for further children of the current node.
+		if (mapOfChildIds.containsKey(currentNodeId)) {
+			//	if the node has child nodes, their paths have to be created as well for each child with each path, that ended in the current node
+			mapOfChildIds.get(currentNodeId).forEach(childId -> {
+				//	the method calls itself recursively to create the paths for the children. for paths leading to the children, the list of paths ending in the current node is used. after creation, these paths are added to the overall list of paths containing the current node.
+				pathsContainingCurrentNode.addAll(createPaths(mapOfDistances, mapOfChildIds, childId, pathsEndingInCurrentNode));
+			});
+		}
+		//	the list of all paths containing the current node is returned
+		return pathsContainingCurrentNode;
+	}
+
 }
