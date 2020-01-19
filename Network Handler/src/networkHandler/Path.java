@@ -76,6 +76,12 @@ public class Path implements Comparable<Path>{
 		this.nodes.add(NodeId);
 	}
 	
+//	check for containing a specific Node
+	public boolean	contains(int NodeId) {
+		return this.nodes.contains(NodeId);
+		
+	}
+	
 //	comparing methods
 	
 	/*	compare Paths by length
