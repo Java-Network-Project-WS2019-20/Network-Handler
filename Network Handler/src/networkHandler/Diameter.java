@@ -1,14 +1,15 @@
 package networkHandler;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class Diameter extends GraphProperty<Double> {
 	//	Attributes
-	private	ArrayList<Path>	shortestPaths;
+	private	TreeSet<Path>	shortestPaths;
 	private	boolean			connectivity;
 	
 	//	Constructor
-	public		Diameter(Graph graph, ArrayList<Path> shortestPaths) {
+	public		Diameter(Graph graph, TreeSet<Path> shortestPaths) {
 		super(graph);
 		this.shortestPaths = shortestPaths;
 	}
