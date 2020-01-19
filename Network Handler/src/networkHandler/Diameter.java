@@ -9,9 +9,10 @@ public class Diameter extends GraphProperty<Double> {
 	private	boolean			connectivity;
 	
 	//	Constructor
-	public		Diameter(Graph graph, TreeSet<Path> shortestPaths) {
+	public		Diameter(Graph graph, TreeSet<Path> shortestPaths, boolean connectivity) {
 		super(graph);
 		this.shortestPaths = shortestPaths;
+		this.connectivity = connectivity;
 	}
 	
 	//	alternative getter method
