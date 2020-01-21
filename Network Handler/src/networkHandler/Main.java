@@ -1,9 +1,13 @@
 package networkHandler;
 
+import org.apache.log4j.BasicConfigurator;
+
 public class Main {
 
 	public static void main(String[] args) throws NoArgumentException {
 
+
+		BasicConfigurator.configure();
 		// cla (command line arguments) for testing:
 		
 		// C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14

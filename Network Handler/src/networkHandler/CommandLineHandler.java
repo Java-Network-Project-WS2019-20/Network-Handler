@@ -12,6 +12,8 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 /**
  * This class implements a parser for command line arguments.
@@ -21,6 +23,8 @@ import org.apache.commons.cli.ParseException;
 public class CommandLineHandler {
 	private String[] claArgs;
 	private GraphHandler graphHandler;
+
+	private final Logger mylog = LogManager.getLogger(CommandLineHandler.class);
 	
 	
 	
@@ -136,9 +140,15 @@ public class CommandLineHandler {
 				throw new IllegalArgumentException();	// if user did not provide proper .graphml file 
 			}											// OR provided wrong arguments
 		} catch (IllegalArgumentException e) {
-			System.out.println("ERROR: First argument needs to be .graphml file"
-					+ "\n	Provide correct file name with path: /<filename>.graphml"
-					+ "\n	Get help using -h or --help");
+
+
+			mylog.info("ERROR: First argument needs to be .graphml file\"\n" +
+					"\t\t\t\t\t+ \"\\n\tProvide correct file name with path: /<filename>.graphml\"\n" +
+					"\t\t\t\t\t+ \"\\n\tGet help using -h or --help");
+
+//			System.out.println("ERROR: First argument needs to be .graphml file"
+//					+ "\n	Provide correct file name with path: /<filename>.graphml"
+//					+ "\n	Get help using -h or --help");
 		}
 		
 		
