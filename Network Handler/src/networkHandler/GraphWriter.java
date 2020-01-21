@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -24,13 +26,15 @@ public class GraphWriter {
 	private Graph graph;
 	private TreeSet<Path> shortestPathList;
 	private	GraphHandler graphHandler;
-	
-	
-	
+	private final Logger mylog = LogManager.getLogger(GraphWriter.class);
+
+
+
+
 	/**
 	 * This constructs a GraphWriter which writes all graph attributes and calculations over it into a new file.
 	 * @param outputFileName The output filename (and path) of the new file
-	 * @param graph The graph on which all calculations will be calculated
+	 * @param graphHandler The graph on which all calculations will be calculated
 	 */
 	public GraphWriter(String outputFileName, GraphHandler graphHandler) {
 		this.outputFileName = outputFileName;
@@ -177,12 +181,12 @@ public class GraphWriter {
         try {
 			outputter.output(document, new FileWriter(outputFileName));
 		} catch (IOException e) {
-			System.out.println("ERROR: Can not create file at specified path.");
-			System.exit(0);
+
+        	mylog.error("Can not create file at specified path");
 		}
-  
-        System.out.println("File created: " + outputFileName);      	
-	} 
+
+        mylog.info("File created: " + outputFileName);
+	}
 
 	
 	// check if file already exists
@@ -195,18 +199,19 @@ public class GraphWriter {
 	        	throw new FileAlreadyExistsException(outputFileName);	
 	        }
         } catch (FileAlreadyExistsException e1) {
-        	System.out.print("WARNING: File already exists. Continue? YES/NO/RENAME: ");
+
+			System.out.println("File already exists. Continue? YES/NO/RENAME: ");
         	String userDecision = in.nextLine();
         	
         	if (userDecision.equalsIgnoreCase("YES")) {
         		// continue
         	} else if (userDecision.equalsIgnoreCase("RENAME")) {
         		// rename outputFileName to newFileName
-        		System.out.print("Enter new file name and path: ");
+				System.out.println("Enter new file name and path: ");
             	String newFileName = in.nextLine();
         		
             	this.outputFileName = newFileName;
-        		System.out.println("New file name: " + newFileName);
+            	mylog.info("New file name: " + newFileName);
         	} else {
         		// else exit
         		System.exit(0);

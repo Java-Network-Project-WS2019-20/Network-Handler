@@ -1,5 +1,7 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -39,7 +41,10 @@ public class FileHandler {
 	 */
 	private ArrayList<Edge> edgeList;
 
-	
+	private final Logger mylog = LogManager.getLogger(FileHandler.class);
+
+
+
 	public FileHandler() {
 
 		//Init
@@ -98,13 +103,11 @@ public class FileHandler {
 			document = builder.parse(graphmlFile);
 		} catch (SAXException e) {
 //			e.printStackTrace();
-			System.out.println("ERROR: File content is not allowed.");
-			System.exit(0);	
+			mylog.error("File content is not allowed");
 		} catch (IOException e) {
 //			e.printStackTrace();
-			System.out.println("ERROR: Can not open/find file.");
-			System.exit(0);
-		}		
+			mylog.error("Can not open/find file");
+		}
 
 		//Pass the parsable document to nodeParser and edgeParser method
 		graphmlParserNodes(document);

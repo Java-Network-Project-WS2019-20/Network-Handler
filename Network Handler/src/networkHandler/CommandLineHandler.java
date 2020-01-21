@@ -142,9 +142,9 @@ public class CommandLineHandler {
 		} catch (IllegalArgumentException e) {
 
 
-			mylog.info("ERROR: First argument needs to be .graphml file\"\n" +
-					"\t\t\t\t\t+ \"\\n\tProvide correct file name with path: /<filename>.graphml\"\n" +
-					"\t\t\t\t\t+ \"\\n\tGet help using -h or --help");
+			mylog.error("First argument needs to be .graphml file. " +
+					"Provide correct file name with path: /<filename>.graphml. " +
+					"Get help using -h or --help");
 
 //			System.out.println("ERROR: First argument needs to be .graphml file"
 //					+ "\n	Provide correct file name with path: /<filename>.graphml"

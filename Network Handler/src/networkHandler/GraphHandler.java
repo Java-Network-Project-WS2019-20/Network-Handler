@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.TreeSet;
 
@@ -15,8 +18,10 @@ public class GraphHandler {
 	private	int								shortestPathInitialNodeId;
 	private	int								shortestPathDestinationNodeId;
 	private	int								betweennessCentralityMeasureNodeId;
-	
-//	Constructor
+	private final 							Logger mylog = LogManager.getLogger(GraphHandler.class);
+
+
+	//	Constructor
 	public	GraphHandler(Graph graph) {
 		this.graph = graph;
 	}
@@ -24,26 +29,34 @@ public class GraphHandler {
 	public	void				calculateDiameter() {
 		this.diameter = new Diameter(this.graph, this.shortestPathList.getValue(), this.connectivity.getValue());
 		this.diameter.calculate();
+		mylog.info("Diameter was calculated successfully");
 	}
 	
 	public	void				calculateConnectivity() {
 		this.connectivity = new Connectivity(this.graph);
 		this.connectivity.calculate();
+		mylog.info("Connectivity was calculated successfully");
 	}
 	
 	public	void				calculateSingleShortestPath() {
 		this.shortestPath = new ShortestPath(this.graph, this.shortestPathInitialNodeId, this.shortestPathDestinationNodeId);
 		this.shortestPath.calculate();
+		mylog.info("Shortest path between " + this.shortestPathInitialNodeId + " and" + this.shortestPathDestinationNodeId + " was calculated successfully");
+
 	}
 	
 	public	void				calculateAllShortestPaths() {
 		this.shortestPathList = new ShortestPathList(this.graph);
 		this.shortestPathList.calculate();
+		mylog.info("Shortest path between all nodes were calculated successfully");
+
 	}
 	
 	public	void				calculateSingleBetweennessCentralityMeasure() {
 		this.betweennessCentralityMeasure = new BetweennessCentralityMeasure(this.graph, this.shortestPathList.getValue(), this.betweennessCentralityMeasureNodeId);
 		this.betweennessCentralityMeasure.calculate();
+		mylog.info("Single betweenness centrality measure was calculated successfully");
+
 	}
 	
 	public	void				calculateAllBetweennessCentralityMeasures() {
@@ -53,6 +66,9 @@ public class GraphHandler {
 			bcm.calculate();
 			this.betweennessCentralityMeasureList.add(bcm.getValue());
 		}
+		mylog.info("All betweenness centrality measure was calculated successfully");
+
+
 	}
 	
 	public	void				calculateAllGraphProperties() {
