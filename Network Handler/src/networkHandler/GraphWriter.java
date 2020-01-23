@@ -212,6 +212,7 @@ public class GraphWriter {
         		
             	this.outputFileName = newFileName;
             	mylog.info("New file name: " + newFileName);
+
         	} else {
         		// else exit
         		System.exit(0);
