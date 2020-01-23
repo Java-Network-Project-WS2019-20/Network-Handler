@@ -1,6 +1,5 @@
 package networkHandler;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
@@ -23,7 +22,19 @@ import org.apache.log4j.Logger;
 public class CommandLineHandler {
 	private String[] claArgs;
 	private GraphHandler graphHandler;
-
+	private String inputFileName;
+	private String outputFileName;
+	private int bcmNodeID;
+	private int spIDone;
+	private int spIDtwo;
+	private boolean flagStartParsing;
+	private boolean flagA;
+	private boolean flagB;
+	private boolean flagC;
+	private boolean flagD;
+	private boolean flagS;
+	private boolean flagSall;
+	private boolean flagG;
 	private final Logger mylog = LogManager.getLogger(CommandLineHandler.class);
 	
 	
@@ -35,6 +46,19 @@ public class CommandLineHandler {
 	 */
 	public CommandLineHandler(String[] args) {
 		this.claArgs = args;
+		this.inputFileName = "";
+		this.outputFileName = "";
+		this.bcmNodeID = 0;
+		this.spIDone = 0;
+		this.spIDtwo = 0;
+		this.flagStartParsing = false;
+		this.flagA = false;
+		this.flagB = false;
+		this.flagC = false;
+		this.flagD = false;
+		this.flagS = false;
+		this.flagSall = false;
+		this.flagG = false;
 	}
 
 
@@ -131,8 +155,11 @@ public class CommandLineHandler {
 		// if first provided argument is .graphml file start parsing the graph
 		try { 
 			if( claArgs[0].contains(".graphml") ) {
-				String inputFileName = claArgs[0];	// set inputFileName = first provided cla		
-				parseGraph(inputFileName);	
+				inputFileName = claArgs[0];	// set inputFileName = first provided cla		
+//				parseGraph(inputFileName);	
+				
+				flagStartParsing = true;
+				
 			} else if ( claArgs[0].contains("help") || ( (claArgs[0].endsWith("h")) && (cmd.hasOption('h')) ) ) {
 				printHelp(options);		// if single argument is -h or --help print help text
 				System.exit(0);			// and exit
@@ -140,7 +167,6 @@ public class CommandLineHandler {
 				throw new IllegalArgumentException();	// if user did not provide proper .graphml file 
 			}											// OR provided wrong arguments
 		} catch (IllegalArgumentException e) {
-
 
 			mylog.error("First argument needs to be .graphml file. " +
 					"Provide correct file name with path: /<filename>.graphml. " +
@@ -154,9 +180,12 @@ public class CommandLineHandler {
 		
 		// if user provided -a call GraphWriter
 	    if (cmd.hasOption("a")) {
-	    	graphHandler.calculateAllGraphProperties();
-	    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graphHandler);
-	    	gw.exportGraphmlAnalysis();
+//	    	graphHandler.calculateAllGraphProperties();
+//	    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graphHandler);
+//	    	gw.exportGraphmlAnalysis();
+	    	
+	    	outputFileName = cmd.getOptionValue('a');
+	    	flagA = true;
 	    }
 	
 	    
@@ -166,11 +195,13 @@ public class CommandLineHandler {
 	    	try {
 		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
 				    try {
-				    	int bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
-				    	graphHandler.setBetweennessCentralityMeasureParameter(bcmNodeID);
-				    	graphHandler.calculateSingleBetweennessCentralityMeasure();
-				    	System.out.println("Betweenness Centrality Measure of Node n" + bcmNodeID + " is " + graphHandler.getSingleBetweennessCentralityMeasure());
-					// if user provides non existing Node ID:
+				    	bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
+//				    	graphHandler.setBetweennessCentralityMeasureParameter(bcmNodeID);
+//				    	graphHandler.calculateSingleBetweennessCentralityMeasure();
+//				    	System.out.println("Betweenness Centrality Measure of Node n" + bcmNodeID + " is " + graphHandler.getSingleBetweennessCentralityMeasure());
+				    	flagB = true;
+				    	
+				    	// if user provides non existing Node ID:
 					} catch (NoSuchElementException nsee) {
 						System.out.println("ERROR: Can not calculate BCM."
 								+ "\n	The Node ID you provided does not exist."
@@ -190,15 +221,19 @@ public class CommandLineHandler {
 		    
 	    // if user provided -c print connectivity to sys.out
 	    if (cmd.hasOption('c')) {
-	    	graphHandler.calculateConnectivity();
-	        System.out.println("Graph is connected: " + graphHandler.getConnectivity());
+//	    	graphHandler.calculateConnectivity();
+//	        System.out.println("Graph is connected: " + graphHandler.getConnectivity());
+	    	
+	    	flagC = true;
 	    }
 	
 	    
 	    // if user provided -d print diameter to sys.out
 	    if (cmd.hasOption('d')) {
-	    	graphHandler.calculateDiameter();
-	    	System.out.println("Diameter: " + graphHandler.getDiameter());
+//	    	graphHandler.calculateDiameter();
+//	    	System.out.println("Diameter: " + graphHandler.getDiameter());
+	    	
+	    	flagD = true;
 	    }
 	
 	
@@ -209,12 +244,17 @@ public class CommandLineHandler {
 				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
 			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
 					try {
-						graphHandler.setSingleShortestPathParameters(Integer.parseInt(cmd.getOptionValues("s")[0]), Integer.parseInt(cmd.getOptionValues("s")[1]));
-						graphHandler.calculateSingleShortestPath();
-						System.out.println( "Shortest Path between: "
-								+ cmd.getOptionValues("s")[0] + " and "
-								+ cmd.getOptionValues("s")[1] + " = "
-								+ graphHandler.getSingleShortestPath().getLength());	
+//						graphHandler.setSingleShortestPathParameters(Integer.parseInt(cmd.getOptionValues("s")[0]), Integer.parseInt(cmd.getOptionValues("s")[1]));
+//						graphHandler.calculateSingleShortestPath();
+//						System.out.println( "Shortest Path between: "
+//								+ cmd.getOptionValues("s")[0] + " and "
+//								+ cmd.getOptionValues("s")[1] + " = "
+//								+ graphHandler.getSingleShortestPath().getLength());	
+						
+						flagS = true;
+						spIDone = Integer.parseInt(cmd.getOptionValues("s")[0]);
+						spIDtwo = Integer.parseInt(cmd.getOptionValues("s")[1]);
+						
 					// if user provides non existing Node ID's:
 					} catch (NoSuchElementException nsee) {
 						System.out.println("ERROR: Can not calculate shortest path."
@@ -235,31 +275,35 @@ public class CommandLineHandler {
 		
 		// if user provided -G print graph to sys.out
 		if (cmd.hasOption('G')) {
-			System.out.println(graphHandler.getGraph());
+//			System.out.println(graphHandler.getGraph());
+			
+			flagG = true;
 		}
 		
 		
 		// if user provided -S calculate all shortest paths and print to sys.out
 		if (cmd.hasOption('S')) {
-			graphHandler.calculateAllShortestPaths();
-			TreeSet<Path> shortestPathList = graphHandler.getShortestPathsList();
-			Iterator<Path>	pathIterator = shortestPathList.iterator();
-			while(pathIterator.hasNext()) {
-				Path currentPath = pathIterator.next();
-				//	source + target
-				System.out.print("source: n" + currentPath.getOriginNode());
-				System.out.print(" target: n" + currentPath.getDestinationNode());
-				
-				//	length
-				System.out.println(" length: " + currentPath.getLength());
-				
-				//	segment values
-				if(currentPath.getLength() != Double.POSITIVE_INFINITY) {
-					for(int i = 0; i < currentPath.getNumberOfNodes(); i++) {
-						System.out.println("segment: n" + currentPath.getNode(i));
-					}
-				}
-			}
+//			graphHandler.calculateAllShortestPaths();
+//			TreeSet<Path> shortestPathList = graphHandler.getShortestPathsList();
+//			Iterator<Path>	pathIterator = shortestPathList.iterator();
+//			while(pathIterator.hasNext()) {
+//				Path currentPath = pathIterator.next();
+//				//	source + target
+//				System.out.print("source: n" + currentPath.getOriginNode());
+//				System.out.print(" target: n" + currentPath.getDestinationNode());
+//				
+//				//	length
+//				System.out.println(" length: " + currentPath.getLength());
+//				
+//				//	segment values
+//				if(currentPath.getLength() != Double.POSITIVE_INFINITY) {
+//					for(int i = 0; i < currentPath.getNumberOfNodes(); i++) {
+//						System.out.println("segment: n" + currentPath.getNode(i));
+//					}
+//				}
+//			}
+			
+			flagSall = true;
 		}
 		
 	

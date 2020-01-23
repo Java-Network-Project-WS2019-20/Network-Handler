@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.TreeSet;
@@ -145,6 +144,11 @@ public class GraphWriter {
  									.setAttribute("for", "node")
  									.setAttribute("attr.name", "id")
  									.setAttribute("attr.type", "double"))
+			 		.addContent(keyElement = new Element("key")
+									.setAttribute("id", "n_bcm")
+									.setAttribute("for", "node")
+									.setAttribute("attr.name", "n_bcm")
+									.setAttribute("attr.type", "double"))
 					.addContent(keyElement = new Element("key")
 									.setAttribute("id", "e_id")
 									.setAttribute("for", "edge")
@@ -171,7 +175,7 @@ public class GraphWriter {
 
         writeToOutputfile(document);
 	}
-        
+	
         
     // write document to new file
 	private void writeToOutputfile(Document document) {     
