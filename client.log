@@ -1,0 +1,33 @@
+2020-01-23 16:22:06,789 ERROR [networkHandler.FileHandler] - Can not open/find file
+2020-01-23 16:28:55,259 INFO [networkHandler.GraphHandler] - Shortest path between 1 and14 was calculated successfully
+2020-01-23 16:29:21,543 INFO [networkHandler.GraphHandler] - Shortest path between 1 and14 was calculated successfully
+2020-01-23 16:29:58,840 INFO [networkHandler.GraphHandler] - Connectivity was calculated successfully
+2020-01-23 16:29:59,918 INFO [networkHandler.GraphHandler] - Shortest path between all nodes were calculated successfully
+2020-01-23 16:29:59,918 INFO [networkHandler.GraphHandler] - Diameter was calculated successfully
+2020-01-23 16:30:00,606 INFO [networkHandler.GraphHandler] - All betweenness centrality measure was calculated successfully
+2020-01-23 16:30:01,810 INFO [networkHandler.GraphWriter] - File created: outp.graphml
+2020-01-25 00:55:29,251 INFO [networkHandler.CommandLineHandler] - 
+---------------------------------------------
+2020-01-25 00:55:29,267 INFO [networkHandler.CommandLineHandler] - usage: The Network Graph Handler
+Start parsing by providing input file name:
+$> java Main <inputfile.graphml>
+adding Options:
+ -a <outputfile.graphml>        Print all graph calculations and node/edge
+                                properties to a new *.graphml file.
+                                Provide file name and path.
+ -b <node_id>                   Calculate the betweenness centrality measure for
+                                a selected node.
+                                Provide a Node id.
+ -c                             Checks whether the the graph is connected.
+ -d                             Calculate diameter of the graph.
+ -G,--graph                     Print # of nodes and edges.
+ -h,--help                      Print this help text.
+ -s <1st node_id 2nd node_id>   Calculate the shortest path between two vertices
+                                according to the Dijkstra algorithm.
+                                Provide two Node id's seperated by a blank
+                                space.
+ -S                             Calculate all shprtest paths betweem all nodes.
+Options, flags and arguments may be in any order.
+---------------------------------------------
+
+

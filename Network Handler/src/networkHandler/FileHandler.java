@@ -94,6 +94,7 @@ public class FileHandler {
 		try {
 			builder = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
+			mylog.error("Something went wrong while creating a parsable document object!");
 			e.printStackTrace();
 		}
 
@@ -112,6 +113,7 @@ public class FileHandler {
 		//Pass the parsable document to nodeParser and edgeParser method
 		graphmlParserNodes(document);
 		graphmlParserEdges(document);
+		mylog.info("Parsing " + graphmlFile.getName() + ".graphml");
 
 	}
 
@@ -137,6 +139,9 @@ public class FileHandler {
 				nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
 			}
 		}
+
+		mylog.info("Nodes were parsed succesfully!");
+
 	}
 
 
@@ -163,6 +168,9 @@ public class FileHandler {
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
 			}
 		}
+
+		mylog.info("Edges were parsed succesfully!");
+
 	}
 	
 	

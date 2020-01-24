@@ -1,31 +1,31 @@
 package networkHandler;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 public class Main {
+
+	private static final Logger mylog = LogManager.getLogger(GraphHandler.class);
+
 
 	public static void main(String[] args) throws NoArgumentException {
 
 
+		//C:\\h.graphml -a outp.graphml
+
 		BasicConfigurator.configure();
-		// cla (command line arguments) for testing:
-		
-		// C:\\Users\\Krzysztof\\Desktop\\Uni\\Java Project\\Graphen\\medium_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
-		// C:\\Users\\Fabian\\Downloads\\medium_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
-		// C:\\Users\\khali\\OneDrive\\Desktop\\\\gra.xml -b 2 -c -d -s 1 14
-		// C:\\Users\\boost\\Downloads\\small_graph.graphml -a /outputfile.graphml -b 2 -c -d -s 1 14
-		
-		
+
 		// user must provide at least one argument = input filename to start parsing graph
 //		try {
-			if (args.length > 0) {	
+			if (args.length > 0) {
 				
 				// start parsing cla
 				CommandLineHandler clHandler = new CommandLineHandler(args);
 				clHandler.claParser();	
 				
 			} else {
-				throw new NoArgumentException();
+				mylog.error("Please input valid arguments!");
 			} 
 //		} catch (NoArgumentException e) {
 //			System.out.println("ERROR: Provide at least one argument."

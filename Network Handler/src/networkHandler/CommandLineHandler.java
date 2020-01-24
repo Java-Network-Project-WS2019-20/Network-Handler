@@ -1,5 +1,7 @@
 package networkHandler;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.TreeSet;
@@ -142,8 +144,12 @@ public class CommandLineHandler {
 			
 			claParserInterrogation(options, cmd);
 		} catch (ParseException e) {
-	    	System.out.println("ERROR: You provided (a) incorrect option(s) and/or missing option value(s)."
-	    			+ "\n	Use -h or --help to print usage help.");
+
+			mylog.error("You provided (a) incorrect option(s) and/or missing option value(s). " +
+					"Use -h or --help to print usage help.");
+//
+//	    	System.out.println("ERROR: You provided (a) incorrect option(s) and/or missing option value(s)."
+//	    			+ "\n	Use -h or --help to print usage help.");
 		}
 	}
 	
@@ -164,7 +170,8 @@ public class CommandLineHandler {
 				printHelp(options);		// if single argument is -h or --help print help text
 				System.exit(0);			// and exit
 			} else {
-				throw new IllegalArgumentException();	// if user did not provide proper .graphml file 
+				mylog.error("Wrong file format was provided or wrong arguments were passed!");
+				throw new IllegalArgumentException();	// if user did not provide proper .graphml file
 			}											// OR provided wrong arguments
 		} catch (IllegalArgumentException e) {
 
@@ -203,18 +210,29 @@ public class CommandLineHandler {
 				    	
 				    	// if user provides non existing Node ID:
 					} catch (NoSuchElementException nsee) {
-						System.out.println("ERROR: Can not calculate BCM."
-								+ "\n	The Node ID you provided does not exist."
-								+ "\n	use -G or --graph to display Graph properties."
-								+ "\n	Use -h or --help to print usage help.");
+
+				    	mylog.error("Can not calculate BCM. " +
+								"\n The Node ID you provided does not exist." +
+								"\n use -G or --graph to display Graph properties" +
+								"\n	Use -h or --help to print usage help." );
+
+//						System.out.println("ERROR: Can not calculate BCM."
+//								+ "\n	The Node ID you provided does not exist."
+//								+ "\n	use -G or --graph to display Graph properties."
+//								+ "\n	Use -h or --help to print usage help.");
 					}
 				} else {
 					throw new NumberFormatException(cmd.getOptionValue('b'));
 				}
 	    	} catch (NumberFormatException e) {
-	    		System.out.println("ERROR: Can not calculate BCM."
-						+ "\n	Wrong number format."
-						+ "\n	Use -h or --help to print usage help.");
+
+	    		mylog.error("Can not calculate BCM." +
+						"\n	Wrong number format. " +
+						"\n	Use -h or --help to print usage help.");
+
+//	    		System.out.println("ERROR: Can not calculate BCM."
+//						+ "\n	Wrong number format."
+//						+ "\n	Use -h or --help to print usage help.");
 	    	}
 	    }
 	    
@@ -257,18 +275,30 @@ public class CommandLineHandler {
 						
 					// if user provides non existing Node ID's:
 					} catch (NoSuchElementException nsee) {
-						System.out.println("ERROR: Can not calculate shortest path."
-								+ "\n	The Node ID you provided does not exist."
-								+ "\n	use -G or --graph to display Graph properties."
-								+ "\n	Use -h or --help to print usage help.");
+
+
+						mylog.error("Can not calculate shortest path.\n" +
+								"The Node ID you provided does not exist.\n" +
+								"use -G or --graph to display Graph properties.\n" +
+								"Use -h or --help to print usage help.");
+
+//						System.out.println("ERROR: Can not calculate shortest path."
+//								+ "\n	The Node ID you provided does not exist."
+//								+ "\n	use -G or --graph to display Graph properties."
+//								+ "\n	Use -h or --help to print usage help.");
 					}
 			    } else {
 		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
 				}
 			} catch (NumberFormatException e) {
-				System.out.println("ERROR: Can not calculate shortest path."
-						+ "\n	Wrong number format."
-						+ "\n	Use -h or --help to print usage help.");
+
+				mylog.error("Can not calculate shortest path.\n" +
+						"Wrong number format.\n" +
+						"Use -h or --help to print usage help.");
+
+//				System.out.println("ERROR: Can not calculate shortest path."
+//						+ "\n	Wrong number format."
+//						+ "\n	Use -h or --help to print usage help.");
 			}
 		}
 	    
@@ -316,12 +346,17 @@ public class CommandLineHandler {
 	    // if user provided command line arguments without any flag
 	    String[] remainder = cmd.getArgs();
 	    if(remainder.length > 1) {
-	        System.out.println("\nWARNING: Could not assign argument(s) to any option:");
+
+	    	mylog.warn("Could not assign argument(s) to any option: ");
+
+//	        System.out.println("\nWARNING: Could not assign argument(s) to any option:");
 	        for (int i=1; i < remainder.length; i++) {
-	            System.out.print(remainder[i]);
-	            System.out.print(" ");
+	        	mylog.warn(remainder[i]);
+	        	mylog.warn(" ");
+//	            System.out.print(remainder[i]);
+//	            System.out.print(" ");
 	        }
-	        System.out.println();
+//	        System.out.println();
 	    }	
 	}
 	
@@ -341,14 +376,29 @@ public class CommandLineHandler {
 	
 	// help text of options -h, --help
 	private void printHelp(Options options) {
-		System.out.println("\n---------------------------------------------");
+
+//		System.out.println("\n---------------------------------------------");
+		mylog.info("\n---------------------------------------------");
     	String header = "Start parsing by providing input file name:\n" + 
     					"$> java Main <inputfile.graphml>	adding Options:\n";
 		String footer = "Options, flags and arguments may be in any order.\n" +
 						"---------------------------------------------\n\n";
-		
+
+		StringWriter out = new StringWriter();
+		PrintWriter pw = new PrintWriter(out);
+
 		HelpFormatter formatter = new HelpFormatter();
-		formatter.printHelp("The Network Graph Handler", header, options, footer, false);
+
+		formatter.printHelp(pw, 80, "The Network Graph Handler", header, options,
+				formatter.getLeftPadding(), formatter.getDescPadding(), footer, false);
+
+		pw.flush();
+
+		mylog.info(out.toString());
+
+//		formatter.printHelp("The Network Graph Handler", header, options, footer, false);
+
+
 	}
 	
 	
