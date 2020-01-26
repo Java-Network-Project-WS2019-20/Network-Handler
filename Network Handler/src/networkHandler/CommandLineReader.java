@@ -26,19 +26,19 @@ public class CommandLineReader {
 	private GraphHandler graphHandler;
 	private final Logger mylog = LogManager.getLogger(CommandLineReader.class);
 	
-	String inputFileName;
-	String outputFileName;
-	int bcmNodeID;
-	int spIDone;
-	int spIDtwo;
-	boolean flagStartParsing;
-	boolean flagOutputFile;
-	boolean flagBCM;
-	boolean flagConnectivity;
-	boolean flagDiameter;
-	boolean flagShortestPathBetweenTwoNodes;
-	boolean flagAllShortestPaths;
-	boolean flagGraphAttributes;
+	private String inputFileName;
+	private String outputFileName;
+	private int bcmNodeID;
+	private int spIDone;
+	private int spIDtwo;
+	private boolean flagStartParsing;
+	private boolean flagOutputFile;
+	private boolean flagBCM;
+	private boolean flagConnectivity;
+	private boolean flagDiameter;
+	private boolean flagShortestPathBetweenTwoNodes;
+	private boolean flagAllShortestPaths;
+	private boolean flagGraphAttributes;
 	
 	
 	
@@ -64,6 +64,22 @@ public class CommandLineReader {
 		this.flagGraphAttributes = false;
 	}
 
+	
+	
+	// getter
+	public String getInputFileName() {return inputFileName;}
+	public String getutputFileName() {return outputFileName;}
+	public int getBcmNodeID() {return bcmNodeID;}
+	public int getSpIDone() {return spIDone;}
+	public int getSpIDtwo() {return spIDtwo;}
+	public boolean getFlagStartParsing() {return flagStartParsing;}
+	public boolean getFlagOutputFile() {return flagOutputFile;}
+	public boolean getFlagBCM() {return flagBCM;}
+	public boolean getFlagConnectivity() {return flagConnectivity;}
+	public boolean getFlagDiameter() {return flagDiameter;}
+	public boolean getFlagShortestPathBetweenTwoNodes() {return flagShortestPathBetweenTwoNodes;}
+	public boolean getFlagAllShortestPaths() {return flagAllShortestPaths;}
+	public boolean getFlagGraphAttributes() {return flagGraphAttributes;}
 
 	
 	/**
