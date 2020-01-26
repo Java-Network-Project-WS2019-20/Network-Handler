@@ -21,23 +21,24 @@ import org.apache.log4j.Logger;
  * @author Sebastian Monok
  *
  */
-public class CommandLineHandler {
+public class CommandLineReader {
 	private String[] claArgs;
 	private GraphHandler graphHandler;
-	private String inputFileName;
-	private String outputFileName;
-	private int bcmNodeID;
-	private int spIDone;
-	private int spIDtwo;
-	private boolean flagStartParsing;
-	private boolean flagA;
-	private boolean flagB;
-	private boolean flagC;
-	private boolean flagD;
-	private boolean flagS;
-	private boolean flagSall;
-	private boolean flagG;
-	private final Logger mylog = LogManager.getLogger(CommandLineHandler.class);
+	private final Logger mylog = LogManager.getLogger(CommandLineReader.class);
+	
+	String inputFileName;
+	String outputFileName;
+	int bcmNodeID;
+	int spIDone;
+	int spIDtwo;
+	boolean flagStartParsing;
+	boolean flagOutputFile;
+	boolean flagBCM;
+	boolean flagConnectivity;
+	boolean flagDiameter;
+	boolean flagShortestPathBetweenTwoNodes;
+	boolean flagAllShortestPaths;
+	boolean flagGraphAttributes;
 	
 	
 	
@@ -46,7 +47,7 @@ public class CommandLineHandler {
 	 * Program arguments / command line arguments are passed to this constructor.
 	 * @param args The provided command line arguments
 	 */
-	public CommandLineHandler(String[] args) {
+	public CommandLineReader(String[] args) {
 		this.claArgs = args;
 		this.inputFileName = "";
 		this.outputFileName = "";
@@ -54,13 +55,13 @@ public class CommandLineHandler {
 		this.spIDone = 0;
 		this.spIDtwo = 0;
 		this.flagStartParsing = false;
-		this.flagA = false;
-		this.flagB = false;
-		this.flagC = false;
-		this.flagD = false;
-		this.flagS = false;
-		this.flagSall = false;
-		this.flagG = false;
+		this.flagOutputFile = false;
+		this.flagBCM = false;
+		this.flagConnectivity = false;
+		this.flagDiameter = false;
+		this.flagShortestPathBetweenTwoNodes = false;
+		this.flagAllShortestPaths = false;
+		this.flagGraphAttributes = false;
 	}
 
 
@@ -192,7 +193,7 @@ public class CommandLineHandler {
 //	    	gw.exportGraphmlAnalysis();
 	    	
 	    	outputFileName = cmd.getOptionValue('a');
-	    	flagA = true;
+	    	flagOutputFile = true;
 	    }
 	
 	    
@@ -206,7 +207,7 @@ public class CommandLineHandler {
 //				    	graphHandler.setBetweennessCentralityMeasureParameter(bcmNodeID);
 //				    	graphHandler.calculateSingleBetweennessCentralityMeasure();
 //				    	System.out.println("Betweenness Centrality Measure of Node n" + bcmNodeID + " is " + graphHandler.getSingleBetweennessCentralityMeasure());
-				    	flagB = true;
+				    	flagBCM = true;
 				    	
 				    	// if user provides non existing Node ID:
 					} catch (NoSuchElementException nsee) {
@@ -242,7 +243,7 @@ public class CommandLineHandler {
 //	    	graphHandler.calculateConnectivity();
 //	        System.out.println("Graph is connected: " + graphHandler.getConnectivity());
 	    	
-	    	flagC = true;
+	    	flagConnectivity = true;
 	    }
 	
 	    
@@ -251,7 +252,7 @@ public class CommandLineHandler {
 //	    	graphHandler.calculateDiameter();
 //	    	System.out.println("Diameter: " + graphHandler.getDiameter());
 	    	
-	    	flagD = true;
+	    	flagDiameter = true;
 	    }
 	
 	
@@ -269,7 +270,7 @@ public class CommandLineHandler {
 //								+ cmd.getOptionValues("s")[1] + " = "
 //								+ graphHandler.getSingleShortestPath().getLength());	
 						
-						flagS = true;
+						flagShortestPathBetweenTwoNodes = true;
 						spIDone = Integer.parseInt(cmd.getOptionValues("s")[0]);
 						spIDtwo = Integer.parseInt(cmd.getOptionValues("s")[1]);
 						
@@ -307,7 +308,7 @@ public class CommandLineHandler {
 		if (cmd.hasOption('G')) {
 //			System.out.println(graphHandler.getGraph());
 			
-			flagG = true;
+			flagGraphAttributes = true;
 		}
 		
 		
@@ -333,7 +334,7 @@ public class CommandLineHandler {
 //				}
 //			}
 			
-			flagSall = true;
+			flagAllShortestPaths = true;	
 		}
 		
 	

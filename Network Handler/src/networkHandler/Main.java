@@ -21,7 +21,7 @@ public class Main {
 			if (args.length > 0) {
 				
 				// start parsing cla
-				CommandLineHandler clHandler = new CommandLineHandler(args);
+				CommandLineReader clHandler = new CommandLineReader(args);
 				clHandler.claParser();	
 				
 			} else {
