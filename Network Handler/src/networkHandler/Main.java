@@ -21,9 +21,16 @@ public class Main {
 			if (args.length > 0) {
 				
 				// start parsing cla
-				CommandLineReader clHandler = new CommandLineReader(args);
-				clHandler.claParser();	
+				CommandLineReader commandLineReader = new CommandLineReader(args);
+				commandLineReader.claParser();	
 				
+				if(commandLineReader.getFlagReadFile()) {
+					FileHandler	fileHandler = new FileHandler();
+					fileHandler.setGraphmlFile(commandLineReader.getInputFileName());
+					fileHandler.prepareParser();
+					GraphHandler graphHandler = new GraphHandler(fileHandler.getEdgeList(), fileHandler.getNodeList());
+					graphHandler.runCalculations(commandLineReader);
+				}
 			} else {
 				mylog.error("Please input valid arguments!");
 			} 
