@@ -1,6 +1,6 @@
 package networkHandler;
 
-public abstract class GraphProperty<T>{
+public abstract class GraphProperty<T> implements Runnable{
 	//	Attribute
 	protected Graph	graph;
 	protected T		value;
@@ -21,5 +21,5 @@ public abstract class GraphProperty<T>{
 	}
 	
 	//	calculation (abstract)
-	public abstract void	calculate();
+	public abstract void	run();
 }

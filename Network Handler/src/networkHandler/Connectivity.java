@@ -16,7 +16,7 @@ public class Connectivity extends GraphProperty<Boolean>{
 //	implementation of calculate method from GraphProperty Superclass
 	// Method to calculate, whether a undirected Graph is connected
 	// Not minding the weight of the edges
-	public void calculate() {
+	public void run() {
 
 		// A linked list of all adjacent Nodes for each Node
 		// Size of array is the number of Nodes

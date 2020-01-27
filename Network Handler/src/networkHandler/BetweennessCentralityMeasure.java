@@ -23,7 +23,7 @@ public class BetweennessCentralityMeasure extends GraphProperty<Double>{
 	
 	//	implementation of calculate from GraphProperty Superclass
 	//	TODO: comments
-	public	void	calculate() {
+	public	void	run() {
 		
 		double[][] countsOfAllPaths = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 		double[][] countsOfPathsContainingNode = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];

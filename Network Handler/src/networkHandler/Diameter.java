@@ -21,7 +21,7 @@ public class Diameter extends GraphProperty<Double> {
 	}
 	
 	//	implementation of calculate method from GraphProperty Superclass
-	public void calculate() {
+	public void run() {
 		if(connectivity) {
 			this.value = 0.0;
 			this.shortestPaths.forEach(path ->	{

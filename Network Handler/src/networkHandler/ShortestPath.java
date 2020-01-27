@@ -22,7 +22,7 @@ public class ShortestPath extends GraphProperty<Path>{
 
 //	implementation of calculate method from GraphProperty Superclass
 	//	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
-	public void calculate() {
+	public void run() {
 		
 			/*	Initialize an adjacency matrix for the graph
 			 * 	This matrix stores the Edge IDs of corresponding Nodes

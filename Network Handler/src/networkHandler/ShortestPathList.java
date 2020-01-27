@@ -22,7 +22,7 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 	/*	Method to calculate the shortest paths between all Nodes by using Dijkstra's algorithm
 	 *	Returns a list of paths sorted by initial node first, destination node second
 	 */
-	public	void	calculate() {
+	public	void	run() {
 		/*	Initialize an adjacency matrix for the graph
 		 * 	This matrix stores the Edge IDs of corresponding Nodes
 		 * 	A positive (>= 0) entry shows an existing Edge between Nodes
