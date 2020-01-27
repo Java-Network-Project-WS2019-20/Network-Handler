@@ -31,8 +31,8 @@ public class CommandLineReader {
 	private int bcmNodeID;
 	private int spIDone;
 	private int spIDtwo;
-	private boolean flagStartParsing;
-	private boolean flagOutputFile;
+	private boolean flagReadFile;
+	private boolean flagCreateOutputFile;
 	private boolean flagBCM;
 	private boolean flagConnectivity;
 	private boolean flagDiameter;
@@ -54,8 +54,8 @@ public class CommandLineReader {
 		this.bcmNodeID = 0;
 		this.spIDone = 0;
 		this.spIDtwo = 0;
-		this.flagStartParsing = false;
-		this.flagOutputFile = false;
+		this.flagReadFile = false;
+		this.flagCreateOutputFile = false;
 		this.flagBCM = false;
 		this.flagConnectivity = false;
 		this.flagDiameter = false;
@@ -72,8 +72,8 @@ public class CommandLineReader {
 	public int getBcmNodeID() {return bcmNodeID;}
 	public int getSpIDone() {return spIDone;}
 	public int getSpIDtwo() {return spIDtwo;}
-	public boolean getFlagStartParsing() {return flagStartParsing;}
-	public boolean getFlagOutputFile() {return flagOutputFile;}
+	public boolean getFlagReadFile() {return flagReadFile;}
+	public boolean getFlagCreateOutputFile() {return flagCreateOutputFile;}
 	public boolean getFlagBCM() {return flagBCM;}
 	public boolean getFlagConnectivity() {return flagConnectivity;}
 	public boolean getFlagDiameter() {return flagDiameter;}
@@ -181,7 +181,7 @@ public class CommandLineReader {
 				inputFileName = claArgs[0];	// set inputFileName = first provided cla		
 //				parseGraph(inputFileName);	
 				
-				flagStartParsing = true;
+				flagReadFile = true;
 				
 			} else if ( claArgs[0].contains("help") || ( (claArgs[0].endsWith("h")) && (cmd.hasOption('h')) ) ) {
 				printHelp(options);		// if single argument is -h or --help print help text
@@ -209,7 +209,7 @@ public class CommandLineReader {
 //	    	gw.exportGraphmlAnalysis();
 	    	
 	    	outputFileName = cmd.getOptionValue('a');
-	    	flagOutputFile = true;
+	    	flagCreateOutputFile = true;
 	    }
 	
 	    
