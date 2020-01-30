@@ -125,4 +125,12 @@ public class Path implements Comparable<Path>{
 		return (this.length == that.length  && this.getNumberOfNodes() == that.getNumberOfNodes() && this.nodes.containsAll(that.nodes));
 	}
 	
+//	printing
+	public	void	printToConsole() {
+		System.out.print("Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {");
+		for(int i = 0; i < getNumberOfNodes() - 1; i++) {
+			System.out.print("n" + getNode(i) + ",");
+		}
+		System.out.print("n" + getDestinationNode() + "}, length: " + getLength() + "\n");
+	}
 }
