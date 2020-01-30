@@ -5,16 +5,14 @@ import java.util.TreeSet;
 
 public class Diameter implements GraphProperty<Double> {
 	//	Attributes
-	private	Graph			graph;
-	private	Double			diameterValue;
-	private	TreeSet<Path>	shortestPaths;
-	private	boolean			connectivity;
+	private	Double				diameterValue;
+	private	ShortestPathList	shortestPathList;
+	private	Connectivity		connectivity;
 	
 	//	Constructor
-	public			Diameter(Graph graph, TreeSet<Path> shortestPaths, boolean connectivity) {
-		this.graph			= graph;
-		this.shortestPaths	= shortestPaths;
-		this.connectivity	= connectivity;
+	public			Diameter(ShortestPathList shortestPathList, Connectivity connectivity) {
+		this.shortestPathList	= shortestPathList;
+		this.connectivity		= connectivity;
 	}
 	
 	public	Double	getValue() {
@@ -28,9 +26,9 @@ public class Diameter implements GraphProperty<Double> {
 	
 	//	implementation of calculate method from GraphProperty Superclass
 	public	void	run() {
-		if(connectivity) {
+		if(connectivity.getValue()) {
 			this.diameterValue = 0.0;
-			this.shortestPaths.forEach(path ->	{
+			this.shortestPathList.getValue().forEach(path ->	{
 				if(path.getLength() > this.diameterValue) {
 					this.diameterValue = path.getLength();
 				}
