@@ -8,17 +8,17 @@ import java.util.TreeSet;
 
 public class GraphHandler {
 //	Attributes
-	private	Graph 							graph;
-	private	Connectivity					connectivity;
-	private	Diameter						diameter;
-	private	ShortestPath					shortestPath;
-	private BetweennessCentralityMeasure	betweennessCentralityMeasure;
-	private	ShortestPathList				shortestPathList;
-	private	ArrayList<Double>				betweennessCentralityMeasureList;
-	private	int								shortestPathInitialNodeId;
-	private	int								shortestPathDestinationNodeId;
-	private	int								betweennessCentralityMeasureNodeId;
-	private final 							Logger mylog = LogManager.getLogger(GraphHandler.class);
+	private	Graph 								graph;
+	private	Connectivity						connectivity;
+	private	Diameter							diameter;
+	private	ShortestPath						shortestPath;
+	private BetweennessCentralityMeasure		betweennessCentralityMeasure;
+	private	ShortestPathList					shortestPathList;
+	private	BetweennessCentralityMeasureList	betweennessCentralityMeasureList;
+	private	int									shortestPathInitialNodeId;
+	private	int									shortestPathDestinationNodeId;
+	private	int									betweennessCentralityMeasureNodeId;
+	private final 								Logger mylog = LogManager.getLogger(GraphHandler.class);
 
 
 	//	Constructor
@@ -31,53 +31,53 @@ public class GraphHandler {
 		this.graph = new Graph(edgeList, nodeList);
 	}
 	
-	public	void				calculateDiameter() {
-		this.diameter = new Diameter(this.graph, this.shortestPathList.getValue(), this.connectivity.getValue());
-		this.diameter.run();
-		mylog.info("Diameter was calculated successfully");
-	}
-	
-	public	void				calculateConnectivity() {
-		this.connectivity = new Connectivity(this.graph);
-		this.connectivity.run();
-		mylog.info("Connectivity was calculated successfully");
-	}
-	
-	public	void				calculateSingleShortestPath() {
-		this.shortestPath = new ShortestPath(this.graph, this.shortestPathInitialNodeId, this.shortestPathDestinationNodeId);
-		this.shortestPath.run();
-		mylog.info("Shortest path between " + this.shortestPathInitialNodeId + " and" + this.shortestPathDestinationNodeId + " was calculated successfully");
-
-	}
-	
-	public	void				calculateAllShortestPaths() {
-		this.shortestPathList = new ShortestPathList(this.graph);
-		this.shortestPathList.run();
-		mylog.info("Shortest path between all nodes were calculated successfully");
-
-	}
-	
-	public	void				calculateSingleBetweennessCentralityMeasure() {
-		this.betweennessCentralityMeasure = new BetweennessCentralityMeasure(this.graph, this.shortestPathList.getValue(), this.betweennessCentralityMeasureNodeId);
-		this.betweennessCentralityMeasure.run();
-		mylog.info("Single betweenness centrality measure was calculated successfully");
-
-	}
-	
-	public	void				calculateAllBetweennessCentralityMeasures() {
-		this.betweennessCentralityMeasureList = new ArrayList<Double>();
-		for(int i = 0; i < this.graph.getNodeCount(); i++) {
-			BetweennessCentralityMeasure bcm = new BetweennessCentralityMeasure(this.graph, this.shortestPathList.getValue(), i);
-			bcm.run();
-			this.betweennessCentralityMeasureList.add(bcm.getValue());
-		}
-		mylog.info("All betweenness centrality measure was calculated successfully");
-
-
-	}
+//	public	void				calculateDiameter() {
+//		this.diameter = new Diameter(this.graph, this.shortestPathList.getValue(), this.connectivity.getValue());
+//		this.diameter.run();
+//		mylog.info("Diameter was calculated successfully");
+//	}
+//	
+//	public	void				calculateConnectivity() {
+//		this.connectivity = new Connectivity(this.graph);
+//		this.connectivity.run();
+//		mylog.info("Connectivity was calculated successfully");
+//	}
+//	
+//	public	void				calculateSingleShortestPath() {
+//		this.shortestPath = new ShortestPath(this.graph, this.shortestPathInitialNodeId, this.shortestPathDestinationNodeId);
+//		this.shortestPath.run();
+//		mylog.info("Shortest path between " + this.shortestPathInitialNodeId + " and" + this.shortestPathDestinationNodeId + " was calculated successfully");
+//
+//	}
+//	
+//	public	void				calculateAllShortestPaths() {
+//		this.shortestPathList = new ShortestPathList(this.graph);
+//		this.shortestPathList.run();
+//		mylog.info("Shortest path between all nodes were calculated successfully");
+//
+//	}
+//	
+//	public	void				calculateSingleBetweennessCentralityMeasure() {
+//		this.betweennessCentralityMeasure = new BetweennessCentralityMeasure(this.graph, this.shortestPathList, this.betweennessCentralityMeasureNodeId);
+//		this.betweennessCentralityMeasure.run();
+//		mylog.info("Single betweenness centrality measure was calculated successfully");
+//
+//	}
+//	
+//	public	void				calculateAllBetweennessCentralityMeasures() {
+//		this.betweennessCentralityMeasureList = new ArrayList<Double>();
+//		for(int i = 0; i < this.graph.getNodeCount(); i++) {
+//			BetweennessCentralityMeasure bcm = new BetweennessCentralityMeasure(this.graph, this.shortestPathList, i);
+//			bcm.run();
+//			this.betweennessCentralityMeasureList.add(bcm.getValue());
+//		}
+//		mylog.info("All betweenness centrality measure was calculated successfully");
+//
+//
+//	}
 	
 	//	TODO: add threading
-	public	void				runCalculations(CommandLineReader commandLineReader) {
+	public	void				runCalculations(CommandLineReader commandLineReader) throws InterruptedException {
 		Thread	connectivityThread;
 		Thread	diameterThread;
 		Thread	allShortestPathsThread;
@@ -85,32 +85,54 @@ public class GraphHandler {
 		Thread	singleShortestPathThread;
 		Thread	singleBetweennessCentralityMeasureThread;
 		if(commandLineReader.getFlagCreateOutputFile()) {
-			this.connectivity = new Connectivity(this.graph);
-			connectivityThread = new Thread(this.connectivity, "Connectivity Calculation");
-			connectivityThread.run();
-			this.shortestPathList = new ShortestPathList(this.graph);
-			allShortestPathsThread = new Thread(this.shortestPathList, "Shortest Paths Calculation");
-			allShortestPathsThread.run();
-			this.calculateDiameter();
-			this.calculateAllBetweennessCentralityMeasures();
+			
+			this.connectivity	= new Connectivity(this.graph);
+			connectivityThread	= new Thread(this.connectivity, "Connectivity Calculation");
+			connectivityThread.start();
+			
+			this.shortestPathList	= new ShortestPathList(this.graph);
+			allShortestPathsThread	= new Thread(this.shortestPathList, "Shortest Paths Calculation");
+			allShortestPathsThread.start();
+			
+			allShortestPathsThread.join();
+			
+			this.betweennessCentralityMeasureList	= new BetweennessCentralityMeasureList(this.graph, this.shortestPathList);
+			allBetweennessCentralityMeasuresThread	= new Thread(this.betweennessCentralityMeasureList, "Betweenness Centrality Measure Calculation");
+			allBetweennessCentralityMeasuresThread.start();
+			
+			connectivityThread.join();
+			
+			this.diameter	= new Diameter(this.shortestPathList, this.connectivity);
+			diameterThread	= new Thread(this.diameter, "Diameter Calculation");
+			diameterThread.start();
+
 		}else {
 			if(	commandLineReader.getFlagConnectivity()
 			||	commandLineReader.getFlagDiameter()
 			)
 			{
-				this.calculateConnectivity();
+				this.connectivity	= new Connectivity(this.graph);
+				connectivityThread	= new Thread(this.connectivity, "Connectivity Calculation");
+				connectivityThread.start();
 			}
 			if(	commandLineReader.getFlagAllShortestPaths()
 			||	commandLineReader.getFlagDiameter()
 			||	commandLineReader.getFlagBCM()
 			)
 			{
-				this.calculateAllShortestPaths();
+				this.shortestPathList	= new ShortestPathList(this.graph);
+				allShortestPathsThread	= new Thread(this.shortestPathList, "Shortest Paths Calculation");
+				allShortestPathsThread.start();
 			}
 			if(	commandLineReader.getFlagDiameter()
 			)
 			{
-				this.calculateDiameter();
+				allShortestPathsThread.join();
+				connectivityThread.join();
+				
+				this.diameter	= new Diameter(this.shortestPathList, this.connectivity);
+				diameterThread	= new Thread(this.diameter, "Diameter Calculation");
+				diameterThread.start();
 			}
 			if(	commandLineReader.getFlagBCM()
 			)
@@ -119,7 +141,8 @@ public class GraphHandler {
 				this.calculateSingleBetweennessCentralityMeasure();
 			}
 			if(	commandLineReader.getFlagShortestPathBetweenTwoNodes()
-			||	!commandLineReader.getFlagAllShortestPaths()
+			&&	!commandLineReader.getFlagAllShortestPaths()
+			
 			)
 			{
 				this.setSingleShortestPathParameters(commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
@@ -161,7 +184,7 @@ public class GraphHandler {
 		return this.betweennessCentralityMeasure.getValue();
 	}
 	
-	public	ArrayList<Double>	getAllBetweennessCentralityMeasures(){
+	public	BetweennessCentralityMeasureList	getAllBetweennessCentralityMeasures(){
 		return this.betweennessCentralityMeasureList;
 	}
 	
