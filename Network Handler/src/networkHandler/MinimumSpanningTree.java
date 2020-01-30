@@ -4,22 +4,28 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class MinimumSpanningTree extends GraphProperty<ArrayList<Edge>>{
-
-	private int mstWeight; 
+public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>>{
 	
-	public MinimumSpanningTree(Graph graph) {
-		super(graph);
-		mstWeight = 0;
+	private	Graph			graph;
+	private	ArrayList<Edge>	minimumSpanningTreeValue;
+	private int 			mstWeight; 
+	
+	public 					MinimumSpanningTree(Graph graph) {
+		this.graph		= graph;
+		this.mstWeight	= 0;
 	}
 	
-	int getMstWeight () {
+	public	ArrayList<Edge>	getValue() {
+		return this.minimumSpanningTreeValue;
+	}
+	
+	public	int 			getMstWeight () {
 		return mstWeight;
 	}
 	
-	public void calculateMstWeight() {
+	public	void			calculateMstWeight() {
 		int weight = 0;
-		for (Edge e : this.value) {
+		for (Edge e : this.minimumSpanningTreeValue) {
 			weight += e.getWeight();
 		}
 		mstWeight = weight;
@@ -31,7 +37,7 @@ public class MinimumSpanningTree extends GraphProperty<ArrayList<Edge>>{
 	 * @param node to find the parents for
 	 * @return parent of node
 	 */
-	public int find(int [] parent, int node) {
+	public	int				find(int [] parent, int node) {
 		if(parent[node] != node)
 			return find(parent, parent[node]);
 		return node;
@@ -43,7 +49,7 @@ public class MinimumSpanningTree extends GraphProperty<ArrayList<Edge>>{
 	 * @param x parent of the source of appended Node
 	 * @param y parent of the target of appended Node
 	 */
-	public void extend(int [] parent, int x, int y) {
+	public	void			extend(int [] parent, int x, int y) {
 		int x_set_parent = find(parent, x);
 		int y_set_parent = find(parent, y);
 		//make x as parent of y
@@ -52,11 +58,11 @@ public class MinimumSpanningTree extends GraphProperty<ArrayList<Edge>>{
 	
 	/**
 	 * Print the Minimum Spanning Tree
-	 * @param edgeList Tree to Print
+	 * 
 	 */
-	public void printMinSpanningTree(ArrayList<Edge> edgeList){
+	public	void			printToConsole(){
 		System.out.println("Minimum Spanning Tree: ");
-		for (Edge e : edgeList) {
+		for (Edge e : this.minimumSpanningTreeValue) {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Source: ").append(e.getSource()).append(" Target: ").
 			append(e.getTarget()).append(" Weight: ").append(e.getWeight()).append("    Edge ID: ").append(e.getEdgeID());
@@ -64,7 +70,7 @@ public class MinimumSpanningTree extends GraphProperty<ArrayList<Edge>>{
 		}
 	}
 	
-	public void run() {
+	public	void			run() {
 		
 		int edgeCount = this.graph.getEdgeCount();
 		int nodeCount = this.graph.getNodeCount();
@@ -99,8 +105,9 @@ public class MinimumSpanningTree extends GraphProperty<ArrayList<Edge>>{
 				extend(parent, x_set, y_set);
 			}
 		}
-		printMinSpanningTree(mst);
-		this.value = mst;
+
+		this.minimumSpanningTreeValue = mst;
 		calculateMstWeight();
 	}	
+
 }

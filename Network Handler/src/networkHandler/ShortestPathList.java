@@ -5,15 +5,22 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
+public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 
+	private	Graph			graph;
+	private	TreeSet<Path>	shortestPathListValue;
+	
 //	Constructor
 	public	ShortestPathList(Graph graph) {
-		super(graph);
+		this.graph = graph;
+	}
+	
+	public	TreeSet<Path>	getValue(){
+		return this.shortestPathListValue;
 	}
 	
 //	alternative getter method
-	public TreeSet<Path> getListOfShortestPaths(){
+	public	TreeSet<Path> getListOfShortestPaths(){
 		return this.getValue();
 	}
 	
@@ -52,7 +59,7 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 		}
 		
 		//		initialize list of all paths
-		this.value = new TreeSet<Path>();
+		this.shortestPathListValue = new TreeSet<Path>();
 		
 		//	iterate over the list of nodes
 		for(int initialNodeId = 0; initialNodeId < this.graph.getNodeCount(); initialNodeId++) {
@@ -182,7 +189,7 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 			
 			/*	TODO: check if the following is actually necessary for the output. it does not make a difference for further calculations. diameter might depend on it but can also handle a check for connectivity instead
 			 * 	add paths for all not connected nodes
-			 * 	these paths have infinte length
+			 * 	these paths have infinite length
 			 */
 			//	initialize iterator for the list of unvisited nodes, which have no connection to the initial node
 			Iterator<Integer> unvisitedNodesIterator = unvisitedNodesMap.keySet().iterator();
@@ -199,7 +206,7 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 				listOfAllPaths.add(new Path(pathNodeList, Double.POSITIVE_INFINITY));
 			}
 			
-			this.value.addAll(listOfAllPaths);
+			this.shortestPathListValue.addAll(listOfAllPaths);
 		}
 		
 
@@ -215,7 +222,7 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 		ArrayList<Path> pathsEndingInCurrentNode = new ArrayList<Path>();
 		//	initialize a list of paths containing all paths, which contain the current node (of the current iteration)
 		ArrayList<Path> pathsContainingCurrentNode;
-		//	check whether the current node ist the initial node for the recursive creation
+		//	check whether the current node is the initial node for the recursive creation
 		if(pathsToCurrentNode.isEmpty()) {
 			//	if there are no paths leading into the node, it is the initial node. therefore an initial path needs to be created, which is the basis for all paths
 			//	initialize the list of nodes for the initial path
@@ -254,4 +261,10 @@ public class ShortestPathList extends GraphProperty<TreeSet<Path>>{
 		return pathsContainingCurrentNode;
 	}
 
+	public	void	printToConsole() {
+		Iterator<Path> iterator = this.shortestPathListValue.iterator();
+		while(iterator.hasNext()) {
+			iterator.next().printToConsole();
+		}
+	}
 }

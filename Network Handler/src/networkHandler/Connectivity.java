@@ -2,14 +2,24 @@ package networkHandler;
 
 import java.util.LinkedList;
 
-public class Connectivity extends GraphProperty<Boolean>{
+public class Connectivity implements GraphProperty<Boolean>{
+//	Attributes
+	private	Graph	graph;
+	private	Boolean	connectivityValue;
+	
 //	Constructor
 	public	Connectivity(Graph graph) {
-		super(graph);
+		this.graph	= graph;
 	}
 	
+//	implementation of getValue method
+	public	Boolean	getValue() {
+		return this.connectivityValue;
+	}
+	
+	
 //	alternative getter method
-	public boolean	getConnectivity() {
+	public Boolean	getConnectivity() {
 		return this.getValue();
 	}
 	
@@ -41,10 +51,10 @@ public class Connectivity extends GraphProperty<Boolean>{
 		// If one Node is not reachable, it means the graph
 		// Is not connected
 		dfsVisit(0,visited,adjListArray);
-		this.value = true;
+		this.connectivityValue = true;
 		for(int v = 0; v < this.graph.getNodeCount(); v++) {
 			if(!visited[v])
-				this.value = false;				
+				this.connectivityValue = false;				
 		}
 
 	}
@@ -63,4 +73,9 @@ public class Connectivity extends GraphProperty<Boolean>{
 		return visited;
 	}
 
+	public	void	printToConsole() {
+		System.out.print("The graph is ");
+		if(!getValue()) {System.out.print("not ");}
+		System.out.print("connected.\n");
+	}
 }

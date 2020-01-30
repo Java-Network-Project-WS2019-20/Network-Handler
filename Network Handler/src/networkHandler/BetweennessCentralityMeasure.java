@@ -3,21 +3,28 @@ package networkHandler;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-public class BetweennessCentralityMeasure extends GraphProperty<Double>{
+public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	Attribute
+	private Graph			graph;
 	private	TreeSet<Path>	shortestPaths;
 	private int				nodeId;
+	private	Double			betweennessCentralityMeasureValue;
 	
 	//	Constructor
 	public			BetweennessCentralityMeasure(Graph graph, TreeSet<Path> shortestPaths, int nodeId) {
-		super(graph);
-		this.shortestPaths	= shortestPaths;
-		this.value			= 0.0;
-		this.nodeId			= nodeId;
+		this.graph								= graph;
+		this.shortestPaths						= shortestPaths;
+		this.betweennessCentralityMeasureValue	= 0.0;
+		this.nodeId								= nodeId;
+	}
+	
+	//	implementation of getValue method
+	public Double	getValue() {
+		return this.betweennessCentralityMeasureValue;
 	}
 	
 	//	alternative getter method
-	public double 	getBetweennessCentralityMeasure() {
+	public Double 	getBetweennessCentralityMeasure() {
 		return this.getValue();
 	}
 	
@@ -41,10 +48,14 @@ public class BetweennessCentralityMeasure extends GraphProperty<Double>{
 			if(i != nodeId) {
 				for(int j = i + 1; j < this.graph.getNodeCount(); j++) {
 					if(j != nodeId) {
-						this.value = this.value + (countsOfPathsContainingNode[i][j] / countsOfAllPaths[i][j]);
+						this.betweennessCentralityMeasureValue = this.betweennessCentralityMeasureValue + (countsOfPathsContainingNode[i][j] / countsOfAllPaths[i][j]);
 					}
 				}
 			}
 		}
+	}
+	
+	public	void	printToConsole() {
+		System.out.print("The Betweenness Centrality Measure for Node v" + this.nodeId + " is " + getValue().toString() + ".\n");
 	}
 }

@@ -3,26 +3,32 @@ package networkHandler;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-public class ShortestPath extends GraphProperty<Path>{
+public class ShortestPath implements GraphProperty<Path>{
 //	Attributes
-	private	int	initialNodeId;
-	private int	destinationNodeId;
+	private	Graph	graph;
+	private	Path	shortestPathValue;
+	private	int		initialNodeId;
+	private int		destinationNodeId;
 	
 //	Constructor
 	public	ShortestPath(Graph graph, int initialNodeId, int destinationNodeId) {
-		super(graph);
+		this.graph				= graph;
 		this.initialNodeId 		= initialNodeId;
 		this.destinationNodeId	= destinationNodeId;
 	}
 	
+	public	Path	getValue() {
+		return this.shortestPathValue;
+	}
+	
 //	alterantive getter method
-	public Path getShortestPath() {
+	public	Path	getShortestPath() {
 		return this.getValue();
 	}
 
 //	implementation of calculate method from GraphProperty Superclass
 	//	Method to calculate the shortest path between two given Nodes by using Dijkstra's algorithm.
-	public void run() {
+	public	void	run() {
 		
 			/*	Initialize an adjacency matrix for the graph
 			 * 	This matrix stores the Edge IDs of corresponding Nodes
@@ -178,11 +184,15 @@ public class ShortestPath extends GraphProperty<Path>{
 				
 			}
 			//	create Path Object
-			this.value = new Path(nodesOnPath, length);
+			this.shortestPathValue = new Path(nodesOnPath, length);
 			
 			
 		
 		
 
+	}
+	
+	public	void	printToConsole() {
+		
 	}
 }

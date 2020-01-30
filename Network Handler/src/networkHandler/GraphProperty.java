@@ -1,25 +1,21 @@
 package networkHandler;
 
-public abstract class GraphProperty<T> implements Runnable{
+public interface GraphProperty<T> extends Runnable{
 	//	Attribute
-	protected Graph	graph;
-	protected T		value;
+//	protected Graph	graph;
+//	protected T		value;
 	
 	//	Constructor
-	public					GraphProperty(Graph graph) {
-		this.graph = graph;
-	}
-	
-	//	set
-	public			void	setValue(T value) {
-		this.value = value;
-	}
-	
+//	public					GraphProperty(Graph graph) {
+//		this.graph = graph;
+//	}
+
 	//	get
-	public			T		getValue() {
-		return this.value;
-	}
+	public			T		getValue();
 	
 	//	calculation (abstract)
 	public abstract void	run();
+	
+	//	print
+	public	void			printToConsole();
 }
