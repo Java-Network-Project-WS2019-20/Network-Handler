@@ -5,15 +5,15 @@ import java.util.TreeSet;
 
 public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	Attribute
-	private Graph			graph;
-	private	TreeSet<Path>	shortestPaths;
-	private int				nodeId;
-	private	Double			betweennessCentralityMeasureValue;
+	private Graph				graph;
+	private	ShortestPathList	shortestPathList;
+	private int					nodeId;
+	private	Double				betweennessCentralityMeasureValue;
 	
 	//	Constructor
-	public			BetweennessCentralityMeasure(Graph graph, TreeSet<Path> shortestPaths, int nodeId) {
+	public			BetweennessCentralityMeasure(Graph graph, ShortestPathList shortestPathList, int nodeId) {
 		this.graph								= graph;
-		this.shortestPaths						= shortestPaths;
+		this.shortestPathList					= shortestPathList;
 		this.betweennessCentralityMeasureValue	= 0.0;
 		this.nodeId								= nodeId;
 	}
@@ -35,7 +35,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 		double[][] countsOfAllPaths = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 		double[][] countsOfPathsContainingNode = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 		
-		Iterator<Path> iterator = this.shortestPaths.iterator();
+		Iterator<Path> iterator = this.shortestPathList.getValue().iterator();
 		while(iterator.hasNext()) {
 			Path path = iterator.next();
 			countsOfAllPaths[path.getOriginNode()][path.getDestinationNode()]++;
