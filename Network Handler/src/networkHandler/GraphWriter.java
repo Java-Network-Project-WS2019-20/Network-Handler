@@ -81,7 +81,7 @@ public class GraphWriter {
  						.setAttribute("key", "v_id")
  						.setText(String.valueOf(graph.getNodeList().get(i).getID())))
  						.setAttribute("key", "n_bcm")
- 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasuresValue().get(i)));
+ 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasuresValue().get(i).getValue()));
  			nodesElement.addContent(nodeElement);
  		}
  		
