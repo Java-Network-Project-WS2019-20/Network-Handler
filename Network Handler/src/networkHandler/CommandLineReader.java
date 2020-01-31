@@ -33,11 +33,12 @@ public class CommandLineReader {
 	private int spIDtwo;
 	private boolean flagReadFile;
 	private boolean flagCreateOutputFile;
-	private boolean flagBCM;
+	private boolean flagBCMSingle;
+	private	boolean	flagBCMAll;
 	private boolean flagConnectivity;
 	private boolean flagDiameter;
-	private boolean flagShortestPathBetweenTwoNodes;
-	private boolean flagAllShortestPaths;
+	private boolean flagShortestPathsTwoNodes;
+	private boolean flagShortestPathsAll;
 	private boolean flagGraphAttributes;
 	
 	
@@ -56,11 +57,11 @@ public class CommandLineReader {
 		this.spIDtwo = 0;
 		this.flagReadFile = false;
 		this.flagCreateOutputFile = false;
-		this.flagBCM = false;
+		this.flagBCMSingle = false;
 		this.flagConnectivity = false;
 		this.flagDiameter = false;
-		this.flagShortestPathBetweenTwoNodes = false;
-		this.flagAllShortestPaths = false;
+		this.flagShortestPathsTwoNodes = false;
+		this.flagShortestPathsAll = false;
 		this.flagGraphAttributes = false;
 	}
 
@@ -74,11 +75,12 @@ public class CommandLineReader {
 	public int getSpIDtwo() {return spIDtwo;}
 	public boolean getFlagReadFile() {return flagReadFile;}
 	public boolean getFlagCreateOutputFile() {return flagCreateOutputFile;}
-	public boolean getFlagBCM() {return flagBCM;}
+	public boolean getFlagBCMSingle() {return flagBCMSingle;}
+	public boolean getFlagBCMAll() {return flagBCMAll;}
 	public boolean getFlagConnectivity() {return flagConnectivity;}
 	public boolean getFlagDiameter() {return flagDiameter;}
-	public boolean getFlagShortestPathBetweenTwoNodes() {return flagShortestPathBetweenTwoNodes;}
-	public boolean getFlagAllShortestPaths() {return flagAllShortestPaths;}
+	public boolean getFlagShortestPathsTwoNodes() {return flagShortestPathsTwoNodes;}
+	public boolean getFlagShortestPathsAll() {return flagShortestPathsAll;}
 	public boolean getFlagGraphAttributes() {return flagGraphAttributes;}
 
 	
@@ -108,6 +110,10 @@ public class CommandLineReader {
 						+ "\nProvide a Node id.")
 				.build();
 		
+		Option option_B = Option.builder("B")
+				.desc("Calculate the betweenness centrality measure for all nodes.")
+				.build();
+		
 		Option option_c = Option.builder("c")
 				.desc("Checks whether the the graph is connected.")
 				.build();
@@ -125,7 +131,7 @@ public class CommandLineReader {
 				.build();
 		
 		Option option_S = Option.builder("S")
-				.desc("Calculate all shprtest paths betweem all nodes.")
+				.desc("Calculate all shortest paths between all nodes.")
 				.build();
 		
 		Option option_G = Option.builder("G")
@@ -141,6 +147,7 @@ public class CommandLineReader {
 		Options options = new Options();
 		options.addOption(option_a);
 		options.addOption(option_b);
+		options.addOption(option_B);
 		options.addOption(option_c);
 		options.addOption(option_d);
 		options.addOption(option_s);
@@ -223,7 +230,7 @@ public class CommandLineReader {
 //				    	graphHandler.setBetweennessCentralityMeasureParameter(bcmNodeID);
 //				    	graphHandler.calculateSingleBetweennessCentralityMeasure();
 //				    	System.out.println("Betweenness Centrality Measure of Node n" + bcmNodeID + " is " + graphHandler.getSingleBetweennessCentralityMeasure());
-				    	flagBCM = true;
+				    	flagBCMSingle = true;
 				    	
 				    	// if user provides non existing Node ID:
 					} catch (NoSuchElementException nsee) {
@@ -253,7 +260,11 @@ public class CommandLineReader {
 	    	}
 	    }
 	    
-		    
+		// if user provided -B print all BCM to sys.out
+	    if (cmd.hasOption('B')) {
+	    	flagBCMAll = true;
+	    }
+	    
 	    // if user provided -c print connectivity to sys.out
 	    if (cmd.hasOption('c')) {
 //	    	graphHandler.calculateConnectivity();
@@ -286,7 +297,7 @@ public class CommandLineReader {
 //								+ cmd.getOptionValues("s")[1] + " = "
 //								+ graphHandler.getSingleShortestPath().getLength());	
 						
-						flagShortestPathBetweenTwoNodes = true;
+						flagShortestPathsTwoNodes = true;
 						spIDone = Integer.parseInt(cmd.getOptionValues("s")[0]);
 						spIDtwo = Integer.parseInt(cmd.getOptionValues("s")[1]);
 						
@@ -350,7 +361,7 @@ public class CommandLineReader {
 //				}
 //			}
 			
-			flagAllShortestPaths = true;	
+			flagShortestPathsAll = true;	
 		}
 		
 	
