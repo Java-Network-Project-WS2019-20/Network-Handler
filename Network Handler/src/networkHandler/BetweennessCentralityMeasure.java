@@ -1,7 +1,6 @@
 package networkHandler;
 
 import java.util.Iterator;
-import java.util.TreeSet;
 
 public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	Attribute
@@ -9,6 +8,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	private	ShortestPathList	shortestPathList;
 	private int					nodeId;
 	private	Double				betweennessCentralityMeasureValue;
+	private	boolean				successfulCalculation;
 	
 	//	Constructor
 	public			BetweennessCentralityMeasure(Graph graph, ShortestPathList shortestPathList, int nodeId) {
@@ -31,31 +31,39 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	implementation of calculate from GraphProperty Superclass
 	//	TODO: comments
 	public	void	run() {
-		
-		double[][] countsOfAllPaths = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
-		double[][] countsOfPathsContainingNode = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
-		
-		Iterator<Path> iterator = this.shortestPathList.getValue().iterator();
-		while(iterator.hasNext()) {
-			Path path = iterator.next();
-			countsOfAllPaths[path.getOriginNode()][path.getDestinationNode()]++;
-			if(path.contains(nodeId)) {
-				countsOfPathsContainingNode[path.getOriginNode()][path.getDestinationNode()]++;
+		if(this.nodeId > -1 && this.nodeId < this.graph.getNodeCount()) {
+			double[][] countsOfAllPaths = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
+			double[][] countsOfPathsContainingNode = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
+			
+			Iterator<Path> iterator = this.shortestPathList.getValue().iterator();
+			while(iterator.hasNext()) {
+				Path path = iterator.next();
+				countsOfAllPaths[path.getOriginNode()][path.getDestinationNode()]++;
+				if(path.contains(nodeId)) {
+					countsOfPathsContainingNode[path.getOriginNode()][path.getDestinationNode()]++;
+				}
 			}
-		}
-		
-		for(int i = 0; i < this.graph.getNodeCount(); i++) {
-			if(i != nodeId) {
-				for(int j = i + 1; j < this.graph.getNodeCount(); j++) {
-					if(j != nodeId) {
-						this.betweennessCentralityMeasureValue = this.betweennessCentralityMeasureValue + (countsOfPathsContainingNode[i][j] / countsOfAllPaths[i][j]);
+			
+			for(int i = 0; i < this.graph.getNodeCount(); i++) {
+				if(i != nodeId) {
+					for(int j = i + 1; j < this.graph.getNodeCount(); j++) {
+						if(j != nodeId) {
+							this.betweennessCentralityMeasureValue = this.betweennessCentralityMeasureValue + (countsOfPathsContainingNode[i][j] / countsOfAllPaths[i][j]);
+						}
 					}
 				}
 			}
+			this.successfulCalculation = true;
+		}else {
+			this.successfulCalculation = false;
 		}
 	}
 	
 	public	void	printToConsole() {
-		System.out.print("The Betweenness Centrality Measure for Node v" + this.nodeId + " is " + getValue().toString() + ".\n");
+		if(this.successfulCalculation) {
+			System.out.print("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString() + ".\n");
+		}else {
+			System.out.print("Calculation for Node n" + this.nodeId +" is not possible. Node does not exist.\n");
+		}
 	}
 }
