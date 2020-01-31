@@ -40,20 +40,23 @@ public class Graph {
 	}
 	
 	public void printAllNodes() {
-		for (Node n : nodeList) {
-			System.out.println(n.toString());
+		for (Node node : nodeList) {
+			node.printToConsole();
 		}
 	}
 	
 	public void printAllEdges() {
-		StringBuilder sb = new StringBuilder();
-		for (Edge e : edgeList) {
-			sb.append("EdgeID: ").append(e.getEdgeID()).append("\n");		
+		for (Edge edge : edgeList) {
+			edge.printToConsole();		
 		}
-		System.out.println(sb);
 	}
 	
-
+	public	void	printToConsole() {
+		System.out.print(this.toString());
+		printAllNodes();
+		printAllEdges();
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
