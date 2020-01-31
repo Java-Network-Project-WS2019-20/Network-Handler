@@ -18,6 +18,9 @@ public class Node {
 		sb.append("NodeID: ").append(getID());
 		return sb.toString();
 	}
-
+	
+	public	void	printToConsole() {
+		System.out.print(this.toString()+ "\n");
+	}
 }
 
