@@ -1,28 +1,39 @@
 package networkHandler;
 
-public class CommandLineWriter {
+public class CommandLineWriter implements Runnable{
 
-	public void printBCM(String bcm) {
-		System.out.println(bcm);
+	private	GraphHandler		graphHandler;
+	private	CommandLineReader	commandLineReader;
+	
+	public	CommandLineWriter(GraphHandler graphHandler, CommandLineReader commandLineReader) {
+		this.graphHandler		= graphHandler;
+		this.commandLineReader	= commandLineReader;
 	}
 	
-	public void printConnectivity(String connectivity) {
-		System.out.println(connectivity);
-	}
-	
-	public void printDiameter(String diameter) {
-		System.out.println(diameter);
-	}
-	
-	public void printShortestPath(String shortestPath) {
-		System.out.println(shortestPath);
-	}
-	
-	public void printAllShortestPaths(String allShortestPaths) {
-		System.out.println(allShortestPaths);
-	}
-	
-	public void printGraphAttributes(String graphAttributes) {
-		System.out.println(graphAttributes);
+	public	void	run() {
+		if(commandLineReader.getFlagGraphAttributes()) {
+			graphHandler.printToConsoleGraph();
+		}
+		if(commandLineReader.getFlagConnectivity()) {
+			graphHandler.printToConsoleConnectivity();
+		}
+		if(commandLineReader.getFlagDiameter()) {
+			graphHandler.printToConsoleDiameter();
+		}
+		if(commandLineReader.getFlagBCMSingle()) {
+			graphHandler.printToConsoleBetweennessCentralityMeasureSingle();
+		}
+		if(commandLineReader.getFlagBCMAll()) {
+			graphHandler.printToConsoleBetweennessCentralityMeasureList();
+		}
+		if(commandLineReader.getFlagShortestPathsTwoNodes()) {
+			graphHandler.printToConsoleShortestPathListTwoNodes();
+		}
+		if(commandLineReader.getFlagShortestPathsAll()) {
+			graphHandler.printToConsoleShortestPathListAll();
+		}
+		if(commandLineReader.getFlagMinimumSpanningTree()) {
+			graphHandler.printToConsoleMinimumSpanningTree();
+		}
 	}
 }
