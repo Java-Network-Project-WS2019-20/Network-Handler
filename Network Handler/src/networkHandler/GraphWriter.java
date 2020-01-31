@@ -23,7 +23,6 @@ import org.jdom2.output.XMLOutputter;
 public class GraphWriter {
 	private String outputFileName;
 	private Graph graph;
-	private TreeSet<Path> shortestPathList;
 	private	GraphHandler graphHandler;
 	private final Logger mylog = LogManager.getLogger(GraphWriter.class);
 
@@ -36,11 +35,9 @@ public class GraphWriter {
 	 * @param graphHandler The graph on which all calculations will be calculated
 	 */
 	public GraphWriter(String outputFileName, GraphHandler graphHandler) {
-		this.outputFileName = outputFileName;
-		this.graphHandler = graphHandler;
-		this.graph = graphHandler.getGraph();
-		this.shortestPathList = graphHandler.getShortestPathsList();
-		
+		this.outputFileName	= outputFileName;
+		this.graphHandler	= graphHandler;
+		this.graph			= graphHandler.getGraph();
 	}
 	
 	
@@ -54,6 +51,7 @@ public class GraphWriter {
 		checkFileExists();
 		
 		// 1. creating a document
+		
         Document document = new Document();
        
         // 2. creating root, node, child of node elements
@@ -64,9 +62,9 @@ public class GraphWriter {
         		.setAttribute("id", "G")
         		.setAttribute("edgedefault", "undirected");
         Element connectivityElement = new Element("connectivity")
-        		.setAttribute("connected", String.valueOf( graphHandler.getConnectivity() ));
+        		.setAttribute("connected", String.valueOf( graphHandler.getConnectivityValue() ));
         Element diameterElement = new Element("diameter")
-        		.setAttribute("diameter", String.valueOf( graphHandler.getDiameter() ));
+        		.setAttribute("diameter", String.valueOf( graphHandler.getDiameterValue() ));
         Element nodesElement = new Element("nodes");
         Element nodeElement;
         Element edgesElement = new Element("edges");
@@ -83,7 +81,7 @@ public class GraphWriter {
  						.setAttribute("key", "v_id")
  						.setText(String.valueOf(graph.getNodeList().get(i).getID())))
  						.setAttribute("key", "n_bcm")
- 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasures().get(i)));
+ 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasuresValue().get(i)));
  			nodesElement.addContent(nodeElement);
  		}
  		
@@ -102,7 +100,7 @@ public class GraphWriter {
  		}
  		
         // 2.c. creating shortest path elements
- 		Iterator<Path>	pathIterator = shortestPathList.iterator();
+ 		Iterator<Path>	pathIterator = graphHandler.getShortestPathsListAllValue().iterator();
  		while(pathIterator.hasNext()) {
  			Path currentPath = pathIterator.next();
 			shortestPathElement = new Element("shortestPath");
@@ -216,7 +214,7 @@ public class GraphWriter {
         		
             	this.outputFileName = newFileName;
             	mylog.info("New file name: " + newFileName);
-
+            	checkFileExists();
         	} else {
         		// else exit
         		System.exit(0);
