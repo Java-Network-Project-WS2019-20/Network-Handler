@@ -40,6 +40,7 @@ public class CommandLineReader {
 	private boolean flagShortestPathsTwoNodes;
 	private boolean flagShortestPathsAll;
 	private boolean flagGraphAttributes;
+	private	boolean	flagMinimumSpanningTree;
 	
 	
 	
@@ -49,40 +50,52 @@ public class CommandLineReader {
 	 * @param args The provided command line arguments
 	 */
 	public CommandLineReader(String[] args) {
-		this.claArgs = args;
-		this.inputFileName = "";
-		this.outputFileName = "";
-		this.bcmNodeID = 0;
-		this.spIDone = 0;
-		this.spIDtwo = 0;
-		this.flagReadFile = false;
-		this.flagCreateOutputFile = false;
-		this.flagBCMSingle = false;
-		this.flagConnectivity = false;
-		this.flagDiameter = false;
-		this.flagShortestPathsTwoNodes = false;
-		this.flagShortestPathsAll = false;
-		this.flagGraphAttributes = false;
+		this.claArgs					= args;
+		this.inputFileName				= "";
+		this.outputFileName				= "";
+		this.bcmNodeID					= 0;
+		this.spIDone					= 0;
+		this.spIDtwo					= 0;
+		this.flagReadFile				= false;
+		this.flagCreateOutputFile		= false;
+		this.flagBCMSingle				= false;
+		this.flagBCMSingle				= false;
+		this.flagConnectivity			= false;
+		this.flagDiameter				= false;
+		this.flagShortestPathsTwoNodes	= false;
+		this.flagShortestPathsAll		= false;
+		this.flagGraphAttributes		= false;
+		this.flagMinimumSpanningTree	= false;
 	}
 
 	
 	
 	// getter
-	public String getInputFileName() {return inputFileName;}
-	public String getutputFileName() {return outputFileName;}
-	public int getBcmNodeID() {return bcmNodeID;}
-	public int getSpIDone() {return spIDone;}
-	public int getSpIDtwo() {return spIDtwo;}
-	public boolean getFlagReadFile() {return flagReadFile;}
-	public boolean getFlagCreateOutputFile() {return flagCreateOutputFile;}
-	public boolean getFlagBCMSingle() {return flagBCMSingle;}
-	public boolean getFlagBCMAll() {return flagBCMAll;}
-	public boolean getFlagConnectivity() {return flagConnectivity;}
-	public boolean getFlagDiameter() {return flagDiameter;}
-	public boolean getFlagShortestPathsTwoNodes() {return flagShortestPathsTwoNodes;}
-	public boolean getFlagShortestPathsAll() {return flagShortestPathsAll;}
-	public boolean getFlagGraphAttributes() {return flagGraphAttributes;}
-
+	public	String	getInputFileName()				{return inputFileName;}
+	public	String	getOutputFileName()				{return outputFileName;}
+	public	int		getBcmNodeID()					{return bcmNodeID;}
+	public	int		getSpIDone()					{return spIDone;}
+	public	int		getSpIDtwo()					{return spIDtwo;}
+	public	boolean	getFlagReadFile()				{return flagReadFile;}
+	public	boolean	getFlagCreateOutputFile()		{return flagCreateOutputFile;}
+	public	boolean	getFlagBCMSingle()				{return flagBCMSingle;}
+	public	boolean	getFlagBCMAll()					{return flagBCMAll;}
+	public	boolean	getFlagConnectivity()			{return flagConnectivity;}
+	public	boolean	getFlagDiameter()				{return flagDiameter;}
+	public	boolean	getFlagShortestPathsTwoNodes()	{return flagShortestPathsTwoNodes;}
+	public	boolean	getFlagShortestPathsAll()		{return flagShortestPathsAll;}
+	public	boolean	getFlagGraphAttributes()		{return flagGraphAttributes;}
+	public	boolean	getFlagMinimumSpanningTree()	{return flagMinimumSpanningTree;}
+	public	boolean	getAnyPrintFlag() {
+		return (	flagBCMSingle
+				||	flagBCMAll
+				||	flagConnectivity
+				||	flagDiameter
+				||	flagShortestPathsTwoNodes
+				||	flagShortestPathsAll
+				||	flagGraphAttributes
+				||	flagMinimumSpanningTree);
+	}
 	
 	/**
 	 * This method parses the command line arguments by using the external library commons-cli-1.4.
@@ -139,6 +152,10 @@ public class CommandLineReader {
 				.desc("Print # of nodes and edges.")
 				.build();
 		
+		Option option_t = Option.builder("t")
+				.desc("Calculate a minimum spanning tree of the given graph.")
+				.build();
+		
 		Option option_help = Option.builder("h")
 				.longOpt("help")
 				.desc("Print this help text.")
@@ -153,6 +170,7 @@ public class CommandLineReader {
 		options.addOption(option_s);
 		options.addOption(option_S);
 		options.addOption(option_G);
+		options.addOption(option_t);
 		options.addOption(option_help);
 		
 		claParserParsing(options);
@@ -364,6 +382,9 @@ public class CommandLineReader {
 			flagShortestPathsAll = true;	
 		}
 		
+		if (cmd.hasOption('t')) {
+			flagMinimumSpanningTree = true;
+		}
 	
 		// if user provided -h or --help print help text
 	    if (cmd.hasOption("help") || cmd.hasOption('h')) {
@@ -390,16 +411,16 @@ public class CommandLineReader {
 	
 	
 	// initiate parsing of the graph
-	private void parseGraph(String inputFileName) {
-		// start parsing the graph
-		FileHandler nFileHandler = new FileHandler();
-		nFileHandler.setGraphmlFile(inputFileName);
-		nFileHandler.prepareParser();
-
-		// instantiate Graph object
-		Graph graph = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
-		graphHandler = new GraphHandler(graph);
-	}
+//	private void parseGraph(String inputFileName) {
+//		// start parsing the graph
+//		FileHandler nFileHandler = new FileHandler();
+//		nFileHandler.setGraphmlFile(inputFileName);
+//		nFileHandler.prepareParser();
+//
+//		// instantiate Graph object
+//		Graph graph = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
+//		graphHandler = new GraphHandler(graph);
+//	}
 	
 	
 	// help text of options -h, --help
