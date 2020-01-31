@@ -9,10 +9,12 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>>{
 	private	Graph			graph;
 	private	ArrayList<Edge>	minimumSpanningTreeValue;
 	private int 			mstWeight; 
+	private Connectivity	connectivity;
 	
-	public 					MinimumSpanningTree(Graph graph) {
-		this.graph		= graph;
-		this.mstWeight	= 0;
+	public 					MinimumSpanningTree(Graph graph, Connectivity connectivity) {
+		this.graph			= graph;
+		this.mstWeight		= 0;
+		this.connectivity	= connectivity;
 	}
 	
 	public	ArrayList<Edge>	getValue() {
@@ -61,53 +63,51 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>>{
 	 * 
 	 */
 	public	void			printToConsole(){
-		System.out.println("Minimum Spanning Tree: ");
-		for (Edge e : this.minimumSpanningTreeValue) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("Source: ").append(e.getSource()).append(" Target: ").
-			append(e.getTarget()).append(" Weight: ").append(e.getWeight()).append("    Edge ID: ").append(e.getEdgeID());
-			System.out.println(sb);
+		
+		if (connectivity.getValue()) {
+			System.out.println("Minimum Spanning Tree: ");
+			for (Edge e : this.minimumSpanningTreeValue) {
+				e.printToConsole();
+			} 
+		}else {
+			System.out.print("Minimum Spanning Tree can not be calculated. Graph is not connected.\n");
 		}
 	}
 	
 	public	void			run() {
 		
-		int edgeCount = this.graph.getEdgeCount();
-		int nodeCount = this.graph.getNodeCount();
-		
-		//Create Priority Queue, sorted by weight of edges
-		PriorityQueue<Edge> pq = new PriorityQueue<>(edgeCount,Comparator.comparingDouble(o -> o.getWeight()));
-		
-		for (int i = 0; i < edgeCount; i++) {
-			pq.add(this.graph.getEdgeList().get(i));
-		}
-		
-		//Creating parent nodes with pointer to itself
-		int[] parent = new int[nodeCount];
-		for(int i = 0; i < nodeCount; i++) {
+		if (connectivity.getValue()) {
+			int edgeCount = this.graph.getEdgeCount();
+			int nodeCount = this.graph.getNodeCount();
+			//Create Priority Queue, sorted by weight of edges
+			PriorityQueue<Edge> pq = new PriorityQueue<>(edgeCount, Comparator.comparingDouble(o -> o.getWeight()));
+			for (int i = 0; i < edgeCount; i++) {
+				pq.add(this.graph.getEdgeList().get(i));
+			}
+			//Creating parent nodes with pointer to itself
+			int[] parent = new int[nodeCount];
+			for (int i = 0; i < nodeCount; i++) {
 				parent[i] = i;
 			}
-			
-		ArrayList<Edge> mst = new ArrayList <>();
-		
-		int index = 0;
-		while(index < nodeCount - 1) {
-			Edge edge = pq.remove();
-			
-			int x_set = find(parent, edge.getSource());
-			int y_set = find(parent, edge.getTarget());
-			//check if adding this edge creates a cycle
-			if(x_set == y_set) {
-				//Do nothing
-			} else {
-				mst.add(edge);
-				index++;
-				extend(parent, x_set, y_set);
-			}
-		}
+			ArrayList<Edge> mst = new ArrayList<>();
+			int index = 0;
+			while (index < nodeCount - 1) {
+				Edge edge = pq.remove();
 
-		this.minimumSpanningTreeValue = mst;
-		calculateMstWeight();
+				int x_set = find(parent, edge.getSource());
+				int y_set = find(parent, edge.getTarget());
+				//check if adding this edge creates a cycle
+				if (x_set == y_set) {
+					//Do nothing
+				} else {
+					mst.add(edge);
+					index++;
+					extend(parent, x_set, y_set);
+				}
+			}
+			this.minimumSpanningTreeValue = mst;
+			calculateMstWeight();
+		}
 	}	
 
 }
