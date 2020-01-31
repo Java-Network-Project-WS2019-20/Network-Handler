@@ -36,4 +36,7 @@ public class Edge {
 		return sb.toString();
 	}
 	
+	public	void	printToConsole() {
+		System.out.print(this.toString() + "\n");
+	}
 }
