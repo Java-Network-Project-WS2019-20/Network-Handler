@@ -20,11 +20,12 @@ import org.jdom2.output.XMLOutputter;
  * @author Sebastian Monok
  *
  */
-public class GraphWriter {
-	private String outputFileName;
-	private Graph graph;
-	private	GraphHandler graphHandler;
-	private final Logger mylog = LogManager.getLogger(GraphWriter.class);
+public class GraphWriter implements Runnable{
+	private String			outputFileName;
+	private Graph			graph;
+	private	GraphHandler	graphHandler;
+	private boolean			createFile;
+	private final Logger	mylog = LogManager.getLogger(GraphWriter.class);
 
 
 
@@ -38,17 +39,19 @@ public class GraphWriter {
 		this.outputFileName	= outputFileName;
 		this.graphHandler	= graphHandler;
 		this.graph			= graphHandler.getGraph();
+		this.createFile		= true;
 	}
 	
-	
+	public	void	run() {
+		if (createFile) {
+			exportGraphmlAnalysis();
+		}
+	}
 	
 	/**
 	 * This Method creates new graphml file by using the external library jdom-2.0.6.
 	 */
 	public void exportGraphmlAnalysis() {
-		
-		// check if provided output file already exists
-		checkFileExists();
 		
 		// 1. creating a document
 		
@@ -192,7 +195,7 @@ public class GraphWriter {
 
 	
 	// check if file already exists
-	private void checkFileExists() {
+	public void checkFileExists() {
 		File outputFileExist = new File(outputFileName);
 		Scanner in = new Scanner(System.in);
     	
@@ -216,8 +219,8 @@ public class GraphWriter {
             	mylog.info("New file name: " + newFileName);
             	checkFileExists();
         	} else {
-        		// else exit
-        		System.exit(0);
+        		// else do not create file
+        		createFile = false;
         	}
         } finally {
         	in.close();
