@@ -41,6 +41,8 @@ public class FileHandler {
 	 */
 	private ArrayList<Edge> edgeList;
 
+	private boolean	parseSuccessful = false;
+	
 	private final Logger mylog = LogManager.getLogger(FileHandler.class);
 
 
@@ -95,7 +97,8 @@ public class FileHandler {
 			builder = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			mylog.error("Something went wrong while creating a parsable document object!");
-			e.printStackTrace();
+//			e.printStackTrace();
+			return;
 		}
 
 		Document document = null;
@@ -105,16 +108,18 @@ public class FileHandler {
 		} catch (SAXException e) {
 //			e.printStackTrace();
 			mylog.error("File content is not allowed");
+			return;
 		} catch (IOException e) {
 //			e.printStackTrace();
 			mylog.error("Can not open/find file");
+			return;
 		}
 
 		//Pass the parsable document to nodeParser and edgeParser method
 		graphmlParserNodes(document);
 		graphmlParserEdges(document);
-		mylog.info("Parsing " + graphmlFile.getName() + ".graphml");
-
+		mylog.info("Parsed " + graphmlFile.getName() + " successfully.");
+		parseSuccessful = true;
 	}
 
 
@@ -174,5 +179,6 @@ public class FileHandler {
 	}
 	
 	
+	public	boolean	getParseSuccessful() {return parseSuccessful;}
 }
 
