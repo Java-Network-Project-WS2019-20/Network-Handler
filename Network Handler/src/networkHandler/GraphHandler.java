@@ -163,6 +163,7 @@ public class GraphHandler {
 					}
 				}
 				betweennessCentralityMeasureThread = new Thread(this.betweennessCentralityMeasureList, "Betweenness Centrality Measure Calculation");
+				betweennessCentralityMeasureThread.start();
 			}
 		}
 		try {
