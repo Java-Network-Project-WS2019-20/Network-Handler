@@ -257,42 +257,44 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 					//	add path to list of all paths
 					listOfAllPaths.add(new Path(pathNodeList, Double.POSITIVE_INFINITY));
 				}
-
+				
 				this.shortestPathListValue.addAll(listOfAllPaths);
-				if(calculateTwoNodes && correctInput) {
-					shortestPathListTwoNodes = new TreeSet<Path>();
-					Iterator<Path> pathIterator = shortestPathListValue.iterator();
-					boolean	foundAllRelevantPaths = false;
-					while(pathIterator.hasNext() && !foundAllRelevantPaths) {
-						Path nextPath = pathIterator.next();
-						if(nextPath.getOriginNode() == nodeId1) {
-							if(nextPath.getDestinationNode() == nodeId2) {
-								shortestPathListTwoNodes.add(nextPath);
-							}else {
-								if(nextPath.getDestinationNode() > nodeId2) {
-									foundAllRelevantPaths = true;
-								}
-							}
+			}
+			if(calculateTwoNodes && correctInput) {
+				shortestPathListTwoNodes = new TreeSet<Path>();
+				Iterator<Path> pathIterator = shortestPathListValue.iterator();
+				boolean	foundAllRelevantPaths = false;
+				while(pathIterator.hasNext() && !foundAllRelevantPaths) {
+					Path nextPath = pathIterator.next();
+					if(nextPath.getOriginNode() == nodeId1) {
+						if(nextPath.getDestinationNode() == nodeId2) {
+							shortestPathListTwoNodes.add(nextPath);
 						}else {
-							if(nextPath.getOriginNode() > nodeId1) {
+							if(nextPath.getDestinationNode() > nodeId2) {
 								foundAllRelevantPaths = true;
 							}
 						}
-					}
-				}
-				//	remove duplicate paths if necessary
-				if(noDuplicates) {
-					Iterator<Path> pathIterator = shortestPathListValue.iterator();
-					TreeSet<Path> temporaryList = new TreeSet<Path>();
-					while(pathIterator.hasNext()) {
-						Path nextPath = pathIterator.next();
-						if(nextPath.getDestinationNode() > nextPath.getOriginNode()) {
-							temporaryList.add(nextPath);
+					}else {
+						if(nextPath.getOriginNode() > nodeId1) {
+							foundAllRelevantPaths = true;
 						}
 					}
-					shortestPathListValue = temporaryList;
 				}
-			} 
+			}
+			
+			//	remove duplicate paths if necessary
+			if(noDuplicates) {
+				Iterator<Path> pathIterator = shortestPathListValue.iterator();
+				TreeSet<Path> temporaryList = new TreeSet<Path>();
+				while(pathIterator.hasNext()) {
+					Path nextPath = pathIterator.next();
+					if(nextPath.getDestinationNode() > nextPath.getOriginNode()) {
+						temporaryList.add(nextPath);
+					}
+				}
+				shortestPathListValue = temporaryList;
+			}
+			
 		}
 		
 
