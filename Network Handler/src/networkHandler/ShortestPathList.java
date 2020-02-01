@@ -15,18 +15,21 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 	private	int				nodeId1;
 	private	int				nodeId2;
 	private	boolean			correctInput;
+	private	boolean			noDuplicates;
 	
 //	Constructor
-	public	ShortestPathList(Graph graph) {
+	public	ShortestPathList(Graph graph, boolean noDuplicates) {
 		this.graph 				= graph;
+		this.noDuplicates		= noDuplicates;
 		this.calculateAll		= true;
 		this.calculateTwoNodes	= false;
 		this.nodeId1			= -1;
 		this.nodeId2			= -1;
 	}
 	
-	public	ShortestPathList(Graph graph, boolean calculateAll,  int nodeId1, int nodeId2) {
+	public	ShortestPathList(Graph graph, boolean noDuplicates, boolean calculateAll,  int nodeId1, int nodeId2) {
 		this.graph				= graph;
+		this.noDuplicates		= noDuplicates;
 		this.calculateAll		= calculateAll;
 		this.calculateTwoNodes	= true;
 		this.nodeId1			= nodeId1;
@@ -276,6 +279,18 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 							}
 						}
 					}
+				}
+				//	remove duplicate paths if necessary
+				if(noDuplicates) {
+					Iterator<Path> pathIterator = shortestPathListValue.iterator();
+					TreeSet<Path> temporaryList = new TreeSet<Path>();
+					while(pathIterator.hasNext()) {
+						Path nextPath = pathIterator.next();
+						if(nextPath.getDestinationNode() > nextPath.getOriginNode()) {
+							temporaryList.add(nextPath);
+						}
+					}
+					shortestPathListValue = temporaryList;
 				}
 			} 
 		}

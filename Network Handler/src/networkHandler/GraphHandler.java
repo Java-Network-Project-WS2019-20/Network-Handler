@@ -43,9 +43,9 @@ public class GraphHandler {
 			connectivityThread.start();
 			
 			if(commandLineReader.getFlagShortestPathsTwoNodes()) {
-				this.shortestPathList	= new ShortestPathList(this.graph, true, commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
+				this.shortestPathList	= new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), true, commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
 			}else {
-				this.shortestPathList	= new ShortestPathList(this.graph);
+				this.shortestPathList	= new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates());
 			}
 			shortestPathThread	= new Thread(this.shortestPathList, "Shortest Paths Calculation");
 			shortestPathThread.start();
@@ -98,15 +98,15 @@ public class GraphHandler {
 			)
 			{
 				if(commandLineReader.getFlagShortestPathsTwoNodes()) {
-					this.shortestPathList	= new ShortestPathList(this.graph, true, commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
+					this.shortestPathList	= new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), true, commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
 				}else {
-					this.shortestPathList	= new ShortestPathList(this.graph);
+					this.shortestPathList	= new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates());
 				}
 				shortestPathThread	= new Thread(this.shortestPathList, "Shortest Paths Calculation");
 				shortestPathThread.start();
 			}else {
 				if(commandLineReader.getFlagShortestPathsTwoNodes()) {
-					this.shortestPathList	= new ShortestPathList(this.graph, false, commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
+					this.shortestPathList	= new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), false, commandLineReader.getSpIDone(), commandLineReader.getSpIDtwo());
 					shortestPathThread	= new Thread(this.shortestPathList, "Shortest Paths Calculation");
 					shortestPathThread.start();
 				}

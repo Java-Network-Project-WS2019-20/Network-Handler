@@ -39,6 +39,7 @@ public class CommandLineReader {
 	private boolean flagDiameter;
 	private boolean flagShortestPathsTwoNodes;
 	private boolean flagShortestPathsAll;
+	private	boolean flagShortestPathsNoDuplicates;
 	private boolean flagGraphAttributes;
 	private	boolean	flagMinimumSpanningTree;
 	
@@ -50,42 +51,44 @@ public class CommandLineReader {
 	 * @param args The provided command line arguments
 	 */
 	public CommandLineReader(String[] args) {
-		this.claArgs					= args;
-		this.inputFileName				= "";
-		this.outputFileName				= "";
-		this.bcmNodeID					= 0;
-		this.spIDone					= 0;
-		this.spIDtwo					= 0;
-		this.flagReadFile				= false;
-		this.flagCreateOutputFile		= false;
-		this.flagBCMSingle				= false;
-		this.flagBCMSingle				= false;
-		this.flagConnectivity			= false;
-		this.flagDiameter				= false;
-		this.flagShortestPathsTwoNodes	= false;
-		this.flagShortestPathsAll		= false;
-		this.flagGraphAttributes		= false;
-		this.flagMinimumSpanningTree	= false;
+		this.claArgs						= args;
+		this.inputFileName					= "";
+		this.outputFileName					= "";
+		this.bcmNodeID						= 0;
+		this.spIDone						= 0;
+		this.spIDtwo						= 0;
+		this.flagReadFile					= false;
+		this.flagCreateOutputFile			= false;
+		this.flagBCMSingle					= false;
+		this.flagBCMSingle					= false;
+		this.flagConnectivity				= false;
+		this.flagDiameter					= false;
+		this.flagShortestPathsTwoNodes		= false;
+		this.flagShortestPathsAll			= false;
+		this.flagShortestPathsNoDuplicates	= false;
+		this.flagGraphAttributes			= false;
+		this.flagMinimumSpanningTree		= false;
 	}
 
 	
 	
 	// getter
-	public	String	getInputFileName()				{return inputFileName;}
-	public	String	getOutputFileName()				{return outputFileName;}
-	public	int		getBcmNodeID()					{return bcmNodeID;}
-	public	int		getSpIDone()					{return spIDone;}
-	public	int		getSpIDtwo()					{return spIDtwo;}
-	public	boolean	getFlagReadFile()				{return flagReadFile;}
-	public	boolean	getFlagCreateOutputFile()		{return flagCreateOutputFile;}
-	public	boolean	getFlagBCMSingle()				{return flagBCMSingle;}
-	public	boolean	getFlagBCMAll()					{return flagBCMAll;}
-	public	boolean	getFlagConnectivity()			{return flagConnectivity;}
-	public	boolean	getFlagDiameter()				{return flagDiameter;}
-	public	boolean	getFlagShortestPathsTwoNodes()	{return flagShortestPathsTwoNodes;}
-	public	boolean	getFlagShortestPathsAll()		{return flagShortestPathsAll;}
-	public	boolean	getFlagGraphAttributes()		{return flagGraphAttributes;}
-	public	boolean	getFlagMinimumSpanningTree()	{return flagMinimumSpanningTree;}
+	public	String	getInputFileName()					{return inputFileName;}
+	public	String	getOutputFileName()					{return outputFileName;}
+	public	int		getBcmNodeID()						{return bcmNodeID;}
+	public	int		getSpIDone()						{return spIDone;}
+	public	int		getSpIDtwo()						{return spIDtwo;}
+	public	boolean	getFlagReadFile()					{return flagReadFile;}
+	public	boolean	getFlagCreateOutputFile()			{return flagCreateOutputFile;}
+	public	boolean	getFlagBCMSingle()					{return flagBCMSingle;}
+	public	boolean	getFlagBCMAll()						{return flagBCMAll;}
+	public	boolean	getFlagConnectivity()				{return flagConnectivity;}
+	public	boolean	getFlagDiameter()					{return flagDiameter;}
+	public	boolean	getFlagShortestPathsTwoNodes()		{return flagShortestPathsTwoNodes;}
+	public	boolean	getFlagShortestPathsAll()			{return flagShortestPathsAll;}
+	public	boolean	getFlagShortestPathsNoDuplicates()	{return flagShortestPathsNoDuplicates;}
+	public	boolean	getFlagGraphAttributes()			{return flagGraphAttributes;}
+	public	boolean	getFlagMinimumSpanningTree()		{return flagMinimumSpanningTree;}
 	public	boolean	getAnyPrintFlag() {
 		return (	flagBCMSingle
 				||	flagBCMAll
