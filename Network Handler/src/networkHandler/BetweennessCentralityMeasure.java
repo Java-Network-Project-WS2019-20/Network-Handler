@@ -2,6 +2,9 @@ package networkHandler;
 
 import java.util.Iterator;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	Attribute
 	private Graph				graph;
@@ -9,7 +12,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	private int					nodeId;
 	private	Double				betweennessCentralityMeasureValue;
 	private	boolean				successfulCalculation;
-	
+	private final	Logger		mylog = LogManager.getLogger(BetweennessCentralityMeasure.class);
 	//	Constructor
 	public			BetweennessCentralityMeasure(Graph graph, ShortestPathList shortestPathList, int nodeId) {
 		this.graph								= graph;
@@ -32,6 +35,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	TODO: comments
 	public	void	run() {
 		if(this.nodeId > -1 && this.nodeId < this.graph.getNodeCount()) {
+			mylog.info("Started calculation for BCM of Node n" + nodeId + ".");
 			double[][] countsOfAllPaths = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 			double[][] countsOfPathsContainingNode = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 			
@@ -63,7 +67,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 		if(this.successfulCalculation) {
 			System.out.print("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString() + ".\n");
 		}else {
-			System.out.print("Calculation for Node n" + this.nodeId +" is not possible. Node does not exist.\n");
+			System.out.print("Calculation for Node n" + this.nodeId +" is not possible. Node does not exist in given graph.\n");
 		}
 	}
 }
