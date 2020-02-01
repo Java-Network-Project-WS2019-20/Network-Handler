@@ -60,7 +60,7 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 		
 		if (calculateTwoNodes) {
 			//	check the input values if calculation for two nodes requested
-			if (nodeId1 < 0 || nodeId1 >= graph.getNodeCount() || nodeId2 < 0 || nodeId2 >= graph.getNodeCount()) {
+			if (nodeId1 < 0 || nodeId1 >= graph.getNodeCount() || nodeId2 < 0 || nodeId2 >= graph.getNodeCount() || nodeId1 == nodeId2) {
 				correctInput = false;
 			} 
 		}
@@ -204,7 +204,7 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 				 * 	this mapping is required for easier recursive creation of the path objects
 				 */
 				TreeMap<Integer, TreeSet<Integer>> childNodesMap = new TreeMap<>();
-
+					
 				//	fill map of child nodes
 				//	initialize iterator over set of keys(children) of map of parent nodes
 				Iterator<Integer> keySetIterator = parentNodesMap.keySet().iterator();
@@ -212,21 +212,26 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 				while (keySetIterator.hasNext()) {
 					//	set next child to check
 					int nextChildId = keySetIterator.next();
-					//	add entry in map of children for each parent of child
-					parentNodesMap.get(nextChildId).forEach(parentId -> {
-						//	check if key(parent) is already mapped
-						if (childNodesMap.containsKey(parentId)) {
-							//	if key(parent) is already mapped, add child to list of children
-							childNodesMap.get(parentId).add(nextChildId);
-						} else {
-							//	if key(parent) is not mapped, initialize list of children
-							TreeSet<Integer> childrenIds = new TreeSet<Integer>();
-							//	add first child to list
-							childrenIds.add(nextChildId);
-							//	map lit of children to parent
-							childNodesMap.put(parentId, childrenIds);
-						}
-					});
+					//	check if child needs to be included in path generation
+					//	if all paths are calculated always include child
+					//	if only between two paths, only visited nodes are required for path generation .If still included, createPaths method fails to find unvisited children and fails entirely(Null Pointer Exception).
+					if (calculateAll || visitedNodesMap.containsKey(nextChildId)) {
+						//	add entry in map of children for each parent of child
+						parentNodesMap.get(nextChildId).forEach(parentId -> {
+							//	check if key(parent) is already mapped
+							if (childNodesMap.containsKey(parentId)) {
+								//	if key(parent) is already mapped, add child to list of children
+								childNodesMap.get(parentId).add(nextChildId);
+							} else {
+								//	if key(parent) is not mapped, initialize list of children
+								TreeSet<Integer> childrenIds = new TreeSet<Integer>();
+								//	add first child to list
+								childrenIds.add(nextChildId);
+								//	map lit of children to parent
+								childNodesMap.put(parentId, childrenIds);
+							}
+						});
+					}
 				}
 				//	call createPaths method to create all paths given the parent-child relation of the nodes
 				ArrayList<Path> listOfAllPaths = createPaths(visitedNodesMap, childNodesMap, initialNodeId, new ArrayList<Path>());
@@ -255,7 +260,7 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 					shortestPathListTwoNodes = new TreeSet<Path>();
 					Iterator<Path> pathIterator = shortestPathListValue.iterator();
 					boolean	foundAllRelevantPaths = false;
-					while(pathIterator.hasNext() || !foundAllRelevantPaths) {
+					while(pathIterator.hasNext() && !foundAllRelevantPaths) {
 						Path nextPath = pathIterator.next();
 						if(nextPath.getOriginNode() == nodeId1) {
 							if(nextPath.getDestinationNode() == nodeId2) {
@@ -342,23 +347,27 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 				pathIterator.next().printToConsole();
 			} 
 		}else {
-			System.out.print("The calculation for the shortest paths bewteen the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible.\nReason: ");
-			boolean node1IsFaulty	= false;
-			boolean node2IsFaulty	= false;
-			if(nodeId1 < 0 || nodeId1 >= graph.getNodeCount()) {
-				node1IsFaulty	= true;
-			}
-			if(nodeId2 < 0 || nodeId2 >= graph.getNodeCount()) {
-				node2IsFaulty	= true;
-			}
-			if(node1IsFaulty && node2IsFaulty) {
-				System.out.print("Both nodes are not present in given graph.\n");
+			System.out.print("The calculation for the shortest paths between the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible.\nReason: ");
+			if(nodeId1 == nodeId2) {
+				System.out.print("The given Node IDs can not be equal.\n");
 			}else {
-				if(node1IsFaulty) {
-					System.out.print("Node n" + nodeId1 + " is not present in given graph.\n");
+				boolean node1IsFaulty	= false;
+				boolean node2IsFaulty	= false;
+				if(nodeId1 < 0 || nodeId1 >= graph.getNodeCount()) {
+					node1IsFaulty	= true;
 				}
-				if(node2IsFaulty) {
-					System.out.print("Node n" + nodeId2 + " is not present in given graph.\n");
+				if(nodeId2 < 0 || nodeId2 >= graph.getNodeCount()) {
+					node2IsFaulty	= true;
+				}
+				if(node1IsFaulty && node2IsFaulty) {
+					System.out.print("Both nodes do not exist in given graph.\n");
+				}else {
+					if(node1IsFaulty) {
+						System.out.print("Node n" + nodeId1 + " does not exist in given graph.\n");
+					}
+					if(node2IsFaulty) {
+						System.out.print("Node n" + nodeId2 + " does not exist in given graph.\n");
+					}
 				}
 			}
 		}
