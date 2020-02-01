@@ -41,6 +41,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	public	void									run() {
 		
 		if (this.calculateAll) {
+			this.betweennessCentralityMeasureListValue = new ArrayList<BetweennessCentralityMeasure>();
 			ArrayList<Thread> threads = new ArrayList<Thread>();
 			for (int i = 0; i < this.graph.getNodeCount(); i++) {
 				this.betweennessCentralityMeasureListValue
@@ -82,7 +83,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	}
 	
 	public	void									printToConsoleSingle() {
-		this.betweennessCentralityMeasureListValue.get(this.singleCalculationNodeId).printToConsole();
+		this.singleBetweennessCentralityMeasureValue.printToConsole();
 	}
 	
 	
