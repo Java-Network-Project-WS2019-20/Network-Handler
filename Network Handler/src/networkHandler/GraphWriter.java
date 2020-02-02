@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.TreeSet;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
@@ -15,18 +13,20 @@ import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+
 /**
  * This class implements the output of all calculations done over a graph into a new file.
  * @author Sebastian Monok
  *
  */
-public class GraphWriter implements Runnable{
+
+public class GraphWriter implements Runnable {
+	
 	private String			outputFileName;
 	private Graph			graph;
 	private	GraphHandler	graphHandler;
 	private boolean			createFile;
 	private final Logger	mylog = LogManager.getLogger(GraphWriter.class);
-
 
 
 
@@ -36,75 +36,104 @@ public class GraphWriter implements Runnable{
 	 * @param graphHandler The graph on which all calculations will be calculated
 	 */
 	public GraphWriter(String outputFileName, GraphHandler graphHandler) {
+		
 		this.outputFileName	= outputFileName;
 		this.graphHandler	= graphHandler;
 		this.graph			= graphHandler.getGraph();
 		this.createFile		= true;
+		
 	}
 	
-	public	void	run() {
-		if (createFile) {
-			exportGraphmlAnalysis();
-		}
-	}
+	
 	
 	/**
-	 * This Method creates new graphml file by using the external library jdom-2.0.6.
+	 * If the boolean createFile is set to true (due to parsing the command line arguments)
+	 * this method will initiate the export of the calculations done over the graph.
 	 */
-	public void exportGraphmlAnalysis() {
+	public void run() {
+		
+		if (createFile) {
+			doExportGraphAnalysis();
+		}
+		
+	}
+	
+	
+	/**
+	 * This Method creates a new graphml file by using the external library jdom-2.0.6.
+	 */
+	public void doExportGraphAnalysis() {
 		
 		// 1. creating a document
 		
-        Document document = new Document();
+        Document document 	= new Document();
        
+        
         // 2. creating root, node, child of node elements
-        Element rootElement = new Element("graphml")
-        		.setAttribute("created.with", "https://github.com/Java-Network-Project-WS2019-20");
+        
+        Element rootElement 			= new Element("graphml")
+        										.setAttribute("created.with", "https://github.com/Java-Network-Project-WS2019-20");
         Element keyElement;
-        Element graphElement = new Element("graph")
-        		.setAttribute("id", "G")
-        		.setAttribute("edgedefault", "undirected");
-        Element connectivityElement = new Element("connectivity")
-        		.setAttribute("connected", String.valueOf( graphHandler.getConnectivityValue() ));
-        Element diameterElement = new Element("diameter")
-        		.setAttribute("diameter", String.valueOf( graphHandler.getDiameterValue() ));
-        Element nodesElement = new Element("nodes");
+        Element graphElement 			= new Element("graph")
+								        		.setAttribute("id", "G")
+								        		.setAttribute("edgedefault", "undirected");
+        Element connectivityElement		= new Element("connectivity")
+        										.setAttribute("connected", String.valueOf( graphHandler.getConnectivityValue() ));
+        Element diameterElement 		= new Element("diameter")
+        										.setAttribute("diameter", String.valueOf( graphHandler.getDiameterValue() ));
+        Element nodesElement 			= new Element("nodes");
         Element nodeElement;
-        Element edgesElement = new Element("edges");
+        Element edgesElement 			= new Element("edges");
         Element edgeElement;	
-        Element allShortestPathsElement = new Element("shortestPaths");
+        Element allShortestPathsElement	= new Element("shortestPaths");
         Element shortestPathElement;
  		Element dataElement;
         
+ 		
  		// 2.a. creating node elements
+ 		
  		for (int i=0; i < graph.getNodeCount(); i++) {
+ 			
  			nodeElement = new Element("node")
- 					.setAttribute("id", "n" + String.valueOf(graph.getNodeList().get(i).getID()))
- 					.addContent(dataElement = new Element("data")
- 						.setAttribute("key", "v_id")
- 						.setText(String.valueOf(graph.getNodeList().get(i).getID())))
- 						.setAttribute("key", "n_bcm")
- 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasuresValue().get(i).getValue()));
+			 					.setAttribute("id", "n" + String.valueOf(graph.getNodeList().get(i).getID()))
+			 					.addContent(dataElement = new Element("data")
+		 						.setAttribute("key", "v_id")
+		 						.setText(String.valueOf(graph.getNodeList().get(i).getID())))
+		 						.setAttribute("key", "n_bcm")
+		 						.setText(String.valueOf(graphHandler.getAllBetweennessCentralityMeasuresValue().get(i).getValue()));
+ 			
+ 			// add node to the nodes list (nodesElement)
  			nodesElement.addContent(nodeElement);
+ 			
  		}
+ 		
  		
  		// 2.b creating edge elements
+ 		
  		for (int i=0; i < graph.getEdgeCount(); i++) {
+ 			
  			edgeElement = new Element("edge")
- 					.setAttribute("source", "n" + String.valueOf(graph.getEdgeList().get(i).getSource()))
- 					.setAttribute("target", "n" + String.valueOf(graph.getEdgeList().get(i).getTarget()))
- 					.addContent(dataElement = new Element("data")
- 						.setAttribute("key", "e_id")
- 						.setText(String.valueOf(graph.getEdgeList().get(i).getEdgeID())))
- 					.addContent(dataElement = new Element("data")
-						.setAttribute("key", "e_weight")
-						.setText(String.valueOf((int) graph.getEdgeList().get(i).getWeight())));
+			 					.setAttribute("source", "n" + String.valueOf(graph.getEdgeList().get(i).getSource()))
+			 					.setAttribute("target", "n" + String.valueOf(graph.getEdgeList().get(i).getTarget()))
+			 					.addContent(dataElement = new Element("data")
+		 						.setAttribute("key", "e_id")
+		 						.setText(String.valueOf(graph.getEdgeList().get(i).getEdgeID())))
+			 					.addContent(dataElement = new Element("data")
+								.setAttribute("key", "e_weight")
+								.setText(String.valueOf((int) graph.getEdgeList().get(i).getWeight())));
+ 			
+ 			// add edge to the edges list (edgesElement)
  			edgesElement.addContent(edgeElement);
+ 			
  		}
  		
+ 		
         // 2.c. creating shortest path elements
+ 		
  		Iterator<Path>	pathIterator = graphHandler.getShortestPathsListAllValue().iterator();
+ 		
  		while(pathIterator.hasNext()) {
+ 			
  			Path currentPath = pathIterator.next();
 			shortestPathElement = new Element("shortestPath");
 			dataElement = new Element("data");
@@ -121,19 +150,24 @@ public class GraphWriter implements Runnable{
 			
 			//	adding segment values
 			if(currentPath.getLength() != Double.POSITIVE_INFINITY) {
+				
     			for(int j = 0; j < currentPath.getNumberOfNodes(); j++) {
+    				
     				dataElement = new Element("data");
     				dataElement.setAttribute("key", "segment" + j).setText("n" + currentPath.getNode(j));
     				//	adding created node elements to root
     				shortestPathElement.addContent(dataElement);
+    				
     			}
 			}
 			
 			//	shortestPathElement.addContent(dataElement);
 			allShortestPathsElement.addContent(shortestPathElement);
  		}
+ 		
                 
         // 3. adding all children to parents to root
+ 		
  		graphElement.addContent(connectivityElement);
  		graphElement.addContent(diameterElement);
 		graphElement.addContent(nodesElement);
@@ -174,57 +208,75 @@ public class GraphWriter implements Runnable{
  
         document.setContent(rootElement);
 
-        writeToOutputfile(document);
+        doWriteToOutputfile(document);
 	}
 	
         
     // write document to new file
-	private void writeToOutputfile(Document document) {     
+	private void doWriteToOutputfile(Document document) {  
+		
         XMLOutputter outputter = new XMLOutputter();
         outputter.setFormat(Format.getPrettyFormat());
         
         try {
+        	
 			outputter.output(document, new FileWriter(outputFileName));
+			
 		} catch (IOException e) {
 
         	mylog.error("Can not create file at specified path");
+        	
 		}
 
         mylog.info("File created: " + outputFileName);
+        
 	}
 
 	
 	// check if file already exists
-	public void checkFileExists() {
+	public void doCheckIfFileExists() {
+		
 		File outputFileExist = new File(outputFileName);
 		Scanner in = new Scanner(System.in);
     	
 		try {
+			
 	        if (outputFileExist.exists()) {
+	        	
 	        	throw new FileAlreadyExistsException(outputFileName);	
+	        	
 	        }
+	        
         } catch (FileAlreadyExistsException e1) {
 
 			System.out.println("File already exists. Continue? YES/NO/RENAME: ");
         	String userDecision = in.nextLine();
         	
         	if (userDecision.equalsIgnoreCase("YES")) {
+        		
         		// continue
+        		
         	} else if (userDecision.equalsIgnoreCase("RENAME")) {
+        		
         		// rename outputFileName to newFileName
 				System.out.println("Enter new file name and path: ");
             	String newFileName = in.nextLine();
         		
             	this.outputFileName = newFileName;
             	mylog.info("New file name: " + newFileName);
-            	checkFileExists();
+            	doCheckIfFileExists();
+            	
         	} else {
+        		
         		// else do not create file
         		createFile = false;
+        		
         	}
+        	
         } finally {
         	in.close();
         }
+		
 	}
 	
 	

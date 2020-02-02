@@ -17,26 +17,26 @@ public class Main {
 		//BasicConfigurator.configure();
 
 		// user must provide at least one argument = input filename to start parsing graph
-//		try {
+		try {
 			if (args.length > 0) {
 				
 				// start parsing cla
 				CommandLineReader commandLineReader = new CommandLineReader(args);
-				commandLineReader.claParser();	
+				commandLineReader.doParseCommandLineArguments();	
 				
 				if(commandLineReader.getFlagReadFile()) {
-					FileHandler	fileHandler = new FileHandler();
-					fileHandler.setGraphmlFile(commandLineReader.getInputFileName());
-					fileHandler.prepareParser();
+					GraphReader	graphReader = new GraphReader();
+					graphReader.setGraphmlFile(commandLineReader.getInputFileName());
+					graphReader.doParseGraphmlFile();
 					
-					if (fileHandler.getParseSuccessful()) {
-						GraphHandler graphHandler = new GraphHandler(fileHandler.getEdgeList(), fileHandler.getNodeList(), commandLineReader);
+					if (graphReader.isParseSuccessful()) {
+						GraphHandler graphHandler = new GraphHandler(graphReader.getEdgeList(), graphReader.getNodeList(), commandLineReader);
 						graphHandler.runCalculations();
 						Thread graphWriterThread = new Thread();
 						Thread commandLineWriterThread = new Thread();
 						if (commandLineReader.getFlagCreateOutputFile()) {
 							GraphWriter graphWriter = new GraphWriter(commandLineReader.getOutputFileName(), graphHandler);
-							graphWriter.checkFileExists();
+							graphWriter.doCheckIfFileExists();
 							graphWriterThread = new Thread(graphWriter, "File Creation Thread");
 							graphWriterThread.start();
 						}
@@ -55,13 +55,13 @@ public class Main {
 					}
 				}
 			} else {
-				mylog.error("Please input valid arguments!");
+				throw new NoArgumentException();
 			} 
 			
-//		} catch (NoArgumentException e) {
-//			System.out.println("ERROR: Provide at least one argument."
-//					+ "\n	Use -h or --help to print usage help.");
-//		}
+		} catch (NoArgumentException e) {
+			mylog.error("Provide at least one argument."
+					+ "\n	Use -h or --help to print usage help.");
+		}
 	
 		
 		

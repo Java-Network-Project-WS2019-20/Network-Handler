@@ -23,103 +23,79 @@ import java.util.ArrayList;
  * @author Sebastian Monok
  */
 
-public class FileHandler {
+public class GraphReader {
+
+	private File							graphmlFile;
+	private ArrayList<networkHandler.Node>	nodeList;
+	private ArrayList<Edge>					edgeList;
+	private boolean							parseSuccessful = false;
+	private final Logger					mylog = LogManager.getLogger(GraphReader.class);
 
 
-	/**
-	 * Points to the provided graphml file from the user.
-	 */
-	private File graphmlFile;
+	// constructor
+	public GraphReader() {
 
-	/**
-	 * Contains all nodes from the provided graphml file.
-	 */
-	private ArrayList<networkHandler.Node> nodeList;
-
-	/**
-	 * Contains all edges from the provided graphml file.
-	 */
-	private ArrayList<Edge> edgeList;
-
-	private boolean	parseSuccessful = false;
-	
-	private final Logger mylog = LogManager.getLogger(FileHandler.class);
-
-
-
-	public FileHandler() {
-
-		//Init
 		this.nodeList = new ArrayList<>();
 		this.edgeList = new ArrayList<>();
 		this.graphmlFile = null ;
 
 	}
 
-	/**
-	 * Specify the filepath of the graphml file.
-	 * @param filePath
-	 * Parameter is the filepath which is provided by the user of the graphml file
-	 */
-	public void setGraphmlFile(String filePath) {
-		this.graphmlFile = new File(filePath);
-	}
-
-	/**
-	 * Return the ArrayList with the extracted nodes from provided the graphml file.
-	 * @return <code>ArrayList</code>
-	 */
-	public ArrayList<networkHandler.Node> getNodeList() {
-		return nodeList;
-	}
-
-	/**
-	 * Return the ArrayList with the extracted edges from provided the graphml file.
-	 * @return <code>ArrayList</code>
-	 */
-	public ArrayList<Edge> getEdgeList() {
-		return edgeList;
-	}
+	
+	
+	// setter - getter
+	public void setGraphmlFile(String filePath) 			{this.graphmlFile = new File(filePath);}
+	public ArrayList<networkHandler.Node> getNodeList() 	{return nodeList;}
+	public ArrayList<Edge> getEdgeList() 					{return edgeList;}
 
 
 	/**
-	 * Create a parsable document. The Document object is specified with the filepath of the
-	 * graphml file which is provided by the user. The graphml file is then passed to {@link FileHandler#graphmlParserEdges(Document)}
-	 * and {@link FileHandler#graphmlParserEdges(Document)} to parse the document for the nodes and edges.
+	 * Creates a parsable document. The Document object is specified with the filepath of the
+	 * graphml file which is provided by the user. The graphml file is then passed to {@link GraphReader#doParseEdges(Document)}
+	 * and {@link GraphReader#doParseEdges(Document)} to parse the document for the nodes and edges.
 	 */
-
-	public void prepareParser(){
+	public void doParseGraphmlFile(){
 
 		//Create a parsable document
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
+		Document document = null;
+		
 		try {
+			
 			builder = factory.newDocumentBuilder();
+			
 		} catch (ParserConfigurationException e) {
+			
 			mylog.error("Something went wrong while creating a parsable document object!");
-//			e.printStackTrace();
 			return;
+			
 		}
 
-		Document document = null;
-
+		
 		try {
+			
 			document = builder.parse(graphmlFile);
+			
 		} catch (SAXException e) {
-//			e.printStackTrace();
+			
 			mylog.error("File content is not allowed");
 			return;
+			
 		} catch (IOException e) {
-//			e.printStackTrace();
+
 			mylog.error("Can not open/find file");
 			return;
+			
 		}
 
+		
 		//Pass the parsable document to nodeParser and edgeParser method
-		graphmlParserNodes(document);
-		graphmlParserEdges(document);
+		doParseNodes(document);
+		doParseEdges(document);
 		mylog.info("Parsed " + graphmlFile.getName() + " successfully.");
 		parseSuccessful = true;
+		
 	}
 
 
@@ -127,21 +103,24 @@ public class FileHandler {
 	 * Parse Document object for nodes and save them into an ArrayList.
 	 * This is done by extracting all nodes into a {@link NodeList} by defining the tag element "node" as parameter in
 	 * the function {@link Document#getElementsByTagName(String)}.
-	 * The {@link NodeList} is then iterated for each node and saved into {@link FileHandler#nodeList}.
+	 * The {@link NodeList} is then iterated for each node and saved into {@link GraphReader#nodeList}.
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
-	public void graphmlParserNodes(Document document) {
+	private void doParseNodes(Document document) {
 
 		// reading all nodes into nodesNL
 		NodeList nodesNL = document.getElementsByTagName("node");
 		
 		// parsing node information
 		for (int temp = 0; temp < nodesNL.getLength(); temp++) {
+			
 			Node nNode = nodesNL.item(temp);
 			
 			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				
 				Element ele = (Element) nNode;
 				nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
+				
 			}
 		}
 
@@ -154,23 +133,27 @@ public class FileHandler {
 	 * Parse Document object for edges and saves them into an ArrayList.
 	 * This is done by extracting all edges into a {@link NodeList} by defining the tag element "edge" as parameter in
 	 * the function {@link Document#getElementsByTagName(String)}.
-	 * The {@link NodeList} is then iterated for each edge and saved into {@link FileHandler#edgeList}.
+	 * The {@link NodeList} is then iterated for each edge and saved into {@link GraphReader#edgeList}.
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
-	public void graphmlParserEdges(Document document) {
+	private void doParseEdges(Document document) {
+		
 		// reading all edges into edgesNL
-				NodeList edgesNL = document.getElementsByTagName("edge");
+		NodeList edgesNL = document.getElementsByTagName("edge");
 				
 		//parsing edge information
 		for (int temp = 0; temp < edgesNL.getLength(); temp++) {
+			
 			Node nEdge = edgesNL.item(temp);
 			
 			if (nEdge.getNodeType() == Node.ELEMENT_NODE) {
+				
 				Element ele = (Element) nEdge;
 				edgeList.add(new Edge(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent()),
 						Integer.parseInt(ele.getAttribute("source").substring(1)),
 						Integer.parseInt(ele.getAttribute("target").substring(1)),
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
+				
 			}
 		}
 
@@ -179,6 +162,7 @@ public class FileHandler {
 	}
 	
 	
-	public	boolean	getParseSuccessful() {return parseSuccessful;}
+	public boolean isParseSuccessful() {return parseSuccessful;}
+	
 }
 

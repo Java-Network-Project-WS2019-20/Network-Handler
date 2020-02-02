@@ -2,10 +2,7 @@ package networkHandler;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.TreeSet;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -16,32 +13,33 @@ import org.apache.commons.cli.ParseException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+
 /**
  * This class implements a parser for command line arguments.
  * @author Sebastian Monok
  *
  */
+
 public class CommandLineReader {
-	private String[] claArgs;
-	private GraphHandler graphHandler;
-	private final Logger mylog = LogManager.getLogger(CommandLineReader.class);
 	
-	private String inputFileName;
-	private String outputFileName;
-	private int bcmNodeID;
-	private int spIDone;
-	private int spIDtwo;
-	private boolean flagReadFile;
-	private boolean flagCreateOutputFile;
-	private boolean flagBCMSingle;
-	private	boolean	flagBCMAll;
-	private boolean flagConnectivity;
-	private boolean flagDiameter;
-	private boolean flagShortestPathsTwoNodes;
-	private boolean flagShortestPathsAll;
-	private	boolean flagShortestPathsNoDuplicates;
-	private boolean flagGraphAttributes;
-	private	boolean	flagMinimumSpanningTree;
+	private 				String[] claArgs;
+	private final Logger	mylog = LogManager.getLogger(CommandLineReader.class);
+	private String 			inputFileName;
+	private String 			outputFileName;
+	private int 			bcmNodeID;
+	private int 			spIDone;
+	private int 			spIDtwo;
+	private boolean 		flagReadFile;
+	private boolean 		flagCreateOutputFile;
+	private boolean 		flagBCMSingle;
+	private	boolean			flagBCMAll;
+	private boolean 		flagConnectivity;
+	private boolean 		flagDiameter;
+	private boolean 		flagShortestPathsTwoNodes;
+	private boolean 		flagShortestPathsAll;
+	private	boolean 		flagShortestPathsNoDuplicates;
+	private boolean 		flagGraphAttributes;
+	private	boolean			flagMinimumSpanningTree;
 	
 	
 	
@@ -51,6 +49,7 @@ public class CommandLineReader {
 	 * @param args The provided command line arguments
 	 */
 	public CommandLineReader(String[] args) {
+		
 		this.claArgs						= args;
 		this.inputFileName					= "";
 		this.outputFileName					= "";
@@ -68,6 +67,7 @@ public class CommandLineReader {
 		this.flagShortestPathsNoDuplicates	= false;
 		this.flagGraphAttributes			= false;
 		this.flagMinimumSpanningTree		= false;
+		
 	}
 
 	
@@ -100,72 +100,74 @@ public class CommandLineReader {
 				||	flagMinimumSpanningTree);
 	}
 	
+	
 	/**
 	 * This method parses the command line arguments by using the external library commons-cli-1.4.
 	 * It calls the parsing of the graph and the export of the graph calculations into a new file.
 	 * 
 	 * This method handles the command line arguments in three stages:
-	 * 1. Definition stage: creating the options
+	 * 1. Definition stage: creating the command line options
 	 * 2. Parsing stage: creating the parser
 	 * 3. Interrogation stage: check whether options available and call methods accordingly 
 	 */
-	public void claParser() {
+	public void doParseCommandLineArguments() {
 		
-		// 1. Definition stage: creating the options
+		// 1. Definition stage: creating the command line options
+		
 		Option option_a = Option.builder("a")
-	    		.hasArgs()
-	    		.argName("outputfile.graphml")
-	    		.argName("duplciates").optionalArg(true)
-	    		.desc("Print all graph calculations and node/edge properties to a new *.graphml file. "
-	    				+ "\nProvide file name and path.")
-	    		.build();
+					    		.hasArgs()
+					    		.argName("outputfile.graphml")
+					    		.argName("duplciates").optionalArg(true)
+					    		.desc("Print all graph calculations and node/edge properties to a new *.graphml file. "
+					    				+ "\nProvide file name and path.")
+					    		.build();
 	    
 		Option option_b = Option.builder("b")
-				.hasArg()
-				.argName("node_id")
-				.desc("Calculate the betweenness centrality measure for a selected node."
-						+ "\nProvide a Node id.")
-				.build();
+								.hasArg()
+								.argName("node_id")
+								.desc("Calculate the betweenness centrality measure for a selected node."
+										+ "\nProvide a Node id.")
+								.build();
 		
 		Option option_B = Option.builder("B")
-				.desc("Calculate the betweenness centrality measure for all nodes.")
-				.build();
+								.desc("Calculate the betweenness centrality measure for all nodes.")
+								.build();
 		
 		Option option_c = Option.builder("c")
-				.desc("Checks whether the the graph is connected.")
-				.build();
+								.desc("Checks whether the the graph is connected.")
+								.build();
 		
 		Option option_d = Option.builder("d")
-				.desc("Calculate diameter of the graph.")
-				.build();
+								.desc("Calculate diameter of the graph.")
+								.build();
 		
 		Option option_s = Option.builder("s")
-				.hasArgs()
-				.numberOfArgs(2)
-				.argName("1st node_id 2nd node_id")
-				.desc("Calculate the shortest path between two vertices according to the Dijkstra algorithm."
-						+ "\nProvide two Node id's seperated by a blank space.")
-				.build();
+								.hasArgs()
+								.numberOfArgs(2)
+								.argName("1st node_id 2nd node_id")
+								.desc("Calculate the shortest path between two vertices according to the Dijkstra algorithm."
+										+ "\nProvide two Node id's seperated by a blank space.")
+								.build();
 		
 		Option option_S = Option.builder("S")
-				.hasArg()
-				.optionalArg(true)
-				.desc("Calculate all shortest paths between all nodes.")
-				.build();
+								.hasArg()
+								.optionalArg(true)
+								.desc("Calculate all shortest paths between all nodes.")
+								.build();
 		
 		Option option_G = Option.builder("G")
-				.longOpt("graph")
-				.desc("Print # of nodes and edges.")
-				.build();
+								.longOpt("graph")
+								.desc("Print # of nodes and edges.")
+								.build();
 		
 		Option option_t = Option.builder("t")
-				.desc("Calculate a minimum spanning tree of the given graph.")
-				.build();
+								.desc("Calculate a minimum spanning tree of the given graph.")
+								.build();
 		
 		Option option_help = Option.builder("h")
-				.longOpt("help")
-				.desc("Print this help text.")
-				.build();
+								.longOpt("help")
+								.desc("Print this help text.")
+								.build();
 			
 		Options options = new Options();
 		options.addOption(option_a);
@@ -179,91 +181,98 @@ public class CommandLineReader {
 		options.addOption(option_t);
 		options.addOption(option_help);
 		
-		claParserParsing(options);
+		// start creating the parser
+		doCreateParser(options);
 	}
 	
 	
 	// 2. parsing stage: creating the parser
-	private void claParserParsing(Options options) {
+	private void doCreateParser(Options options) {
+		
 		try {
+			
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd;
 			cmd = parser.parse(options, claArgs);
 			
-			claParserInterrogation(options, cmd);
+			// start interrogation stage
+			doInterrogateCommandLineArguments(options, cmd);
+			
 		} catch (ParseException e) {
-
+			
 			mylog.error("You provided (a) incorrect option(s) and/or missing option value(s). " +
 					"Use -h or --help to print usage help.");
-//
-//	    	System.out.println("ERROR: You provided (a) incorrect option(s) and/or missing option value(s)."
-//	    			+ "\n	Use -h or --help to print usage help.");
+			
 		}
+		
 	}
 	
 	
 	// 3. interrogation stage: check whether options available and call methods accordingly
-	private void claParserInterrogation(Options options, CommandLine cmd) {
+	private void doInterrogateCommandLineArguments(Options options, CommandLine cmd) {	
 		
+		try {
 			
-		// if first provided argument is .graphml file start parsing the graph
-		try { 
+			// if first provided argument is a .graphml file start parsing the graph
 			if( claArgs[0].contains(".graphml") ) {
+				
 				inputFileName = claArgs[0];	// set inputFileName = first provided cla		
-//				parseGraph(inputFileName);	
-				
 				flagReadFile = true;
-				
+			
+			// if user input is -h or --help print the help text and exit
 			} else if ( claArgs[0].contains("help") || ( (claArgs[0].endsWith("h")) && (cmd.hasOption('h')) ) ) {
-				printHelp(options);		// if single argument is -h or --help print help text
-				System.exit(0);			// and exit
+				
+				doPrintHelpText(options);
+				System.exit(0);
+			
+			// if user did not provide proper .graphml file OR provided wrong arguments
 			} else {
+				
 				mylog.error("Wrong file format was provided or wrong arguments were passed!");
-				throw new IllegalArgumentException();	// if user did not provide proper .graphml file
-			}											// OR provided wrong arguments
+				throw new IllegalArgumentException();	
+				
+			}
+		
+		// if user did not provide valid input file as first argument
 		} catch (IllegalArgumentException e) {
 
 			mylog.error("First argument needs to be .graphml file. " +
 					"Provide correct file name with path: /<filename>.graphml. " +
 					"Get help using -h or --help");
 
-//			System.out.println("ERROR: First argument needs to be .graphml file"
-//					+ "\n	Provide correct file name with path: /<filename>.graphml"
-//					+ "\n	Get help using -h or --help");
 		}
 		
 		
-		// if user provided -a call GraphWriter
+		// if command line arguments contain -a set outputFileName to given output file name
+		// and set flag to call GraphWriter
 	    if (cmd.hasOption("a")) {
-//	    	graphHandler.calculateAllGraphProperties();
-//	    	GraphWriter gw = new GraphWriter(cmd.getOptionValue('a'), graphHandler);
-//	    	gw.exportGraphmlAnalysis();
 	    	
 	    	outputFileName = cmd.getOptionValue('a');
 	    	flagCreateOutputFile = true;
 	    	
-	    	
+	    	// if user does not want duplicates in shortest paths calculation to be written in output file
 			if ( (cmd.getOptionValues("a").length == 2) && (cmd.getOptionValues("a")[1].equals("nodup")) ) { 
 				flagShortestPathsNoDuplicates = true;
-				System.out.println( flagShortestPathsNoDuplicates );
+//				System.out.println( flagShortestPathsNoDuplicates );
 			}
 			
 	    }
 	
 	    
-	    // if user provided -b print BCM to sys.out
-	    // test if value of 'b' is digit	    
+	    // if command line arguments contain -b print BCM to sys.out	    
 	    if (cmd.hasOption("b")) {
+	    	
 	    	try {
+	    		
+	    		// test if value of 'b' is digit
 		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
+		    		
 				    try {
+				    	
 				    	bcmNodeID = Integer.parseInt(cmd.getOptionValue('b'));
-//				    	graphHandler.setBetweennessCentralityMeasureParameter(bcmNodeID);
-//				    	graphHandler.calculateSingleBetweennessCentralityMeasure();
-//				    	System.out.println("Betweenness Centrality Measure of Node n" + bcmNodeID + " is " + graphHandler.getSingleBetweennessCentralityMeasure());
 				    	flagBCMSingle = true;
 				    	
-				    	// if user provides non existing Node ID:
+			    	// if user provides non existing Node ID:
 					} catch (NoSuchElementException nsee) {
 
 				    	mylog.error("Can not calculate BCM. " +
@@ -271,62 +280,59 @@ public class CommandLineReader {
 								"\n use -G or --graph to display Graph properties" +
 								"\n	Use -h or --help to print usage help." );
 
-//						System.out.println("ERROR: Can not calculate BCM."
-//								+ "\n	The Node ID you provided does not exist."
-//								+ "\n	use -G or --graph to display Graph properties."
-//								+ "\n	Use -h or --help to print usage help.");
 					}
+				    
 				} else {
+					
 					throw new NumberFormatException(cmd.getOptionValue('b'));
+					
 				}
+		    	
 	    	} catch (NumberFormatException e) {
 
 	    		mylog.error("Can not calculate BCM." +
 						"\n	Wrong number format. " +
 						"\n	Use -h or --help to print usage help.");
 
-//	    		System.out.println("ERROR: Can not calculate BCM."
-//						+ "\n	Wrong number format."
-//						+ "\n	Use -h or --help to print usage help.");
 	    	}
+	    	
 	    }
 	    
-		// if user provided -B print all BCM to sys.out
+	    
+	    // if command line arguments contain -B print ALL BCM to sys.out
 	    if (cmd.hasOption('B')) {
+	    	
 	    	flagBCMAll = true;
+	    	
 	    }
 	    
-	    // if user provided -c print connectivity to sys.out
+	    
+	    // if command line arguments contain -c print connectivity to sys.out
 	    if (cmd.hasOption('c')) {
-//	    	graphHandler.calculateConnectivity();
-//	        System.out.println("Graph is connected: " + graphHandler.getConnectivity());
-	    	
+
 	    	flagConnectivity = true;
+	    	
 	    }
 	
 	    
-	    // if user provided -d print diameter to sys.out
+	    // if command line arguments contain -d print diameter to sys.out
 	    if (cmd.hasOption('d')) {
-//	    	graphHandler.calculateDiameter();
-//	    	System.out.println("Diameter: " + graphHandler.getDiameter());
-	    	
+
 	    	flagDiameter = true;
+	    	
 	    }
 	
 	
-	    // if user provided -s calculate shortest path between two given nodes and print to sys.out
-	    // test if both values of 's' are digits		    
+	    // if command line arguments contain -s calculate shortest path between two given nodes and print to sys.out		    
 		if (cmd.hasOption('s')) {
+			
 			try {
+				
+			    // test if both values of 's' are digits
 				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
 			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
-					try {
-//						graphHandler.setSingleShortestPathParameters(Integer.parseInt(cmd.getOptionValues("s")[0]), Integer.parseInt(cmd.getOptionValues("s")[1]));
-//						graphHandler.calculateSingleShortestPath();
-//						System.out.println( "Shortest Path between: "
-//								+ cmd.getOptionValues("s")[0] + " and "
-//								+ cmd.getOptionValues("s")[1] + " = "
-//								+ graphHandler.getSingleShortestPath().getLength());	
+					
+					try {	
 						
 						flagShortestPathsTwoNodes = true;
 						spIDone = Integer.parseInt(cmd.getOptionValues("s")[0]);
@@ -335,78 +341,67 @@ public class CommandLineReader {
 					// if user provides non existing Node ID's:
 					} catch (NoSuchElementException nsee) {
 
-
 						mylog.error("Can not calculate shortest path.\n" +
 								"The Node ID you provided does not exist.\n" +
 								"use -G or --graph to display Graph properties.\n" +
 								"Use -h or --help to print usage help.");
 
-//						System.out.println("ERROR: Can not calculate shortest path."
-//								+ "\n	The Node ID you provided does not exist."
-//								+ "\n	use -G or --graph to display Graph properties."
-//								+ "\n	Use -h or --help to print usage help.");
 					}
+					
 			    } else {
+			    	
 		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
+		        	
 				}
+				
 			} catch (NumberFormatException e) {
 
 				mylog.error("Can not calculate shortest path.\n" +
 						"Wrong number format.\n" +
 						"Use -h or --help to print usage help.");
 
-//				System.out.println("ERROR: Can not calculate shortest path."
-//						+ "\n	Wrong number format."
-//						+ "\n	Use -h or --help to print usage help.");
 			}
+			
 		}
 	    
 		
-		// if user provided -G print graph to sys.out
+		// if command line arguments contain -G print graph attributes to sys.out
 		if (cmd.hasOption('G')) {
-//			System.out.println(graphHandler.getGraph());
-			
+
 			flagGraphAttributes = true;
+			
 		}
 		
 		
-		// if user provided -S calculate all shortest paths and print to sys.out
+		// if command line arguments contain -S calculate ALL shortest paths and print to sys.out
 		if (cmd.hasOption('S')) {
-//			graphHandler.calculateAllShortestPaths();
-//			TreeSet<Path> shortestPathList = graphHandler.getShortestPathsList();
-//			Iterator<Path>	pathIterator = shortestPathList.iterator();
-//			while(pathIterator.hasNext()) {
-//				Path currentPath = pathIterator.next();
-//				//	source + target
-//				System.out.print("source: n" + currentPath.getOriginNode());
-//				System.out.print(" target: n" + currentPath.getDestinationNode());
-//				
-//				//	length
-//				System.out.println(" length: " + currentPath.getLength());
-//				
-//				//	segment values
-//				if(currentPath.getLength() != Double.POSITIVE_INFINITY) {
-//					for(int i = 0; i < currentPath.getNumberOfNodes(); i++) {
-//						System.out.println("segment: n" + currentPath.getNode(i));
-//					}
-//				}
-//			}
 			
 			flagShortestPathsAll = true;
-			if ( (cmd.getOptionValue('S') != null) && (cmd.getOptionValue('S').equals("nodup")) ) { 
+			
+			// if user does not want duplicates in shortest path calculation
+			if ( (cmd.getOptionValue('S') != null) && (cmd.getOptionValue('S').equals("nodup")) ) {
+				
 				flagShortestPathsNoDuplicates = true;
 //				System.out.println( flagShortestPathsNoDuplicates );
+				
 			}
 
 		}
 		
+		
+		// if command line arguments contain -t calculate a spanning tree and print to sys.out
 		if (cmd.hasOption('t')) {
+			
 			flagMinimumSpanningTree = true;
+			
 		}
 	
-		// if user provided -h or --help print help text
+		
+		// if command line arguments contain -h or --help print help text
 	    if (cmd.hasOption("help") || cmd.hasOption('h')) {
-	    	 printHelp(options);
+	    	
+	    	 doPrintHelpText(options);
+	    	 
 	    }
 	
 	    
@@ -416,35 +411,22 @@ public class CommandLineReader {
 
 	    	mylog.warn("Could not assign argument(s) to any option: ");
 
-//	        System.out.println("\nWARNING: Could not assign argument(s) to any option:");
 	        for (int i=1; i < remainder.length; i++) {
+	        	
 	        	mylog.warn(remainder[i]);
 	        	mylog.warn(" ");
-//	            System.out.print(remainder[i]);
-//	            System.out.print(" ");
+
 	        }
-//	        System.out.println();
-	    }	
+
+	    }
+	    
+	    
 	}
 	
 	
-	// initiate parsing of the graph
-//	private void parseGraph(String inputFileName) {
-//		// start parsing the graph
-//		FileHandler nFileHandler = new FileHandler();
-//		nFileHandler.setGraphmlFile(inputFileName);
-//		nFileHandler.prepareParser();
-//
-//		// instantiate Graph object
-//		Graph graph = new Graph(nFileHandler.getEdgeList(), nFileHandler.getNodeList());
-//		graphHandler = new GraphHandler(graph);
-//	}
-	
-	
-	// help text of options -h, --help
-	private void printHelp(Options options) {
+	// help text of options -h, --help output with logger
+	private void doPrintHelpText(Options options) {
 
-//		System.out.println("\n---------------------------------------------");
 		mylog.info("\n---------------------------------------------");
     	String header = "Start parsing by providing input file name:\n" + 
     					"$> java Main <inputfile.graphml>	adding Options:\n";
@@ -463,13 +445,8 @@ public class CommandLineReader {
 
 		mylog.info(out.toString());
 
-//		formatter.printHelp("The Network Graph Handler", header, options, footer, false);
-
-
 	}
 	
 	
 } 
-	
-
 	

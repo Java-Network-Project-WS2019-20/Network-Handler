@@ -1,7 +1,8 @@
 package networkHandler;
 
+
 /**
- * This class implements an exception for a missing argument.
+ * This class implements an exception for missing arguments.
  * The user should provide at least one command line argument / program argument.
  * 
  * @author Sebastian Monok
@@ -9,6 +10,7 @@ package networkHandler;
  */
 
 public class NoArgumentException extends Exception {
+	
 	private static final long serialVersionUID = 1L;
 
 	public NoArgumentException () { }
