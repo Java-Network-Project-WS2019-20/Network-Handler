@@ -113,8 +113,9 @@ public class CommandLineReader {
 		
 		// 1. Definition stage: creating the options
 		Option option_a = Option.builder("a")
-	    		.hasArg()
+	    		.hasArgs()
 	    		.argName("outputfile.graphml")
+	    		.argName("duplciates").optionalArg(true)
 	    		.desc("Print all graph calculations and node/edge properties to a new *.graphml file. "
 	    				+ "\nProvide file name and path.")
 	    		.build();
@@ -147,6 +148,8 @@ public class CommandLineReader {
 				.build();
 		
 		Option option_S = Option.builder("S")
+				.hasArg()
+				.optionalArg(true)
 				.desc("Calculate all shortest paths between all nodes.")
 				.build();
 		
@@ -238,6 +241,13 @@ public class CommandLineReader {
 	    	
 	    	outputFileName = cmd.getOptionValue('a');
 	    	flagCreateOutputFile = true;
+	    	
+	    	
+			if ( (cmd.getOptionValues("a").length == 2) && (cmd.getOptionValues("a")[1].equals("nodup")) ) { 
+				flagShortestPathsNoDuplicates = true;
+				System.out.println( flagShortestPathsNoDuplicates );
+			}
+			
 	    }
 	
 	    
@@ -382,7 +392,12 @@ public class CommandLineReader {
 //				}
 //			}
 			
-			flagShortestPathsAll = true;	
+			flagShortestPathsAll = true;
+			if ( (cmd.getOptionValue('S') != null) && (cmd.getOptionValue('S').equals("nodup")) ) { 
+				flagShortestPathsNoDuplicates = true;
+//				System.out.println( flagShortestPathsNoDuplicates );
+			}
+
 		}
 		
 		if (cmd.hasOption('t')) {
