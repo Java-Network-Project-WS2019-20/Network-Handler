@@ -82,6 +82,10 @@ public class GraphWriter implements Runnable {
         Element diameterElement 		= new Element("diameter")
         										.setAttribute("diameter", String.valueOf( graphHandler.getDiameterValue() ));
         Element nodesElement 			= new Element("nodes");
+        Element numberOfNodes 			= new Element("Nodes")
+  												.setAttribute("amount", String.valueOf(graphHandler.getGraph().getNodeCount()));
+  		Element numberOfEdges 			= new Element("Edges")
+  												.setAttribute("amount", String.valueOf(graphHandler.getGraph().getEdgeCount()));
         Element nodeElement;
         Element edgesElement 			= new Element("edges");
         Element edgeElement;	
@@ -167,13 +171,16 @@ public class GraphWriter implements Runnable {
  		
                 
         // 3. adding all children to parents to root
- 		
+
+		graphElement.addContent(numberOfNodes);
+		graphElement.addContent(numberOfEdges);
  		graphElement.addContent(connectivityElement);
  		graphElement.addContent(diameterElement);
 		graphElement.addContent(nodesElement);
  		graphElement.addContent(edgesElement);
  		graphElement.addContent(allShortestPathsElement);
- 		  
+
+
  		rootElement.addContent(keyElement = new Element("key")
  									.setAttribute("id", "v_id")
  									.setAttribute("for", "node")
