@@ -349,6 +349,7 @@ public class CommandLineReader {
 					
 //			    } else {
 //			    	
+//					kann man weglassen
 //		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
 //		        	
 //				}
