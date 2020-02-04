@@ -63,7 +63,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 		}
 	}
 	
-	public	void	printToConsole() {
+		public	void	printToConsole() {
 		if(this.successfulCalculation) {
 			System.out.print("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString() + ".\n");
 		}else {

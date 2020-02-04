@@ -398,3 +398,76 @@ Options, flags and arguments may be in any order.
 2020-02-02 12:57:40,697 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n14.
 2020-02-02 12:57:40,697 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n13.
 2020-02-02 12:57:43,291 INFO [networkHandler.GraphWriter] - File created: C:\Users\khali\OneDrive\Desktop\TEST\output.graphml
+2020-02-02 19:11:56,635 ERROR [networkHandler.FileHandler] - Can not open/find file
+2020-02-02 19:12:28,189 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:12:28,189 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:12:28,204 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:13:03,607 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:13:03,607 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:13:03,607 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:13:24,164 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:13:24,164 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:13:24,164 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:13:24,195 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n8.
+2020-02-02 19:13:36,999 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:13:36,999 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:13:36,999 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n3.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n14.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n13.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n12.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n10.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n11.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n9.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n8.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n6.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n7.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n5.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n4.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n2.
+2020-02-02 19:13:37,014 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n0.
+2020-02-02 19:17:19,763 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:17:19,763 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:17:19,763 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:17:31,670 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:17:31,670 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:17:31,670 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:17:41,826 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:17:41,826 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:17:41,826 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:17:58,120 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:17:58,136 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:17:58,136 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
+2020-02-02 19:18:54,971 INFO [networkHandler.CommandLineReader] - 
+---------------------------------------------
+2020-02-02 19:18:54,971 INFO [networkHandler.CommandLineReader] - usage: The Network Graph Handler
+Start parsing by providing input file name:
+$> java Main <inputfile.graphml>
+adding Options:
+ -a <outputfile.graphml>        Print all graph calculations and node/edge
+                                properties to a new *.graphml file.
+                                Provide file name and path.
+ -b <node_id>                   Calculate the betweenness centrality measure for
+                                a selected node.
+                                Provide a Node id.
+ -B                             Calculate the betweenness centrality measure for
+                                all nodes.
+ -c                             Checks whether the the graph is connected.
+ -d                             Calculate diameter of the graph.
+ -G,--graph                     Print # of nodes and edges.
+ -h,--help                      Print this help text.
+ -s <1st node_id 2nd node_id>   Calculate the shortest path between two vertices
+                                according to the Dijkstra algorithm.
+                                Provide two Node id's seperated by a blank
+                                space.
+ -S                             Calculate all shortest paths between all nodes.
+ -t                             Calculate a minimum spanning tree of the given
+                                graph.
+Options, flags and arguments may be in any order.
+---------------------------------------------
+
+
+2020-02-02 19:18:55,002 INFO [networkHandler.FileHandler] - Nodes were parsed succesfully!
+2020-02-02 19:18:55,002 INFO [networkHandler.FileHandler] - Edges were parsed succesfully!
+2020-02-02 19:18:55,002 INFO [networkHandler.FileHandler] - Parsed small_graph.graphml successfully.
