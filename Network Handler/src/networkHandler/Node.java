@@ -1,8 +1,22 @@
 package networkHandler;
 
 public class Node {
+
+
+	/**
+	 * This class represents a node
+	 */
+
+	/**
+	 * A node is identified with an id
+	 */
 	private int id;
 
+
+	/**
+	 * Default Constructor
+	 * @param id
+	 */
 
 	public Node(int id) {
 		this.id = id;

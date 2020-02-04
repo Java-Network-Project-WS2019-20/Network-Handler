@@ -1,21 +1,17 @@
 package networkHandler;
 
-public interface GraphProperty<T> extends Runnable{
-	//	Attribute
-//	protected Graph	graph;
-//	protected T		value;
-	
-	//	Constructor
-//	public					GraphProperty(Graph graph) {
-//		this.graph = graph;
-//	}
+/**
+ * Interface for all calculations. It defines what methods should be included by
+ * the Classes for the calculations.
+ * 
+ * @author Fabian Grun
+ * @param <T> data type of the class of the calculation
+ */
+public interface GraphProperty<T> extends Runnable {
 
-	//	get
-	public			T		getValue();
-	
-	//	calculation (abstract)
-	public abstract void	run();
-	
-	//	print
-	public	void			printToConsole();
+	public T getValue();
+
+	public abstract void run();
+
+	public void printToConsole();
 }

@@ -1,10 +1,36 @@
 package networkHandler;
 
 public class Edge {
+
+	/**
+	 * This class represents an Edge. An Edge contains a edgeID, a source, a target and a weight.
+	 */
+
+
+	/**
+	 * An each is identfied via an id
+	 */
 	private int edgeID;
+
+	/**
+	 * Each has a source and a target node
+	 */
 	private int source;
 	private int target;
+
+	/**
+	 * Edge has a weight
+	 */
 	private double weight;
+
+
+	/**
+	 * Default constructor
+	 * @param edgeID
+	 * @param source
+	 * @param target
+	 * @param weight
+	 */
 
 	public Edge(int edgeID, int source, int target, int weight) {
 		this.edgeID = edgeID;

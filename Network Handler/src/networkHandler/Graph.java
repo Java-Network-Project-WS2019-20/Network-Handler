@@ -1,62 +1,58 @@
 package networkHandler;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
-
+/**
+ * Class that represents a Graph. It stores all Nodes and Edges in respective
+ * Arraylists that have been created by the {@link GraphReader}
+ * 
+ * @author Krzysztof Goroll
+ * @author Fabian Grun
+ */
 public class Graph {
+	
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
-	
-	// Constructor
-	Graph (ArrayList<Edge> EdgeList, ArrayList<Node> NodeList){
+
+	Graph(ArrayList<Edge> EdgeList, ArrayList<Node> NodeList) {
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
 	}
-	
-	
-	// getter - setter
+
 	public int getNodeCount() {
 		return nodeList.size();
 	}
-	
+
 	public int getEdgeCount() {
 		return edgeList.size();
 	}
-	
+
 	public ArrayList<Node> getNodeList() {
 		return nodeList;
 	}
-	
+
 	public ArrayList<Edge> getEdgeList() {
 		return edgeList;
 	}
-	
+
 	public void printAllNodes() {
 		for (Node node : nodeList) {
 			node.printToConsole();
 		}
 	}
-	
+
 	public void printAllEdges() {
 		for (Edge edge : edgeList) {
-			edge.printToConsole();		
+			edge.printToConsole();
 		}
 	}
-	
-	public	void	printToConsole() {
+
+	public void printToConsole() {
 		System.out.print(this.toString());
 		printAllNodes();
 		printAllEdges();
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -64,5 +60,4 @@ public class Graph {
 		sb.append("Number of egdes: ").append(getEdgeCount()).append("\n");
 		return sb.toString();
 	}
-	
 }
