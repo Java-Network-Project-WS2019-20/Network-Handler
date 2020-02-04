@@ -228,7 +228,6 @@ public class CommandLineReader {
 			// if user did not provide proper .graphml file OR provided wrong arguments
 			} else {
 				
-				mylog.error("Wrong file format was provided or wrong arguments were passed!");
 				throw new IllegalArgumentException();	
 				
 			}
@@ -265,7 +264,7 @@ public class CommandLineReader {
 	    	try {
 	    		
 	    		// test if value of 'b' is digit
-		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
+//		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
 		    		
 				    try {
 				    	
@@ -282,11 +281,11 @@ public class CommandLineReader {
 
 					}
 				    
-				} else {
-					
-					throw new NumberFormatException(cmd.getOptionValue('b'));
-					
-				}
+//				} else {
+//					
+//					throw new NumberFormatException(cmd.getOptionValue('b'));
+//					
+//				}
 		    	
 	    	} catch (NumberFormatException e) {
 
@@ -329,8 +328,8 @@ public class CommandLineReader {
 			try {
 				
 			    // test if both values of 's' are digits
-				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
-			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
+//				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
+//			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
 					
 					try {	
 						
@@ -348,11 +347,11 @@ public class CommandLineReader {
 
 					}
 					
-			    } else {
-			    	
-		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
-		        	
-				}
+//			    } else {
+//			    	
+//		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
+//		        	
+//				}
 				
 			} catch (NumberFormatException e) {
 

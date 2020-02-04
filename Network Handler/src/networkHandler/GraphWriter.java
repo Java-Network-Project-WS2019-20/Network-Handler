@@ -17,7 +17,6 @@ import org.jdom2.output.XMLOutputter;
 /**
  * This class implements the output of all calculations done over a graph into a new file.
  * @author Sebastian Monok
- *
  */
 
 public class GraphWriter implements Runnable {

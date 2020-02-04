@@ -21,7 +21,7 @@ public class CommandLineWriter implements Runnable{
 	
 	
 	/**
-	 *  The method run checks which calculations should be printed to sys.out
+	 *  The method run checks which calculations should be printed to the console
 	 */
 	public void		run() {
 		
