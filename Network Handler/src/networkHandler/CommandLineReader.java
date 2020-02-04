@@ -119,7 +119,8 @@ public class CommandLineReader {
 					    		.argName("outputfile.graphml")
 					    		.argName("duplciates").optionalArg(true)
 					    		.desc("Print all graph calculations and node/edge properties to a new *.graphml file. "
-					    				+ "\nProvide file name and path.")
+					    				+ "\nProvide file name and path."
+					    				+ "\nadd 'nodup' to avoid duplicates.")
 					    		.build();
 	    
 		Option option_b = Option.builder("b")
@@ -152,7 +153,8 @@ public class CommandLineReader {
 		Option option_S = Option.builder("S")
 								.hasArg()
 								.optionalArg(true)
-								.desc("Calculate all shortest paths between all nodes.")
+								.desc("Calculate all shortest paths between all nodes."
+										+ "\nadd 'nodup' to avoid duplicates.")
 								.build();
 		
 		Option option_G = Option.builder("G")

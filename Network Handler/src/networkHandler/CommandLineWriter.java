@@ -2,7 +2,7 @@ package networkHandler;
 
 
 /**
- * The CommandLineWriter handles all the system outputs
+ * The CommandLineWriter handles all the system outputs to the console
  * @author Fabian Grun
  * @author Sebastian Monok
  */
