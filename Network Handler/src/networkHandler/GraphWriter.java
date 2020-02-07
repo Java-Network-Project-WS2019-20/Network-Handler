@@ -17,7 +17,6 @@ import org.jdom2.output.XMLOutputter;
 /**
  * This class implements the output of all calculations done over a graph into a new file.
  * @author Sebastian Monok
- *
  */
 
 public class GraphWriter implements Runnable {
@@ -92,6 +91,7 @@ public class GraphWriter implements Runnable {
         Element allShortestPathsElement	= new Element("shortestPaths");
         Element shortestPathElement;
  		Element dataElement;
+ 		Element minimumSpanningTree		= new Element("minumumSpanningTree");
         
  		
  		// 2.a. creating node elements
@@ -168,6 +168,26 @@ public class GraphWriter implements Runnable {
 			//	shortestPathElement.addContent(dataElement);
 			allShortestPathsElement.addContent(shortestPathElement);
  		}
+
+
+        // 2.d. creating minimumSpanningTree elements
+
+ 		for (int i=0; i < graphHandler.getMinimumSpanningTreeValue().size(); i++) {
+ 			
+ 			edgeElement = new Element("edge")
+								.setAttribute("source", "n" + String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getSource()))
+								.setAttribute("target", "n" + String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getTarget()))
+								.addContent(dataElement = new Element("data")
+								.setAttribute("key", "e_id")
+								.setText(String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getEdgeID())))
+								.addContent(dataElement = new Element("data")
+								.setAttribute("key", "e_weight")
+								.setText(String.valueOf((int) graphHandler.getMinimumSpanningTreeValue().get(i).getWeight())));
+	
+			// add edge to the edges list (edgesElement)
+ 			minimumSpanningTree.addContent(edgeElement);
+ 			
+ 		}
  		
                 
         // 3. adding all children to parents to root
@@ -179,6 +199,7 @@ public class GraphWriter implements Runnable {
 		graphElement.addContent(nodesElement);
  		graphElement.addContent(edgesElement);
  		graphElement.addContent(allShortestPathsElement);
+ 		graphElement.addContent(minimumSpanningTree);
 
 
  		rootElement.addContent(keyElement = new Element("key")

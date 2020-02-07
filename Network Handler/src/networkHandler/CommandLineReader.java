@@ -119,7 +119,8 @@ public class CommandLineReader {
 					    		.argName("outputfile.graphml")
 					    		.argName("duplciates").optionalArg(true)
 					    		.desc("Print all graph calculations and node/edge properties to a new *.graphml file. "
-					    				+ "\nProvide file name and path.")
+					    				+ "\nProvide file name and path."
+					    				+ "\nadd 'nodup' to avoid duplicates.")
 					    		.build();
 	    
 		Option option_b = Option.builder("b")
@@ -152,7 +153,8 @@ public class CommandLineReader {
 		Option option_S = Option.builder("S")
 								.hasArg()
 								.optionalArg(true)
-								.desc("Calculate all shortest paths between all nodes.")
+								.desc("Calculate all shortest paths between all nodes."
+										+ "\nadd 'nodup' to avoid duplicates.")
 								.build();
 		
 		Option option_G = Option.builder("G")
@@ -228,7 +230,6 @@ public class CommandLineReader {
 			// if user did not provide proper .graphml file OR provided wrong arguments
 			} else {
 				
-				mylog.error("Wrong file format was provided or wrong arguments were passed!");
 				throw new IllegalArgumentException();	
 				
 			}
@@ -265,7 +266,7 @@ public class CommandLineReader {
 	    	try {
 	    		
 	    		// test if value of 'b' is digit
-		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
+//		    	if( Character.isDigit(cmd.getOptionValue('b').charAt(0)) ) {
 		    		
 				    try {
 				    	
@@ -282,11 +283,11 @@ public class CommandLineReader {
 
 					}
 				    
-				} else {
-					
-					throw new NumberFormatException(cmd.getOptionValue('b'));
-					
-				}
+//				} else {
+//					
+//					throw new NumberFormatException(cmd.getOptionValue('b'));
+//					
+//				}
 		    	
 	    	} catch (NumberFormatException e) {
 
@@ -329,8 +330,8 @@ public class CommandLineReader {
 			try {
 				
 			    // test if both values of 's' are digits
-				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
-			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
+//				if( Character.isDigit(cmd.getOptionValues("s")[0].charAt(0))
+//			    		&& Character.isDigit(cmd.getOptionValues("s")[1].charAt(0)) ) {
 					
 					try {	
 						
@@ -348,11 +349,12 @@ public class CommandLineReader {
 
 					}
 					
-			    } else {
-			    	
-		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
-		        	
-				}
+//			    } else {
+//			    	
+//					kann man weglassen
+//		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
+//		        	
+//				}
 				
 			} catch (NumberFormatException e) {
 
