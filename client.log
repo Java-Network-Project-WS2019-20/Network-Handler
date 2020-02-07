@@ -497,3 +497,48 @@ Options, flags and arguments may be in any order.
 2020-02-07 20:31:37,285 INFO [networkHandler.GraphReader] - Edges were parsed succesfully!
 2020-02-07 20:31:37,287 INFO [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
 2020-02-07 20:31:39,489 INFO [networkHandler.GraphWriter] - File created: C:\Users\khali\OneDrive\Desktop\TEST\output.graphml
+2020-02-07 20:34:00,119 INFO [networkHandler.GraphReader] - Nodes were parsed succesfully!
+2020-02-07 20:34:00,121 INFO [networkHandler.GraphReader] - Edges were parsed succesfully!
+2020-02-07 20:34:00,123 INFO [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
+2020-02-07 20:34:22,894 INFO [networkHandler.GraphReader] - Nodes were parsed succesfully!
+2020-02-07 20:34:22,895 INFO [networkHandler.GraphReader] - Edges were parsed succesfully!
+2020-02-07 20:34:22,897 INFO [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n6.
+2020-02-07 20:34:22,918 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n10.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n9.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n5.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n7.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n8.
+2020-02-07 20:34:22,918 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n13.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n3.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n0.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n4.
+2020-02-07 20:34:22,917 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n2.
+2020-02-07 20:34:22,919 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n14.
+2020-02-07 20:34:22,918 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n12.
+2020-02-07 20:34:22,918 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n11.
+2020-02-07 20:34:25,716 INFO [networkHandler.GraphWriter] - File created: C:\Users\khali\OneDrive\Desktop\TEST\output.graphml
+2020-02-07 20:34:30,251 INFO [networkHandler.GraphReader] - Nodes were parsed succesfully!
+2020-02-07 20:34:30,253 INFO [networkHandler.GraphReader] - Edges were parsed succesfully!
+2020-02-07 20:34:30,255 INFO [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
+2020-02-07 20:34:32,708 INFO [networkHandler.GraphWriter] - File created: C:\Users\khali\OneDrive\Desktop\TEST\output.graphml
+2020-02-07 20:36:55,419 INFO [networkHandler.GraphReader] - Nodes were parsed succesfully!
+2020-02-07 20:36:55,420 INFO [networkHandler.GraphReader] - Edges were parsed succesfully!
+2020-02-07 20:36:55,422 INFO [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n0.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n10.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n9.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n8.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n7.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n6.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n4.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n5.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n2.
+2020-02-07 20:36:55,442 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n3.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n14.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n13.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n12.
+2020-02-07 20:36:55,443 INFO [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n11.
+2020-02-07 20:36:58,065 INFO [networkHandler.GraphWriter] - File created: C:\Users\khali\OneDrive\Desktop\TEST\output.graphml
