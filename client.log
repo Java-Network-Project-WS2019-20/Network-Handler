@@ -136,3 +136,12 @@
 2020-02-08 17:55:27,757 DEBUG [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
 2020-02-08 17:55:27,777 INFO [networkHandler.Path] - Shortest path between n1 and n8: {n1,n3,n8}, length: 4.0
 
+2020-02-08 23:45:15,355 DEBUG [networkHandler.GraphReader] - Nodes were parsed succesfully!
+2020-02-08 23:45:15,371 DEBUG [networkHandler.GraphReader] - Edges were parsed succesfully!
+2020-02-08 23:45:15,371 DEBUG [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
+2020-02-08 23:45:15,402 INFO [networkHandler.Path] - Shortest path between n1 and n8: {n1,n3,n8}, length: 4.0
+
+2020-02-08 23:45:24,282 DEBUG [networkHandler.GraphReader] - Nodes were parsed succesfully!
+2020-02-08 23:45:24,282 DEBUG [networkHandler.GraphReader] - Edges were parsed succesfully!
+2020-02-08 23:45:24,282 DEBUG [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
+2020-02-08 23:45:24,282 INFO [networkHandler.Connectivity] - The graph isconnected

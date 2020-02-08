@@ -200,16 +200,8 @@ public class GraphHandler {
 		return this.connectivity.getValue();
 	}
 
-	public TreeSet<Path> getShortestPathListTwoNodesValue() {
-		return this.shortestPathList.getListOfShortestPathsTwoNodes();
-	}
-
 	public TreeSet<Path> getShortestPathsListAllValue() {
 		return this.shortestPathList.getValue();
-	}
-
-	public Double getSingleBetweennessCentralityMeasureValue() {
-		return this.betweennessCentralityMeasureList.getSingleBetweennessCentralityMeasure().getValue();
 	}
 
 	public ArrayList<BetweennessCentralityMeasure> getAllBetweennessCentralityMeasuresValue() {

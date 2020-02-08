@@ -26,11 +26,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 		return this.betweennessCentralityMeasureValue;
 	}
 	
-	//	alternative getter method
-	public Double 	getBetweennessCentralityMeasure() {
-		return this.getValue();
-	}
-	
+
 	//	implementation of calculate from GraphProperty Superclass
 	//	TODO: comments
 	public	void	run() {

@@ -54,7 +54,7 @@ public class GraphReader {
 	 * graphml file which is provided by the user. The graphml file is then passed to {@link GraphReader#doParseEdges(Document)}
 	 * and {@link GraphReader#doParseEdges(Document)} to parse the document for the nodes and edges.
 	 */
-	public void doParseGraphmlFile(){
+	public void prepareParser(){
 
 		//Create a parsable document
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

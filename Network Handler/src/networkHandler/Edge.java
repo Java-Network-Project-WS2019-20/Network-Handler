@@ -46,7 +46,6 @@ public class Edge {
 	}
 
 	public int getEdgeID() { return edgeID; }
-	public void setEdgeID(int edgeID) { this.edgeID = edgeID; }
 
 	public int getSource() { return source; }
 	public void setSource(int source) { this.source = source; }
@@ -55,8 +54,7 @@ public class Edge {
 	public void setTarget(int target) { this.target = target; }
 	
 	public double getWeight() { return weight; }
-	public void setWeight(double weight) { this.weight = weight; }
-	
+
 	
 	@Override
 	public String toString() {

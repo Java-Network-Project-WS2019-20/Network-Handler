@@ -44,16 +44,7 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 	public	TreeSet<Path>	getValue(){
 		return this.shortestPathListValue;
 	}
-	
-//	alternative getter method
-	public	TreeSet<Path> 	getListOfShortestPathsAll(){
-		return this.getValue();
-	}
-	
-	public	TreeSet<Path>	getListOfShortestPathsTwoNodes(){
-		return this.shortestPathListTwoNodes;
-	}
-	
+
 //	implementation of inherited abstract method form GraphProperty class
 	/*	Method to calculate the shortest paths between all Nodes by using Dijkstra's algorithm
 	 *	Returns a list of paths sorted by initial node first, destination node second

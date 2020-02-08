@@ -26,10 +26,6 @@ public class Connectivity implements GraphProperty<Boolean> {
 		return this.connectivityValue;
 	}
 
-	public Boolean getConnectivity() {
-		return this.getValue();
-	}
-
 	@SuppressWarnings("unchecked")
 	public void run() {
 

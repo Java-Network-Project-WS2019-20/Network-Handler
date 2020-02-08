@@ -1,6 +1,5 @@
 package networkHandler;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -27,7 +26,7 @@ public class Main {
 				if(commandLineReader.getFlagReadFile()) {
 					GraphReader	graphReader = new GraphReader();
 					graphReader.setGraphmlFile(commandLineReader.getInputFileName());
-					graphReader.doParseGraphmlFile();
+					graphReader.prepareParser();
 					
 					if (graphReader.isParseSuccessful()) {
 						GraphHandler graphHandler = new GraphHandler(graphReader.getEdgeList(), graphReader.getNodeList(), commandLineReader);
@@ -49,15 +48,14 @@ public class Main {
 							graphWriterThread.join();
 							commandLineWriterThread.join();
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} 
+							mylog.error("Something went wrong: " +e.getMessage());
+						}
 					}
 				}
 			} else {
 				throw new NoArgumentException();
-			} 
-			
+			}
+
 		} catch (NoArgumentException e) {
 			mylog.error("Provide at least one argument."
 					+ "\n	Use -h or --help to print usage help.");

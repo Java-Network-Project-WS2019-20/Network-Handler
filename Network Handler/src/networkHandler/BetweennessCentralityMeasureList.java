@@ -38,11 +38,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	public	BetweennessCentralityMeasure			getSingleBetweennessCentralityMeasure() {
 		return this.singleBetweennessCentralityMeasureValue;
 	}
-	
-	public	BetweennessCentralityMeasure			getBetweennessCentralityMeasure(int nodeId) {
-		return this.betweennessCentralityMeasureListValue.get(nodeId);
-	}
-	
+
 	public	void									run() {
 		
 		if (this.calculateAll) {

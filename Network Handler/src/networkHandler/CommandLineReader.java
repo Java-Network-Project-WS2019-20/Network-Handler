@@ -23,7 +23,6 @@ import org.apache.log4j.Logger;
 public class CommandLineReader {
 	
 	private 				String[] claArgs;
-	private final Logger	mylog = LogManager.getLogger(CommandLineReader.class);
 	private String 			inputFileName;
 	private String 			outputFileName;
 	private int 			bcmNodeID;
@@ -40,9 +39,11 @@ public class CommandLineReader {
 	private	boolean 		flagShortestPathsNoDuplicates;
 	private boolean 		flagGraphAttributes;
 	private	boolean			flagMinimumSpanningTree;
-	
-	
-	
+	private final Logger	mylog = LogManager.getLogger(CommandLineReader.class);
+
+
+
+
 	/**
 	 * This constructs the parser of command line arguments.
 	 * Program arguments / command line arguments are passed to this constructor.
