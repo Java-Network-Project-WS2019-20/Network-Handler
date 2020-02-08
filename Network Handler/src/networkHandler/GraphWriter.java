@@ -252,7 +252,7 @@ public class GraphWriter implements Runnable {
 			
 		} catch (IOException e) {
 
-        	mylog.error("Can not create file at specified path");
+        	mylog.error("Can not create file at specified path. \n" +e.getMessage());
         	
 		}
 
@@ -277,7 +277,8 @@ public class GraphWriter implements Runnable {
 	        
         } catch (FileAlreadyExistsException e1) {
 
-			System.out.println("File already exists. Continue? YES/NO/RENAME: ");
+			mylog.error("File already exists. Continue? YES/NO/RENAME: ");
+//			System.out.println("File already exists. Continue? YES/NO/RENAME: ");
         	String userDecision = in.nextLine();
         	
         	if (userDecision.equalsIgnoreCase("YES")) {

@@ -203,7 +203,7 @@ public class CommandLineReader {
 		} catch (ParseException e) {
 			
 			mylog.error("You provided (a) incorrect option(s) and/or missing option value(s). " +
-					"Use -h or --help to print usage help.");
+					"Use -h or --help to print usage help. \n" + e.getMessage());
 			
 		}
 		
@@ -228,18 +228,13 @@ public class CommandLineReader {
 				System.exit(0);
 			
 			// if user did not provide proper .graphml file OR provided wrong arguments
-			} else {
-				
-				throw new IllegalArgumentException();	
-				
 			}
-		
 		// if user did not provide valid input file as first argument
 		} catch (IllegalArgumentException e) {
 
 			mylog.error("First argument needs to be .graphml file. " +
 					"Provide correct file name with path: /<filename>.graphml. " +
-					"Get help using -h or --help");
+					"Get help using -h or --help \n" + e.getMessage());
 
 		}
 		
@@ -279,7 +274,7 @@ public class CommandLineReader {
 				    	mylog.error("Can not calculate BCM. " +
 								"\n The Node ID you provided does not exist." +
 								"\n use -G or --graph to display Graph properties" +
-								"\n	Use -h or --help to print usage help." );
+								"\n	Use -h or --help to print usage help. \n" +nsee.getMessage() );
 
 					}
 				    
@@ -293,7 +288,7 @@ public class CommandLineReader {
 
 	    		mylog.error("Can not calculate BCM." +
 						"\n	Wrong number format. " +
-						"\n	Use -h or --help to print usage help.");
+						"\n	Use -h or --help to print usage help. \n" +e.getMessage());
 
 	    	}
 	    	
@@ -345,22 +340,16 @@ public class CommandLineReader {
 						mylog.error("Can not calculate shortest path.\n" +
 								"The Node ID you provided does not exist.\n" +
 								"use -G or --graph to display Graph properties.\n" +
-								"Use -h or --help to print usage help.");
+								"Use -h or --help to print usage help. \n " + nsee.getMessage());
 
 					}
-					
-//			    } else {
-//			    	
-//					kann man weglassen
-//		        	throw new NumberFormatException(cmd.getOptionValues("s")[0]);
-//		        	
-//				}
+
 				
 			} catch (NumberFormatException e) {
 
 				mylog.error("Can not calculate shortest path.\n" +
 						"Wrong number format.\n" +
-						"Use -h or --help to print usage help.");
+						"Use -h or --help to print usage help. \n" + e.getMessage());
 
 			}
 			
@@ -411,12 +400,12 @@ public class CommandLineReader {
 	    String[] remainder = cmd.getArgs();
 	    if(remainder.length > 1) {
 
-	    	mylog.warn("Could not assign argument(s) to any option: ");
+	    	mylog.error("Could not assign argument(s) to any option: ");
 
 	        for (int i=1; i < remainder.length; i++) {
 	        	
-	        	mylog.warn(remainder[i]);
-	        	mylog.warn(" ");
+	        	mylog.error(remainder[i]);
+	        	mylog.error(" ");
 
 	        }
 

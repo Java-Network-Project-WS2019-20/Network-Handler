@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -15,6 +18,8 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 	private ArrayList<Edge> minimumSpanningTreeValue;
 	private int mstWeight;
 	private Connectivity connectivity;
+	private final Logger mylog = LogManager.getLogger(MinimumSpanningTree.class);
+
 
 	public MinimumSpanningTree(Graph graph, Connectivity connectivity) {
 		this.graph = graph;
@@ -105,12 +110,14 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 	public void printToConsole() {
 
 		if (connectivity.getValue()) {
-			System.out.println("Minimum Spanning Tree: ");
+			mylog.info("Minimum Spanning Tree: ");
+//			System.out.println("Minimum Spanning Tree: ");
 			for (Edge e : this.minimumSpanningTreeValue) {
 				e.printToConsole();
 			}
 		} else {
-			System.out.print("Minimum Spanning Tree can not be calculated. Graph is not connected.\n");
+			mylog.error("Minimum Spanning Tree can not be calculated. Graph is not connected");
+//			System.out.print("Minimum Spanning Tree can not be calculated. Graph is not connected.\n");
 		}
 	}
 

@@ -35,7 +35,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	//	TODO: comments
 	public	void	run() {
 		if(this.nodeId > -1 && this.nodeId < this.graph.getNodeCount()) {
-			mylog.info("Started calculation for BCM of Node n" + nodeId + ".");
+			mylog.debug("Started calculation for BCM of Node n" + nodeId + ".");
 			double[][] countsOfAllPaths = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 			double[][] countsOfPathsContainingNode = new double[this.graph.getNodeCount()][this.graph.getNodeCount()];
 			
@@ -65,9 +65,11 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	
 		public	void	printToConsole() {
 		if(this.successfulCalculation) {
-			System.out.print("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString() + ".\n");
+			mylog.info("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString());
+//			System.out.print("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString() + ".\n");
 		}else {
-			System.out.print("Calculation for Node n" + this.nodeId +" is not possible. Node does not exist in given graph.\n");
+			mylog.error("Calculation for Node n\" + this.nodeId +\" is not possible. Node does not exist in given graph.");
+//			System.out.print("Calculation for Node n" + this.nodeId +" is not possible. Node does not exist in given graph.\n");
 		}
 	}
 }

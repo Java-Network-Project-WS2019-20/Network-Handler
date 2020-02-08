@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.LinkedList;
 
 /**
@@ -13,6 +16,7 @@ public class Connectivity implements GraphProperty<Boolean> {
 
 	private Graph graph;
 	private Boolean connectivityValue;
+	private final Logger mylog = LogManager.getLogger(Connectivity.class);
 
 	public Connectivity(Graph graph) {
 		this.graph = graph;
@@ -73,10 +77,13 @@ public class Connectivity implements GraphProperty<Boolean> {
 	}
 
 	public void printToConsole() {
-		System.out.print("The graph is ");
+		String x = "The graph is";
+//		System.out.print("The graph is ");
 		if (!getValue()) {
-			System.out.print("not ");
+//			System.out.print("not ");
+		x = x + "not";
 		}
-		System.out.print("connected.\n");
+		x = x + "connected";
+		mylog.info(x);
 	}
 }

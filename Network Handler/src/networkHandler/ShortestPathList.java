@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
@@ -16,8 +19,10 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 	private	int				nodeId2;
 	private	boolean			correctInput;
 	private	boolean			noDuplicates;
-	
-//	Constructor
+	private final Logger mylog = LogManager.getLogger(ShortestPathList.class);
+
+
+	//	Constructor
 	public	ShortestPathList(Graph graph, boolean noDuplicates) {
 		this.graph 				= graph;
 		this.noDuplicates		= noDuplicates;
@@ -364,9 +369,12 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 				pathIterator.next().printToConsole();
 			} 
 		}else {
-			System.out.print("The calculation for the shortest paths between the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible.\nReason: ");
+
+			mylog.error("The calculation for the shortest paths between the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible. Reason:" );
+//			System.out.print("The calculation for the shortest paths between the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible.\nReason: ");
 			if(nodeId1 == nodeId2) {
-				System.out.print("The given Node IDs can not be equal.\n");
+
+				mylog.error("The given Node IDs can not be equal.\n");
 			}else {
 				boolean node1IsFaulty	= false;
 				boolean node2IsFaulty	= false;
@@ -377,13 +385,13 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 					node2IsFaulty	= true;
 				}
 				if(node1IsFaulty && node2IsFaulty) {
-					System.out.print("Both nodes do not exist in given graph.\n");
+					mylog.error("Both nodes do not exist in given graph.\n");
 				}else {
 					if(node1IsFaulty) {
-						System.out.print("Node n" + nodeId1 + " does not exist in given graph.\n");
+						mylog.error("Node n" + nodeId1 + " does not exist in given graph.\n");
 					}
 					if(node2IsFaulty) {
-						System.out.print("Node n" + nodeId2 + " does not exist in given graph.\n");
+						mylog.error("Node n" + nodeId2 + " does not exist in given graph.\n");
 					}
 				}
 			}

@@ -1,4 +1,7 @@
 package networkHandler;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 
 //	Note: this class has a natural ordering that is inconsistent with equals.
@@ -15,7 +18,10 @@ public class Path implements Comparable<Path>{
 	 *  infinity if no connection between nodes exists
 	 */
 	private	double 				length;
-	
+
+	private final Logger mylog = LogManager.getLogger(Path.class);
+
+
 //	Constructors
 	
 	//	given all values
@@ -127,10 +133,16 @@ public class Path implements Comparable<Path>{
 	
 //	printing
 	public	void	printToConsole() {
-		System.out.print("Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {");
+
+//		System.out.print("Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {");
+		String x = "Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {";
 		for(int i = 0; i < getNumberOfNodes() - 1; i++) {
 			System.out.print("n" + getNode(i) + ",");
+			x = x + "n" + getNode(i) + ",";
 		}
-		System.out.print("n" + getDestinationNode() + "}, length: " + getLength() + "\n");
+		x = x + "n" + getDestinationNode() + "}, length: " + getLength() + "\n";
+//		System.out.print("n" + getDestinationNode() + "}, length: " + getLength() + "\n");
+//		System.out.println(x);
+		mylog.info(x);
 	}
 }

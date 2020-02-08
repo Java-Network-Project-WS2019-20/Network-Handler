@@ -1,22 +1,24 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
+	/**
+ 	* This class represents a node
+ 	*/
+
 public class Node {
 
 
-	/**
-	 * This class represents a node
-	 */
+
 
 	/**
 	 * A node is identified with an id
 	 */
 	private int id;
+	private final Logger mylog = LogManager.getLogger(Node.class);
 
 
-	/**
-	 * Default Constructor
-	 * @param id
-	 */
 
 	public Node(int id) {
 		this.id = id;
@@ -34,7 +36,10 @@ public class Node {
 	}
 	
 	public	void	printToConsole() {
-		System.out.print(this.toString()+ "\n");
+
+
+		mylog.info(this.toString());
+//		System.out.print(this.toString()+ "\n");
 	}
 }
 

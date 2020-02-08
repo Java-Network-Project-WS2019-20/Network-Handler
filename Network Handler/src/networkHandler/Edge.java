@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 public class Edge {
 
 	/**
@@ -22,6 +25,9 @@ public class Edge {
 	 * Edge has a weight
 	 */
 	private double weight;
+
+
+	private final Logger mylog = LogManager.getLogger(Edge.class);
 
 
 	/**
@@ -63,6 +69,8 @@ public class Edge {
 	}
 	
 	public	void	printToConsole() {
-		System.out.print(this.toString() + "\n");
+
+		mylog.info(this.toString());
+//		System.out.print(this.toString() + "\n");
 	}
 }

@@ -58,7 +58,10 @@ public class GraphHandler {
 				connectivityThread.join();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+				mylog.error("Something went wrong: " +e.getMessage());
+
+//				e.printStackTrace();
 			}
 
 			this.minimumSpanningTree = new MinimumSpanningTree(this.graph, this.connectivity);
@@ -118,7 +121,9 @@ public class GraphHandler {
 					connectivityThread.join();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mylog.error("Something went wrong: " +e.getMessage());
+
+//					e.printStackTrace();
 				}
 				minimumSpanningTree = new MinimumSpanningTree(this.graph, this.connectivity);
 				minimumSpanningTreeThread = new Thread(minimumSpanningTree, "Minimum Spanning Tree Calculation");
@@ -131,7 +136,9 @@ public class GraphHandler {
 					connectivityThread.join();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mylog.error("Something went wrong: " +e.getMessage());
+
+//					e.printStackTrace();
 				}
 
 				this.diameter = new Diameter(this.shortestPathList, this.connectivity);
@@ -145,7 +152,9 @@ public class GraphHandler {
 					shortestPathThread.join();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+//					e.printStackTrace();
+					mylog.error("Something went wrong: " +e.getMessage());
+
 				}
 				if (commandLineReader.getFlagBCMAll() && commandLineReader.getFlagBCMSingle()) {
 					this.betweennessCentralityMeasureList = new BetweennessCentralityMeasureList(this.graph,
@@ -172,7 +181,9 @@ public class GraphHandler {
 			betweennessCentralityMeasureThread.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mylog.error("Something went wrong: " +e.getMessage());
+
+//			e.printStackTrace();
 		}
 
 	}

@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 /**
  * Calculates the Diameter of a {@link Graph}
  * 
@@ -10,6 +13,9 @@ public class Diameter implements GraphProperty<Double> {
 	private Double diameterValue;
 	private ShortestPathList shortestPathList;
 	private Connectivity connectivity;
+	private final Logger mylog = LogManager.getLogger(Diameter.class);
+
+
 
 	public Diameter(ShortestPathList shortestPathList, Connectivity connectivity) {
 		this.shortestPathList = shortestPathList;
@@ -35,6 +41,7 @@ public class Diameter implements GraphProperty<Double> {
 	}
 
 	public void printToConsole() {
-		System.out.print("The Diameter of the graph is " + getValue().toString() + ".\n");
+
+		mylog.info("The Diameter of the graph is " + getValue().toString());
 	}
 }

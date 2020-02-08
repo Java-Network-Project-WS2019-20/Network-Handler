@@ -67,7 +67,7 @@ public class GraphReader {
 			
 		} catch (ParserConfigurationException e) {
 			
-			mylog.error("Something went wrong while creating a parsable document object!");
+			mylog.error("Something went wrong while creating a parsable document object! \n" +e.getMessage());
 			return;
 			
 		}
@@ -79,12 +79,12 @@ public class GraphReader {
 			
 		} catch (SAXException e) {
 			
-			mylog.error("File content is not allowed");
+			mylog.error("File content is not allowed \n" +e.getMessage());
 			return;
 			
 		} catch (IOException e) {
 
-			mylog.error("Can not open/find file");
+			mylog.error("Can not open/find file \n" +e.getMessage());
 			return;
 			
 		}
@@ -93,7 +93,7 @@ public class GraphReader {
 		//Pass the parsable document to nodeParser and edgeParser method
 		doParseNodes(document);
 		doParseEdges(document);
-		mylog.info("Parsed " + graphmlFile.getName() + " successfully.");
+		mylog.debug("Parsed " + graphmlFile.getName() + " successfully.");
 		parseSuccessful = true;
 		
 	}
@@ -124,7 +124,7 @@ public class GraphReader {
 			}
 		}
 
-		mylog.info("Nodes were parsed succesfully!");
+		mylog.debug("Nodes were parsed succesfully!");
 
 	}
 
@@ -157,7 +157,7 @@ public class GraphReader {
 			}
 		}
 
-		mylog.info("Edges were parsed succesfully!");
+		mylog.debug("Edges were parsed succesfully!");
 
 	}
 	

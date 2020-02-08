@@ -1,5 +1,8 @@
 package networkHandler;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList<BetweennessCentralityMeasure>>{
@@ -10,7 +13,9 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	private	boolean									calculateAll;
 	private	boolean									calculateSingle;
 	private	int										singleCalculationNodeId;
-	
+	private final Logger mylog = LogManager.getLogger(BetweennessCentralityMeasureList.class);
+
+
 	public											BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList) {
 		this.graph				= graph;
 		this.shortestPathsList	= shortestPathList;
@@ -55,7 +60,9 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 					threads.get(i).join();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+
+					mylog.error("Something went wrong: " +e.getMessage());
+//					e.printStackTrace();
 				}
 			}
 			if(this.calculateSingle) {
@@ -69,7 +76,9 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 				thread.join();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				mylog.error("Something went wrong: " +e.getMessage());
+
+//				e.printStackTrace();
 			}
 		}
 		
