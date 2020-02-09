@@ -20,7 +20,7 @@ public class Path implements Comparable<Path>{
 	
 	/**
 	 * Default Constructor given a list of {@link Node}s and a value for the {@link Path#length}.
-	 * @param nodes {@link ArrayList} of {@link Nodes} sorted by their order on the {@link Path}.
+	 * @param nodes {@link ArrayList} of {@link Node}s sorted by their order on the {@link Path}.
 	 * @param length double value indicating the length of the {@link Path}.
 	 */
 	public Path(ArrayList<Integer> nodes, double length){

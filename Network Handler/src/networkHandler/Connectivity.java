@@ -21,7 +21,7 @@ public class Connectivity implements GraphProperty<Boolean> {
 
 	/**
 	 * Default Constructor
-	 * @param graph
+	 * @param graph The {@link Graph} which needs to be checked for connectivity.
 	 */
 	public Connectivity(Graph graph) {
 		this.graph = graph;

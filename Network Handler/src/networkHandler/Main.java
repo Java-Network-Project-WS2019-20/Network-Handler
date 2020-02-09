@@ -18,8 +18,8 @@ public class Main {
 	 * <p> The main method creates an instance of {@link CommandLineReader}, forwards the given arguments to it and calls its parsing method.
 	 * <p> After parsing the arguments it reads the necessary flags, calls the {@link GraphmlReader} if necessary and forwards the results to an instance of {@link GraphHandler}.
 	 * <p> After completing the calculations in {@link GraphHandler}, {@link GraphmlWriter} and {@link CommandLineWriter} are created called as instructed by the results of the {@link CommandLineReader}.
-	 * @param args
-	 * @throws NoArgumentException
+	 * @param args The arguments entered into the system console when starting the program
+	 * @throws NoArgumentException Exception is thrown if no arguments are used when starting the program
 	 */
 	public static void main(String[] args) throws NoArgumentException {
 		try {
