@@ -145,3 +145,209 @@
 2020-02-08 23:45:24,282 DEBUG [networkHandler.GraphReader] - Edges were parsed succesfully!
 2020-02-08 23:45:24,282 DEBUG [networkHandler.GraphReader] - Parsed small_graph.graphml successfully.
 2020-02-08 23:45:24,282 INFO [networkHandler.Connectivity] - The graph isconnected
+2020-02-09 13:14:16,914 ERROR [networkHandler.CommandLineReader] - Could not assign argument(s) to any option: 
+2020-02-09 13:14:16,914 ERROR [networkHandler.CommandLineReader] - 55
+2020-02-09 13:14:16,914 ERROR [networkHandler.CommandLineReader] -  
+2020-02-09 13:14:16,976 DEBUG [networkHandler.GraphmlReader] - Nodes were parsed succesfully!
+2020-02-09 13:14:16,976 DEBUG [networkHandler.GraphmlReader] - Edges were parsed succesfully!
+2020-02-09 13:14:16,976 DEBUG [networkHandler.GraphmlReader] - Parsed small_graph.graphml successfully.
+2020-02-09 13:14:16,976 DEBUG [networkHandler.ShortestPathList] - Started calculation of shortest paths.
+2020-02-09 13:14:16,976 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n0.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n0.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n1.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n1.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n2.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n2.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n3.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n3.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n4.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n4.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n5.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n5.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n6.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n6.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n7.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n7.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n8.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n8.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n9.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n9.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n10.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n10.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n11.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n11.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n12.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n12.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n13.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n13.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n14.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n14.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.ShortestPathList] - Finished calculation for all necessary shortest paths.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Started Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.BetweennessCentralityMeasure] - Successfully calculated BCM of Node n1.
+2020-02-09 13:14:16,992 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Finished Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:14:17,008 INFO [networkHandler.BetweennessCentralityMeasure] - The Betweenness Centrality Measure for Node n1 is 0.0
+2020-02-09 13:16:39,293 DEBUG [networkHandler.GraphmlReader] - Nodes were parsed succesfully!
+2020-02-09 13:16:39,293 DEBUG [networkHandler.GraphmlReader] - Edges were parsed succesfully!
+2020-02-09 13:16:39,293 DEBUG [networkHandler.GraphmlReader] - Parsed small_graph.graphml successfully.
+2020-02-09 13:16:39,293 DEBUG [networkHandler.ShortestPathList] - Started calculation of shortest paths.
+2020-02-09 13:16:39,293 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n0.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n0.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n1.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n1.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n2.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n2.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n3.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n3.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n4.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n4.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n5.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n5.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n6.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n6.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n7.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n7.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n8.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n8.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n9.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n9.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n10.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n10.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n11.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n11.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n12.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n12.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n13.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n13.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n14.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n14.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.ShortestPathList] - Finished calculation for all necessary shortest paths.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Started Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.BetweennessCentralityMeasure] - Successfully calculated BCM of Node n1.
+2020-02-09 13:16:39,308 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Finished Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:16:39,324 INFO [networkHandler.BetweennessCentralityMeasure] - The Betweenness Centrality Measure for Node n1 is 0.0
+2020-02-09 13:16:46,775 DEBUG [networkHandler.GraphmlReader] - Nodes were parsed succesfully!
+2020-02-09 13:16:46,775 DEBUG [networkHandler.GraphmlReader] - Edges were parsed succesfully!
+2020-02-09 13:16:46,775 DEBUG [networkHandler.GraphmlReader] - Parsed small_graph.graphml successfully.
+2020-02-09 13:16:46,775 DEBUG [networkHandler.ShortestPathList] - Started calculation of shortest paths.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n0.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n0.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n1.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n1.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n2.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n2.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n3.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n3.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n4.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n4.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n5.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n5.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n6.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n6.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n7.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n7.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n8.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n8.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n9.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n9.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n10.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n10.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n11.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n11.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n12.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n12.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n13.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n13.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n14.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n14.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.ShortestPathList] - Finished calculation for all necessary shortest paths.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Started Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.BetweennessCentralityMeasure] - Aborted calculation for BCM of Node n155. Node does not exist in given Graph.
+2020-02-09 13:16:46,791 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Finished Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:16:46,791 ERROR [networkHandler.BetweennessCentralityMeasure] - Calculation for Node n155 was not possible. Node does not exist in given graph.
+2020-02-09 13:20:24,854 ERROR [networkHandler.CommandLineReader] - 99
+2020-02-09 13:20:24,854 ERROR [networkHandler.CommandLineReader] -  
+2020-02-09 13:20:24,854 ERROR [networkHandler.CommandLineReader] - Could not assign argument(s) to any option: 99 
+2020-02-09 13:20:24,885 DEBUG [networkHandler.GraphmlReader] - Nodes were parsed succesfully!
+2020-02-09 13:20:24,885 DEBUG [networkHandler.GraphmlReader] - Edges were parsed succesfully!
+2020-02-09 13:20:24,885 DEBUG [networkHandler.GraphmlReader] - Parsed small_graph.graphml successfully.
+2020-02-09 13:20:24,885 DEBUG [networkHandler.ShortestPathList] - Started calculation of shortest paths.
+2020-02-09 13:20:24,885 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n0.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n0.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n1.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n1.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n2.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n2.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n3.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n3.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n4.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n4.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n5.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n5.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n6.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n6.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n7.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n7.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n8.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n8.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n9.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n9.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n10.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n10.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n11.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n11.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n12.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n12.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n13.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n13.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n14.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n14.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.ShortestPathList] - Finished calculation for all necessary shortest paths.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Started Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.BetweennessCentralityMeasure] - Successfully calculated BCM of Node n1.
+2020-02-09 13:20:24,901 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Finished Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:20:24,901 INFO [networkHandler.BetweennessCentralityMeasure] - The Betweenness Centrality Measure for Node n1 is 0.0
+2020-02-09 13:20:34,664 ERROR [networkHandler.CommandLineReader] - Could not assign argument(s) to any option: 99 
+2020-02-09 13:20:34,695 DEBUG [networkHandler.GraphmlReader] - Nodes were parsed succesfully!
+2020-02-09 13:20:34,695 DEBUG [networkHandler.GraphmlReader] - Edges were parsed succesfully!
+2020-02-09 13:20:34,711 DEBUG [networkHandler.GraphmlReader] - Parsed small_graph.graphml successfully.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation of shortest paths.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n0.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n0.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n1.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n1.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n2.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n2.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n3.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n3.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n4.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n4.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n5.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n5.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n6.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n6.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n7.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n7.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n8.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n8.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n9.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n9.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n10.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n10.
+2020-02-09 13:20:34,711 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n11.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n11.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n12.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n12.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n13.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n13.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Started calculation for shortest paths originating in node n14.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Finished calculation for shortest paths originating in node n14.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.ShortestPathList] - Finished calculation for all necessary shortest paths.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Started Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.BetweennessCentralityMeasure] - Started calculation for BCM of Node n1.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.BetweennessCentralityMeasure] - Successfully calculated BCM of Node n1.
+2020-02-09 13:20:34,726 DEBUG [networkHandler.BetweennessCentralityMeasureList] - Finished Calculation for single Betweenness Centrality Measure.
+2020-02-09 13:20:34,726 INFO [networkHandler.BetweennessCentralityMeasure] - The Betweenness Centrality Measure for Node n1 is 0.0
