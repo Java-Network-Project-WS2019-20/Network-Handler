@@ -2,73 +2,51 @@ package networkHandler;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
+/**
+ * This class represents an Edge between two {@link Node}s of a {@link Graph}.
+ */
 public class Edge {
-
-	/**
-	 * This class represents an Edge. An Edge contains a edgeID, a source, a target and a weight.
-	 */
-
-
-	/**
-	 * An each is identfied via an id
-	 */
+	
 	private int edgeID;
-
-	/**
-	 * Each has a source and a target node
-	 */
-	private int source;
-	private int target;
-
-	/**
-	 * Edge has a weight
-	 */
+	private int sourceNodeId;
+	private int targetNodeId;
 	private double weight;
-
-
 	private final Logger mylog = LogManager.getLogger(Edge.class);
 
-
-	/**
-	 * Default constructor
-	 * @param edgeID
-	 * @param source
-	 * @param target
-	 * @param weight
-	 */
-
-	public Edge(int edgeID, int source, int target, int weight) {
+	public Edge(int edgeID, int sourceNodeId, int targetNodeId, int weight) {
 		this.edgeID = edgeID;
-		this.source = source;
-		this.target = target;
+		this.sourceNodeId = sourceNodeId;
+		this.targetNodeId = targetNodeId;
 		this.weight = weight;
 	}
 
-	public int getEdgeID() { return edgeID; }
+	public int getEdgeID() {
+		return edgeID;
+	}
 
-	public int getSource() { return source; }
-	public void setSource(int source) { this.source = source; }
+	public int getSourceNodeId() {
+		return sourceNodeId;
+	}
 	
-	public int getTarget() { return target; }
-	public void setTarget(int target) { this.target = target; }
+	public int getTargetNodeId() {
+		return targetNodeId;
+	}
 	
-	public double getWeight() { return weight; }
+	public double getWeight() {
+		return weight;
+	}
 
-	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("EdgeID: ").append(getEdgeID());
-		sb.append(" Source: ").append(getSource());
-		sb.append(" Target: ").append(getTarget());
+		sb.append(" Source: ").append(getSourceNodeId());
+		sb.append(" Target: ").append(getTargetNodeId());
 		sb.append(" Weight: ").append(getWeight());
 		return sb.toString();
 	}
 	
-	public	void	printToConsole() {
-
+	public void printToConsole() {
 		mylog.info(this.toString());
-//		System.out.print(this.toString() + "\n");
 	}
 }
