@@ -237,7 +237,11 @@ public class CommandLineReader {
 			// if first provided argument is a .graphml file start parsing the graph
 			if( commandLineArguments[0].contains(".graphml") ) {	
 				inputFileName = commandLineArguments[0];	// set inputFileName = first provided cla		
-				flagReadFile = true;
+				if(commandLineArguments.length != 1) {
+					flagReadFile = true;
+				}else {
+					throw new NoArgumentException("");
+				}
 			// if user input is -h or --help print the help text and exit
 			} else if ( commandLineArguments[0].contains("help") || ( (commandLineArguments[0].endsWith("h")) && (commandLine.hasOption('h')) ) ) {
 				doPrintHelpText(options);
@@ -250,7 +254,10 @@ public class CommandLineReader {
 		} catch (IllegalArgumentException e) {
 			mylog.error("First argument needs to be .graphml file. " +
 					"Provide correct file name with path: /<filename>.graphml. " +
-					"Get help using -h or --help \n" + e.getMessage());
+					"Get help using -h or --help \n");
+		} catch(NoArgumentException e) {
+			mylog.error("At least one more argument must be provided after the input file.\n"
+					+ "Get help using -h or --help\n");
 		}
 		// if command line arguments contain -a set outputFileName to given output file name
 		// and set flag to call GraphWriter
