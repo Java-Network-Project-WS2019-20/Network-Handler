@@ -4,9 +4,10 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * Calculates the Diameter of a {@link Graph}
- * 
+ * <p>This class is responsible for the calculation of the Diameter of a {@link Graph} given a {@link ShortestPathsList} and its {@link Connectivity}.
  * @author Krzysztof
+ * @author Fabian Grun
+ * @see GraphProperty
  */
 public class Diameter implements GraphProperty<Double> {
 
@@ -21,15 +22,21 @@ public class Diameter implements GraphProperty<Double> {
 		this.shortestPathList = shortestPathList;
 		this.connectivity = connectivity;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Double getValue() {
 		return this.diameterValue;
 	}
 
+	/**
+	 * <p>{@inheritDoc}
+	 * <p>In case of a {@link Connectivity} value 'false' for the {@link Graph}, the value will be set to Infinity. 
+	 */
 	public void run() {
 		if (connectivity.getValue()) {
 			this.diameterValue = 0.0;
-			// check which shortest path is the biggest resp. longest
 			this.shortestPathList.getValue().forEach(path -> {
 				if (path.getLength() > this.diameterValue) {
 					this.diameterValue = path.getLength();
@@ -40,8 +47,10 @@ public class Diameter implements GraphProperty<Double> {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void printToConsole() {
-
 		mylog.info("The Diameter of the graph is " + getValue().toString());
 	}
 }

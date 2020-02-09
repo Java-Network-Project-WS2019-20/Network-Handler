@@ -10,6 +10,7 @@ import java.util.LinkedList;
  * Search Algorithm
  * 
  * @author Krzysztof
+ * @see GraphProperty
  */
 
 public class Connectivity implements GraphProperty<Boolean> {
@@ -21,11 +22,17 @@ public class Connectivity implements GraphProperty<Boolean> {
 	public Connectivity(Graph graph) {
 		this.graph = graph;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public Boolean getValue() {
 		return this.connectivityValue;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@SuppressWarnings("unchecked")
 	public void run() {
 
