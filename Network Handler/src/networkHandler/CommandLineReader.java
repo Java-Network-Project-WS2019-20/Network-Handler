@@ -243,6 +243,8 @@ public class CommandLineReader {
 				doPrintHelpText(options);
 				System.exit(0);
 			// if user did not provide proper .graphml file OR provided wrong arguments
+			}else {
+				throw new IllegalArgumentException("");
 			}
 		// if user did not provide valid input file as first argument
 		} catch (IllegalArgumentException e) {
