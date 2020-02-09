@@ -60,7 +60,7 @@ public class GraphHandler {
 			connectivityThread = new Thread(this.connectivity, "Connectivity Calculation");
 			connectivityThread.start();
 			if (commandLineReader.getFlagShortestPathsTwoNodes()) {
-				this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), true, commandLineReader.getShortestPathNodeID1(), commandLineReader.getShortestPathNodeID2());
+				this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), true, commandLineReader.getShortestPathNodeId1(), commandLineReader.getShortestPathNodeId2());
 			} else {
 				this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates());
 			}
@@ -93,7 +93,7 @@ public class GraphHandler {
 			}
 			if (commandLineReader.getFlagShortestPathsAll() || commandLineReader.getFlagDiameter() || commandLineReader.getFlagBetweennessCentralityMeasureSingle() || commandLineReader.getFlagBetweennessCentralityMeasureAll()) {
 				if (commandLineReader.getFlagShortestPathsTwoNodes()) {
-					this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), true, commandLineReader.getShortestPathNodeID1(), commandLineReader.getShortestPathNodeID2());
+					this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), true, commandLineReader.getShortestPathNodeId1(), commandLineReader.getShortestPathNodeId2());
 				} else {
 					this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates());
 				}
@@ -101,7 +101,7 @@ public class GraphHandler {
 				shortestPathThread.start();
 			} else {
 				if (commandLineReader.getFlagShortestPathsTwoNodes()) {
-					this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), false, commandLineReader.getShortestPathNodeID1(), commandLineReader.getShortestPathNodeID2());
+					this.shortestPathList = new ShortestPathList(this.graph, commandLineReader.getFlagShortestPathsNoDuplicates(), false, commandLineReader.getShortestPathNodeId1(), commandLineReader.getShortestPathNodeId2());
 					shortestPathThread = new Thread(this.shortestPathList, "Shortest Paths Calculation");
 					shortestPathThread.start();
 				}

@@ -26,8 +26,8 @@ public class CommandLineReader {
 	private String inputFileName;
 	private String outputFileName;
 	private int betweennessCentralityMeasureNodeID;
-	private int shortestPathNodeID1;
-	private int shortestPathNodeID2;
+	private int shortestPathNodeId1;
+	private int shortestPathNodeId2;
 	private boolean flagReadFile;
 	private boolean flagCreateOutputFile;
 	private boolean flagBetweennessCentralityMeasureSingle;
@@ -55,8 +55,8 @@ public class CommandLineReader {
 		this.inputFileName = "";
 		this.outputFileName = "";
 		this.betweennessCentralityMeasureNodeID = 0;
-		this.shortestPathNodeID1 = 0;
-		this.shortestPathNodeID2 = 0;
+		this.shortestPathNodeId1 = 0;
+		this.shortestPathNodeId2 = 0;
 		this.flagReadFile = false;
 		this.flagCreateOutputFile = false;
 		this.flagBetweennessCentralityMeasureSingle = false;
@@ -83,12 +83,12 @@ public class CommandLineReader {
 		return betweennessCentralityMeasureNodeID;
 	}
 	
-	public int getShortestPathNodeID1() {
-		return shortestPathNodeID1;
+	public int getShortestPathNodeId1() {
+		return shortestPathNodeId1;
 	}
 	
-	public int getShortestPathNodeID2() {
-		return shortestPathNodeID2;
+	public int getShortestPathNodeId2() {
+		return shortestPathNodeId2;
 	}
 	
 	public boolean getFlagReadFile() {
@@ -296,8 +296,8 @@ public class CommandLineReader {
 			try {				
 				try {	
 					flagShortestPathsTwoNodes = true;
-					shortestPathNodeID1 = Integer.parseInt(commandLine.getOptionValues("s")[0]);
-					shortestPathNodeID2 = Integer.parseInt(commandLine.getOptionValues("s")[1]);
+					shortestPathNodeId1 = Integer.parseInt(commandLine.getOptionValues("s")[0]);
+					shortestPathNodeId2 = Integer.parseInt(commandLine.getOptionValues("s")[1]);
 				} catch (NoSuchElementException nsee) {
 					mylog.error("Can not calculate shortest path.\n" +
 					"The Node ID you provided does not exist.\n" +

@@ -38,7 +38,7 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 		return this.minimumSpanningTreeValue;
 	}
 
-	public int getMstWeight() {
+	public int getTotalWeight() {
 		return totalWeight;
 	}
 

@@ -16,12 +16,12 @@ public class Graph {
 
 	/**
 	 * Default Constructor
-	 * @param EdgeList an ArrayList of Edges as part of the graph
-	 * @param NodeList an ArrayList of Nodes as part of the graph
+	 * @param edgeList an ArrayList of Edges as part of the graph
+	 * @param nodeList an ArrayList of Nodes as part of the graph
 	 */
-	public Graph(ArrayList<Edge> EdgeList, ArrayList<Node> NodeList) {
-		this.edgeList = EdgeList;
-		this.nodeList = NodeList;
+	public Graph(ArrayList<Edge> edgeList, ArrayList<Node> nodeList) {
+		this.edgeList = edgeList;
+		this.nodeList = nodeList;
 	}
 
 	public int getNodeCount() {
