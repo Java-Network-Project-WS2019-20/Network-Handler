@@ -3,97 +3,72 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-
-//	Note: this class has a natural ordering that is inconsistent with equals.
+/**
+ * <p>This class represents a path of {@link Node}s in a {@link Graph}.
+ * <p>It consists of an {@link ArrayList} of {@link Node}s sorted by their order of occurrence on the path and a length.
+ * <p>This class also implements the {@link Comparable} interface for easier recursive construction by the {@link ShortestPathList} class and sorting of paths.
+ * <p>Note: this class has a natural ordering that is inconsistent with equals.
+ * @author Fabian Grun
+ *
+ */
 public class Path implements Comparable<Path>{
 	
-//	Attributes
-	
-	/*	nodes (IDs) on the path 
-	 *	in order from origin to destination
-	 */
-	private	ArrayList<Integer>	nodes;
-	
-	/*	length of the path
-	 *  infinity if no connection between nodes exists
-	 */
-	private	double 				length;
-
+	private ArrayList<Integer> nodes;
+	private double length;
 	private final Logger mylog = LogManager.getLogger(Path.class);
-
-
-//	Constructors
 	
-	//	given all values
-	public			Path(ArrayList<Integer> nodes, /*ArrayList<Integer> edges,*/ double length){
+	public Path(ArrayList<Integer> nodes, double length){
 		this.nodes = new ArrayList<Integer>();
 		this.nodes.addAll(nodes);
 		this.length = length;
 	}
-	
-	//	copy
-	public			Path(Path that) {
+
+	public Path(Path that) {
 		this.nodes = new ArrayList<Integer>();
 		this.nodes.addAll(that.nodes);
 		this.length = that.length;
 	}
-	
-//	getter methods
-	
-	//	origin Node
-	public	int		getOriginNode() {
+
+	public int getOriginNode() {
 		return this.nodes.get(0);
 	}
-	
-	//	destination Node
-	public	int		getDestinationNode() {
+
+	public int getDestinationNode() {
 		return this.nodes.get(this.nodes.size() - 1);
 	}
-	
-	//	number of Nodes
-	public	int		getNumberOfNodes() {
+
+	public int getNumberOfNodes() {
 		return this.nodes.size();
 	}
-	
-	/*	i-th Node of path
-	 * 	numbered from 0 to size()-1
-	 */
-	public	int		getNode(int i) {
+
+	public int getNode(int i) {
 		return this.nodes.get(i);
 	}
-	
-	//	length of path
-	public	double	getLength() {
+
+	public double getLength() {
 		return length;
 	}
 
-//	setter methods
-	
-	//	set length
-	public	void	setLength(double length) {
+	public void setLength(double length) {
 		this.length = length;
 	}
-	
-	//	extend the path with another node
-	public	void	extend(double length, int NodeId) {
-		//	set new path length
+
+	public void extend(double length, int NodeId) {
 		this.setLength(length);
-		//	add Node ID to list
 		this.nodes.add(NodeId);
 	}
-	
-//	check for containing a specific Node
-	public boolean	contains(int NodeId) {
+
+	public boolean contains(int NodeId) {
 		return this.nodes.contains(NodeId);
 		
 	}
 	
-//	comparing methods
-	
-	/*	compare Paths by length
-	 *	equality in this respect does not correspond to equality of Paths
+	/**
+	 * <p>Implementation of the compareTo method inherited from the {@link Comparable} interface.
+	 * <p>Paths are sorted by their Origin {@link Node} (Index 0 in list) first, their destination {@link Node} second.
+	 * <p>If both origin and destination {@link Node} are equal, the number of {@link Node}s on the path is used next ("shorter" paths before "longer") and if equal as well, the remaining {@link Node}s on the path are compared.
 	 */
-	public	int		compareTo(Path that) {
+	public int compareTo(Path that) {
 		if(this.getOriginNode() == that.getOriginNode() && this.getDestinationNode() == that.getDestinationNode()) {
 			if(this.getNumberOfNodes() < that.getNumberOfNodes()) {
 				return -1;
@@ -125,24 +100,17 @@ public class Path implements Comparable<Path>{
 			}
 		}
 	}
-	
-	//	method to check equality of Paths
-	public	boolean	equals(Path that) {
+
+	public boolean equals(Path that) {
 		return (this.length == that.length  && this.getNumberOfNodes() == that.getNumberOfNodes() && this.nodes.containsAll(that.nodes));
 	}
 	
-//	printing
-	public	void	printToConsole() {
-
-//		System.out.print("Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {");
-		String x = "Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {";
+	public void printToConsole() {
+		StringBuilder stringBuilder = new StringBuilder("Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {");
 		for(int i = 0; i < getNumberOfNodes() - 1; i++) {
-			System.out.print("n" + getNode(i) + ",");
-			x = x + "n" + getNode(i) + ",";
+			stringBuilder.append("n" + getNode(i) + ",");
 		}
-		x = x + "n" + getDestinationNode() + "}, length: " + getLength() + "\n";
-//		System.out.print("n" + getDestinationNode() + "}, length: " + getLength() + "\n");
-//		System.out.println(x);
-		mylog.info(x);
+		stringBuilder.append("n" + getDestinationNode() + "}, length: " + getLength() + "\n");
+		mylog.info(stringBuilder.toString());
 	}
 }
