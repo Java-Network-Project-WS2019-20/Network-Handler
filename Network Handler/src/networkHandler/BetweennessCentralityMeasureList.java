@@ -5,89 +5,125 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * <p>This class is responsible for managing calculations of a single or multiple {@link BetweennessCentralityMeasure}s of a given {@link Graph}.
+ * In case of multiple calculations, separate {@link Thread}s are used for efficiency.
+ * <p>It handles three different cases of calculation:
+ * <p> 1.: All {@link BetweennessCentralityMeasure}s of a given {@link #graph} are calculated.
+ * <p> 2.: Only a {@link #singleBetweennessCentralityMeasure} for a given {@link #singleCalculationNodeId} is calculated.
+ * <p> 3.: A combination of case 1 and 2. First all {@link BetweennessCentralityMeasure}s are calculated and afterwards a {@link #singleBetweennessCentralityMeasure} is referenced separately.
+ * <p> To differ between these cases multiple constructors are implemented for ease of use.
+ * @author Fabian Grun
+ * @see BetweennessCentralityMeasure
+ * @see GraphProperty
+ */
+
 public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList<BetweennessCentralityMeasure>>{
-	private	Graph									graph;
-	private	ShortestPathList						shortestPathsList;
-	private	ArrayList<BetweennessCentralityMeasure>	betweennessCentralityMeasureListValue;
-	private	BetweennessCentralityMeasure			singleBetweennessCentralityMeasureValue;
-	private	boolean									calculateAll;
-	private	boolean									calculateSingle;
-	private	int										singleCalculationNodeId;
+	private Graph graph;
+	private ShortestPathList shortestPathsList;
+	private ArrayList<BetweennessCentralityMeasure> betweennessCentralityMeasureListValue;
+	private BetweennessCentralityMeasure singleBetweennessCentralityMeasureValue;
+	private boolean calculateAll;
+	private boolean calculateSingle;
+	private int singleCalculationNodeId;
 	private final Logger mylog = LogManager.getLogger(BetweennessCentralityMeasureList.class);
 
 
-	public											BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList) {
-		this.graph				= graph;
-		this.shortestPathsList	= shortestPathList;
-		this.calculateAll		= true;
-		this.calculateSingle	= false;
-	}
-
-	public											BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList, boolean calculateAll, int singleCalculationNodeId) {
-		this.graph						= graph;
-		this.shortestPathsList			= shortestPathList;
-		this.calculateAll				= calculateAll;
-		this.calculateSingle			= true;
-		this.singleCalculationNodeId	= singleCalculationNodeId;
+	/**
+	 * Constructor used if it is not necessary to separate a {@link #singleBetweennessCentralityMeasure} from the {@link #singleBetweennessCentralityMeasureValue}.
+	 * @param graph
+	 * @param shortestPathList
+	 */
+	public BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList) {
+		this.graph = graph;
+		this.shortestPathsList = shortestPathList;
+		this.calculateAll = true;
+		this.calculateSingle = false;
 	}
 	
-	public	ArrayList<BetweennessCentralityMeasure>	getValue() {
+	/**
+	 * Constructor used if a {@link #singleBetweennessCentralityMeasure} is required.
+	 * @param graph
+	 * @param shortestPathList
+	 * @param calculateAll
+	 * @param singleCalculationNodeId
+	 */
+	public BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList, boolean calculateAll, int singleCalculationNodeId) {
+		this.graph = graph;
+		this.shortestPathsList = shortestPathList;
+		this.calculateAll = calculateAll;
+		this.calculateSingle = true;
+		this.singleCalculationNodeId = singleCalculationNodeId;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 *  @return ArrayList<BetweennessCentralityMeasure>
+	 */
+	public ArrayList<BetweennessCentralityMeasure> getValue() {
 		return this.betweennessCentralityMeasureListValue;
 	}
 	
-	public	BetweennessCentralityMeasure			getSingleBetweennessCentralityMeasure() {
+	public BetweennessCentralityMeasure getSingleBetweennessCentralityMeasure() {
 		return this.singleBetweennessCentralityMeasureValue;
 	}
 
-	public	void									run() {
+	/**
+	 * <p>{@inheritDoc}
+	 * <p>The method first checks whether a full list of {@link BetweennessCentralityMeasure}s needs to be calculated or only a {@link #singleBetweennessCentralityMeasure}.
+	 * <p>Afterwards it creates and starts separate {@link Thread}s for the separate {@link BetweennessCentralityMeasure}s and waits until they are all finished before terminating.
+	 */
+	public void run() {
 		
 		if (this.calculateAll) {
+			mylog.debug("Started Calculation for all Betweenness Centrality Measures.");
 			this.betweennessCentralityMeasureListValue = new ArrayList<BetweennessCentralityMeasure>();
 			ArrayList<Thread> threads = new ArrayList<Thread>();
 			for (int i = 0; i < this.graph.getNodeCount(); i++) {
-				this.betweennessCentralityMeasureListValue
-						.add(new BetweennessCentralityMeasure(this.graph, this.shortestPathsList, i));
-				threads.add(
-						new Thread(this.betweennessCentralityMeasureListValue.get(i), ("BCM Calculation Node " + i)));
+				this.betweennessCentralityMeasureListValue.add(new BetweennessCentralityMeasure(this.graph, this.shortestPathsList, i));
+				threads.add(new Thread(this.betweennessCentralityMeasureListValue.get(i), ("BCM Calculation Node " + i)));
 				threads.get(i).start();
 			}
 			for (int i = 0; i < this.graph.getNodeCount(); i++) {
 				try {
 					threads.get(i).join();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-
 					mylog.error("Something went wrong: " +e.getMessage());
-//					e.printStackTrace();
 				}
 			}
+			mylog.debug("Finished Calculation for all Betweenness Centrality Measures.");
 			if(this.calculateSingle) {
 				this.singleBetweennessCentralityMeasureValue = this.betweennessCentralityMeasureListValue.get(this.singleCalculationNodeId);
 			}
 		}else {
+			mylog.debug("Started Calculation for single Betweenness Centrality Measure.");
 			this.singleBetweennessCentralityMeasureValue = new BetweennessCentralityMeasure(this.graph, this.shortestPathsList, this.singleCalculationNodeId);
 			Thread thread = new Thread(this.singleBetweennessCentralityMeasureValue, ("BCM Calculation Node " + this.singleCalculationNodeId));
 			thread.start();
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				mylog.error("Something went wrong: " +e.getMessage());
-
-//				e.printStackTrace();
 			}
+			mylog.debug("Finished Calculation for single Betweenness Centrality Measure.");
 		}
 		
 	}
 	
-
-	public	void									printToConsole() {
+	/**
+	 * <p>{@inheritDoc}
+	 * <p>Calls the {@link BetweennessCentralityMeasure#printToConsole} method of all managed {@link BetweennessCentralityMeasure}s.
+	 */
+	public void printToConsole() {
 		for(int i = 0; i < this.betweennessCentralityMeasureListValue.size(); i++) {
 			this.betweennessCentralityMeasureListValue.get(i).printToConsole();
 		}
 	}
 	
-	public	void									printToConsoleSingle() {
+	/**
+	 * <p>Calls the {@link BetweennessCentralityMeasure#printToConsole} method of the {@link #singleBetweennessCentralityMeasure}.
+	 */
+	public void printToConsoleSingle() {
 		this.singleBetweennessCentralityMeasureValue.printToConsole();
 	}
 	
