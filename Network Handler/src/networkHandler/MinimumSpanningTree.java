@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 /**
  * Responsible for calculation of a Minimum Spanning Tree for a {@link Graph}.
  * 
- * @author Krzysztof
+ * @author Krzysztof Goroll
  */
 public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 
@@ -20,13 +20,20 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 	private Connectivity connectivity;
 	private final Logger mylog = LogManager.getLogger(MinimumSpanningTree.class);
 
-
+	/**
+	 * Default Constructor
+	 * @param graph The instance of {@link Graph} for which the {@link MinimumSpanningTree} is to be calculated.
+	 * @param connectivity An instance of {@link Connectivity} indicating whether the calculation is possible.
+	 */
 	public MinimumSpanningTree(Graph graph, Connectivity connectivity) {
 		this.graph = graph;
 		this.totalWeight = 0;
 		this.connectivity = connectivity;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public ArrayList<Edge> getValue() {
 		return this.minimumSpanningTreeValue;
 	}
@@ -35,7 +42,10 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 		return totalWeight;
 	}
 
-	public void doCalculateMstWeight() {
+	/**
+	 * This method sums the weights of all {@link Edge}s building the calculated {@link MinimumSpanningTree} and saves them in {@link MinimumSpanningTree#totalWeight}.
+	 */
+	private void doCalculateTotalWeight() {
 		int weight = 0;
 		for (Edge edge : this.minimumSpanningTreeValue) {
 			weight += edge.getWeight();
@@ -43,6 +53,13 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 		totalWeight = weight;
 	}
 
+	/**
+	 * <p>{@inheritDoc}
+	 * <p>This Method first sorts the {@link Edge}s into a queue depending on their weights. This queue is then used to check
+	 * all {@link Edge}s starting with the "lightest" for creating a tree. If an {@link Edge} can be integrated without creating a loop,
+	 * it becomes part of the {@link MinimumSpanningTree}. In the end the {@link MinimumSpanningTree#doCalculateTotalWeight()} method is called
+	 * to assign a total weight to the calculated tree.
+	 */
 	public void run() {
 
 		if (connectivity.getValue()) {
@@ -75,7 +92,7 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 				}
 			}
 			this.minimumSpanningTreeValue = mst;
-			doCalculateMstWeight();
+			doCalculateTotalWeight();
 		}
 	}
 
@@ -107,6 +124,12 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 		parent[y_set_parent] = x_set_parent;
 	}
 
+	/**
+	 * <p>{@inheritDoc}
+	 * <p>This method prints all {@link Edge}s building the {@link MinimumSpanningTree} to the console.
+	 * <p>To do this, their respective {@link Edge#printToConsole()} methods are called.
+	 * <p>If the Tree cannot be calculated, an appropriate error message is returned instead.
+	 */
 	public void printToConsole() {
 
 		if (connectivity.getValue()) {

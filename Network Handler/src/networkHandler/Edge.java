@@ -4,6 +4,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 /**
  * This class represents an Edge between two {@link Node}s of a {@link Graph}.
+ * @author Sebastian Monok
  */
 public class Edge {
 	
@@ -15,10 +16,10 @@ public class Edge {
 
 	/**
 	 * Default Constructor
-	 * @param edgeID
-	 * @param sourceNodeId
-	 * @param targetNodeId
-	 * @param weight
+	 * @param edgeID given identifier of the {@link Edge}
+	 * @param sourceNodeId given ID of the origin {@link Node} of the {@link Edge}
+	 * @param targetNodeId given ID of the destination {@link Node} of the {@link Edge}
+	 * @param weight given weighting of the {@link Edge}
 	 */
 	public Edge(int edgeID, int sourceNodeId, int targetNodeId, int weight) {
 		this.edgeID = edgeID;

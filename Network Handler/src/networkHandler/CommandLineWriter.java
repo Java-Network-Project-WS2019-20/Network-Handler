@@ -18,8 +18,8 @@ public class CommandLineWriter implements Runnable{
 	
 	/**
 	 * Default Constructor
-	 * @param graphHandler
-	 * @param commandLineReader
+	 * @param graphHandler The {@link GraphHandler} responsible for forwarding the printing calls
+	 * @param commandLineReader The {@link CommandLineReader} responsible for providing the flags indicating which printing calls are required
 	 */
 	public CommandLineWriter (GraphHandler graphHandler, CommandLineReader commandLineReader) {
 		this.graphHandler		= graphHandler;

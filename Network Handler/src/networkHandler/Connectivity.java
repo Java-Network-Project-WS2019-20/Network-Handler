@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * This class is responsible for calculating whether a {@link Graph} is connected or not, using the Depth First
  * Search Algorithm
  * 
- * @author Krzysztof
+ * @author Krzysztof Goroll
  * @see GraphProperty
  */
 
@@ -67,6 +67,18 @@ public class Connectivity implements GraphProperty<Boolean> {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public void printToConsole() {
+		String outputString = "The graph is";
+		if (!getValue()) {
+		outputString = outputString + "not";
+		}
+		outputString = outputString + "connected";
+		mylog.info(outputString);
+	}
+	
+	/**
 	 * Method to calculate, which nodes are reachable from a certain node v
 	 * 
 	 * @param startNodeId
@@ -83,17 +95,5 @@ public class Connectivity implements GraphProperty<Boolean> {
 				doVisitNodes(adjacentNodeId, visitedNodes, adjacentListArray);
 		}
 		return visitedNodes;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void printToConsole() {
-		String outputString = "The graph is";
-		if (!getValue()) {
-		outputString = outputString + "not";
-		}
-		outputString = outputString + "connected";
-		mylog.info(outputString);
 	}
 }

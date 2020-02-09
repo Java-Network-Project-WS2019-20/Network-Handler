@@ -42,6 +42,39 @@ public class GraphmlWriter implements Runnable {
 	}
 	
 	/**
+	 * This method checks whether a given filename for file creation is already in use.
+	 * If so, a prompt will be printed, asking whether the program should continue (with the same/different filename) or abort.
+	 */
+	public void doCheckIfFileExists() {
+		File outputFileExist = new File(outputFileName);
+		Scanner in = new Scanner(System.in);
+		try {
+	        if (outputFileExist.exists()) {
+	        	throw new FileAlreadyExistsException(outputFileName);	
+	        }
+        } catch (FileAlreadyExistsException e1) {
+			mylog.info("File already exists. Continue? YES/NO/RENAME: ");
+        	String userDecision = in.nextLine();
+        	if (userDecision.equalsIgnoreCase("YES")) {
+        		// continue
+        	} else if (userDecision.equalsIgnoreCase("RENAME")) {
+        		// rename outputFileName to newFileName
+				System.out.println("Enter new file name and path: ");
+            	String newFileName = in.nextLine();
+            	this.outputFileName = newFileName;
+            	mylog.info("New file name: " + newFileName);
+            	// check new name
+            	doCheckIfFileExists();
+        	} else {
+        		// else do not create file
+        		createFile = false;
+        	}
+        } finally {
+        	in.close();
+        }
+	}
+	
+	/**
 	 * If the boolean createFile is set to true (due to parsing the command line arguments)
 	 * this method will initiate the export of the calculations done over the graph.
 	 */
@@ -202,36 +235,6 @@ public class GraphmlWriter implements Runnable {
         	mylog.error("Can not create file at specified path. \n" +e.getMessage());
 		}
         mylog.info("File created: " + outputFileName);
-	}
-	
-	// check if file already exists
-	public void doCheckIfFileExists() {
-		File outputFileExist = new File(outputFileName);
-		Scanner in = new Scanner(System.in);
-		try {
-	        if (outputFileExist.exists()) {
-	        	throw new FileAlreadyExistsException(outputFileName);	
-	        }
-        } catch (FileAlreadyExistsException e1) {
-			mylog.info("File already exists. Continue? YES/NO/RENAME: ");
-        	String userDecision = in.nextLine();
-        	if (userDecision.equalsIgnoreCase("YES")) {
-        		// continue
-        	} else if (userDecision.equalsIgnoreCase("RENAME")) {
-        		// rename outputFileName to newFileName
-				System.out.println("Enter new file name and path: ");
-            	String newFileName = in.nextLine();
-            	this.outputFileName = newFileName;
-            	mylog.info("New file name: " + newFileName);
-            	// check new name
-            	doCheckIfFileExists();
-        	} else {
-        		// else do not create file
-        		createFile = false;
-        	}
-        } finally {
-        	in.close();
-        }
 	}
 }
 

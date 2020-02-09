@@ -34,8 +34,8 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 
 	/**
 	 * Constructor for only calculating all shortest {@link Path}s, without creating a separate list for two given {@link Node}s.
-	 * @param graph
-	 * @param noDuplicates
+	 * @param graph An instance of {@link Graph} on which the shortest {@link Path}s are to be calculated.
+	 * @param noDuplicates A boolean value indicating whether duplicate {@link Path}s need to be removed after calculation.
 	 */
 	public	ShortestPathList(Graph graph, boolean noDuplicates) {
 		this.graph = graph;
@@ -48,11 +48,11 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 	
 	/**
 	 * Constructor for calculating shortest {@link Path}s between two given {@link Node}s. Depending on the parameters, all other shortest {@link Path}s are created as well.
-	 * @param graph
-	 * @param noDuplicates
-	 * @param calculateAll
-	 * @param nodeId1
-	 * @param nodeId2
+	 * @param graph An instance of {@link Graph} on which the shortest {@link Path}s are to be calculated.
+	 * @param noDuplicates A boolean value indicating whether duplicate {@link Path}s need to be removed after calculation.
+	 * @param calculateAll A boolean value indicating whether all shortest {@link Path}s need to be calculated.
+	 * @param nodeId1 ID identifying a {@link Node} from which shortest {@link Path}s need to be calculated.
+	 * @param nodeId2 ID identifying a {@link Node} to which shortest {@link Path}s need to be calculated.
 	 */
 	public	ShortestPathList(Graph graph, boolean noDuplicates, boolean calculateAll,  int nodeId1, int nodeId2) {
 		this.graph = graph;
@@ -63,6 +63,57 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 		this.nodeId2 = nodeId2;
 	}
 	
+	/**
+	 * <p>{@inheritDoc}
+	 * <p>The method calls the {@link Path#printToConsole()} for each calculated shortest {@link Path}.
+	 */
+	public void printToConsole() {
+		Iterator<Path> pathIterator = this.shortestPathListValue.iterator();
+		while(pathIterator.hasNext()) {
+			pathIterator.next().printToConsole();
+		}
+	}
+	
+	/**
+	 * <p>Method for printing the result of the calculation for two given {@link Node}s to the console.
+	 * <p>If an incorrect input was provided, an appropriate error message is returned instead.
+	 */
+	public void printToConsoleTwoNodes() {
+		if (correctInput) {
+			Iterator<Path> pathIterator = shortestPathListTwoNodes.iterator();
+			while (pathIterator.hasNext()) {
+				pathIterator.next().printToConsole();
+			} 
+		}else {
+			mylog.error("The calculation for the shortest paths between the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible. Reason:" );
+			if(nodeId1 == nodeId2) {
+				mylog.error("The given Node IDs can not be equal.\n");
+			}else {
+				boolean node1IsFaulty	= false;
+				boolean node2IsFaulty	= false;
+				if(nodeId1 < 0 || nodeId1 >= graph.getNodeCount()) {
+					node1IsFaulty	= true;
+				}
+				if(nodeId2 < 0 || nodeId2 >= graph.getNodeCount()) {
+					node2IsFaulty	= true;
+				}
+				if(node1IsFaulty && node2IsFaulty) {
+					mylog.error("Both nodes do not exist in given graph.\n");
+				}else {
+					if(node1IsFaulty) {
+						mylog.error("Node n" + nodeId1 + " does not exist in given graph.\n");
+					}
+					if(node2IsFaulty) {
+						mylog.error("Node n" + nodeId2 + " does not exist in given graph.\n");
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public TreeSet<Path> getValue(){
 		return this.shortestPathListValue;
 	}
@@ -285,47 +336,4 @@ public class ShortestPathList implements GraphProperty<TreeSet<Path>>{
 		return pathsContainingCurrentNode;
 	}
 
-	public void printToConsole() {
-		Iterator<Path> pathIterator = this.shortestPathListValue.iterator();
-		while(pathIterator.hasNext()) {
-			pathIterator.next().printToConsole();
-		}
-	}
-	
-	/**
-	 * <p>Method for printing the result of the calculation for two given {@link Node}s to the console.
-	 * <p>If an incorrect input was provided, an appropriate error message is returned instead.
-	 */
-	public void printToConsoleTwoNodes() {
-		if (correctInput) {
-			Iterator<Path> pathIterator = shortestPathListTwoNodes.iterator();
-			while (pathIterator.hasNext()) {
-				pathIterator.next().printToConsole();
-			} 
-		}else {
-			mylog.error("The calculation for the shortest paths between the nodes n" + nodeId1 + " and n" + nodeId2 + " is not possible. Reason:" );
-			if(nodeId1 == nodeId2) {
-				mylog.error("The given Node IDs can not be equal.\n");
-			}else {
-				boolean node1IsFaulty	= false;
-				boolean node2IsFaulty	= false;
-				if(nodeId1 < 0 || nodeId1 >= graph.getNodeCount()) {
-					node1IsFaulty	= true;
-				}
-				if(nodeId2 < 0 || nodeId2 >= graph.getNodeCount()) {
-					node2IsFaulty	= true;
-				}
-				if(node1IsFaulty && node2IsFaulty) {
-					mylog.error("Both nodes do not exist in given graph.\n");
-				}else {
-					if(node1IsFaulty) {
-						mylog.error("Node n" + nodeId1 + " does not exist in given graph.\n");
-					}
-					if(node2IsFaulty) {
-						mylog.error("Node n" + nodeId2 + " does not exist in given graph.\n");
-					}
-				}
-			}
-		}
-	}
 }

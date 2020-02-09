@@ -18,12 +18,21 @@ public class Path implements Comparable<Path>{
 	private double length;
 	private final Logger mylog = LogManager.getLogger(Path.class);
 	
+	/**
+	 * Default Constructor given a list of {@link Node}s and a value for the {@link Path#length}.
+	 * @param nodes {@link ArrayList} of {@link Nodes} sorted by their order on the {@link Path}.
+	 * @param length double value indicating the length of the {@link Path}.
+	 */
 	public Path(ArrayList<Integer> nodes, double length){
 		this.nodes = new ArrayList<Integer>();
 		this.nodes.addAll(nodes);
 		this.length = length;
 	}
 
+	/**
+	 * Copy Constructor, which creates a copy of the given {@link Path}.
+	 * @param that An instance of {@link Path} which is to be copied.
+	 */
 	public Path(Path that) {
 		this.nodes = new ArrayList<Integer>();
 		this.nodes.addAll(that.nodes);
@@ -54,11 +63,22 @@ public class Path implements Comparable<Path>{
 		this.length = length;
 	}
 
+	/**
+	 * <p>The method is used to expand a {@link Path} with another {@link Node}.
+	 * <p>The given {@link Node} is appended to the {@link ArrayList} of {@link Node}s, while the length is set to the new given value.
+	 * @param length New length of the {@link Path}
+	 * @param NodeId ID identifying the {@link Node} to append to the {@link Path}
+	 */
 	public void expand(double length, int NodeId) {
 		this.setLength(length);
 		this.nodes.add(NodeId);
 	}
 
+	/**
+	 * This method check whether the {@link Path} contains a given {@link Node}.
+	 * @param NodeId ID identifying the {@link Node} which is to be checked.
+	 * @return boolean (true if {@link Node} lies on {@link Path}, otherwise false
+	 */
 	public boolean contains(int NodeId) {
 		return this.nodes.contains(NodeId);
 		
@@ -102,10 +122,19 @@ public class Path implements Comparable<Path>{
 		}
 	}
 
+	/**
+	 * This method is used to check two {@link Path}s for equality
+	 * @param that another {@link Path} instance to be compared with the {@link Path}
+	 * @return boolean, true if the {@link Path}s are equal, otherwise false
+	 */
 	public boolean equals(Path that) {
 		return (this.length == that.length  && this.getNumberOfNodes() == that.getNumberOfNodes() && this.nodes.containsAll(that.nodes));
 	}
 	
+	/**
+	 * This method prints the information of the {@link Path} as a {@link String} to the Console. The Information consists of the origin {@link Node}, the destination {@link Node},
+	 * the other {@link Node}s on the {@link Path} in order and the length.
+	 */
 	public void printToConsole() {
 		StringBuilder stringBuilder = new StringBuilder("Shortest path between n" + getOriginNode() + " and n" + getDestinationNode() + ": {");
 		for(int i = 0; i < getNumberOfNodes() - 1; i++) {

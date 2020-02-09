@@ -40,21 +40,11 @@ public class Graph {
 		return edgeList;
 	}
 
-	public void printAllNodes() {
-		for (Node node : nodeList) {
-			node.printToConsole();
-		}
-	}
-
-	public void printAllEdges() {
-		for (Edge edge : edgeList) {
-			edge.printToConsole();
-		}
-	}
-
 	/**
-	 * This method prints the
-	 */
+	 * This method prints all information about the graph to the command line. First {@link #toString()} is called for general information
+	 * and afterwards the printing methods of all {@link Node}s and {@link Edge}s in the Graph. 
+	 * 
+	*/
 	public void printToConsole() {
 		System.out.print(this.toString());
 		printAllNodes();
@@ -63,7 +53,7 @@ public class Graph {
 
 	@Override
 	/**
-	 * This method creates a {@link String} representation of the Graph containing information about the numbers of Nodes and Edges.
+	 * This method creates a {@link String} representation of the Graphs information about the numbers of Nodes and Edges.
 	 * @return String
 	 */
 	public String toString() {
@@ -72,4 +62,17 @@ public class Graph {
 		sb.append("Number of egdes: ").append(getEdgeCount()).append("\n");
 		return sb.toString();
 	}
+
+	private void printAllNodes() {
+		for (Node node : nodeList) {
+			node.printToConsole();
+		}
+	}
+
+	private void printAllEdges() {
+		for (Edge edge : edgeList) {
+			edge.printToConsole();
+		}
+	}
+
 }

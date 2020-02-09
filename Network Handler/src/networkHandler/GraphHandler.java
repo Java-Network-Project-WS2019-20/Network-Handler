@@ -31,6 +31,12 @@ public class GraphHandler {
 	private CommandLineReader commandLineReader;
 	private final Logger mylog = LogManager.getLogger(GraphHandler.class);
 
+	/**
+	 * Default Constructor
+	 * @param edgeList An {@link ArrayList} of {@link Edge}s necessary for creation of a {@link Graph}.
+	 * @param nodeList An {@link ArrayList} of {@link Node}s necessary for creation of a {@link Graph}.
+	 * @param commandLineReader An instance of {@link CommandLineReader} providing access to the flags deciding which calculations are to be made.
+	 */
 	public GraphHandler(ArrayList<Edge> edgeList, ArrayList<Node> nodeList, CommandLineReader commandLineReader) {
 		this.graph = new Graph(edgeList, nodeList);
 		this.commandLineReader = commandLineReader;
@@ -176,34 +182,58 @@ public class GraphHandler {
 		return this.minimumSpanningTree.getValue();
 	}
 
+	/**
+	 * This method calls the {@link Graph#printToConsole} method for printing the {@link Graph}s information.
+	 */
 	public void printToConsoleGraph() {
 		graph.printToConsole();
 	}
 
+	/**
+	 * This method calls the {@link Connectivity#printToConsole()} method for printing the {@link Connectivity}s information.
+	 */
 	public void printToConsoleConnectivity() {
 		connectivity.printToConsole();
 	}
 
+	/**
+	 * This method calls the {@link Diameter#printToConsole()} method for printing the {@link Diameter}s information.
+	 */
 	public void printToConsoleDiameter() {
 		diameter.printToConsole();
 	}
 
+	/**
+	 * This method calls the {@link ShortestPathList#printToConsole()} method for printing all shortest {@link Path}s.
+	 */
 	public void printToConsoleShortestPathListAll() {
 		shortestPathList.printToConsole();
 	}
 
+	/**
+	 * This method calls the {@link ShortestPathList#printToConsoleTwoNodes()} method for printing the shortest {@link Path}s between two given {@link Node}s.
+	 */
 	public void printToConsoleShortestPathListTwoNodes() {
 		shortestPathList.printToConsoleTwoNodes();
 	}
 
+	/**
+	 * This method calls the {@link BetweennessCentralityMeasureList#printToConsole()} method for printing all {@link BetweennessCentralityMeasure} values.
+	 */
 	public void printToConsoleBetweennessCentralityMeasureList() {
 		betweennessCentralityMeasureList.printToConsole();
 	}
 
+	/**
+	 * This method calls the {@link BetweennessCentralityMeasureList#printToConsoleSingle()} method for printing a single {@link BetweennessCentralityMeasure}s information.
+	 */
 	public void printToConsoleBetweennessCentralityMeasureSingle() {
 		betweennessCentralityMeasureList.printToConsoleSingle();
 	}
 
+	/**
+	 * This method calls the {@link MinimumSpanningTree#printToConsole()} method for printing the information about a {@link MinimumSpanningTree}.
+	 */
 	public void printToConsoleMinimumSpanningTree() {
 		minimumSpanningTree.printToConsole();
 	}

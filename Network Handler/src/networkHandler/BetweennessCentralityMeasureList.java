@@ -31,8 +31,8 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 
 	/**
 	 * Constructor used if it is not necessary to separate a {@link #singleBetweennessCentralityMeasureValue} from the {@link #singleBetweennessCentralityMeasureValue}.
-	 * @param graph
-	 * @param shortestPathList
+	 * @param graph	The {@link Graph} instance for which the calculations are done
+	 * @param shortestPathList An instance of {@link ShortestPathList} containing the information about the shortest {@link Path}s necessary for the calculations
 	 */
 	public BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList) {
 		this.graph = graph;
@@ -43,10 +43,10 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	
 	/**
 	 * Constructor used if a {@link #singleBetweennessCentralityMeasureValue} is required.
-	 * @param graph
-	 * @param shortestPathList
-	 * @param calculateAll
-	 * @param singleCalculationNodeId
+	 * @param graph The {@link Graph} instance for which the calculations are done
+	 * @param shortestPathList An instance of {@link ShortestPathList} containing the information about the shortest {@link Path}s necessary for the calculations
+	 * @param calculateAll Boolean indicating whether all {@link BetweennessCentralityMeasure}s have to be calculated
+	 * @param singleCalculationNodeId ID identifying the {@link Node} for which a single calculation is required
 	 */
 	public BetweennessCentralityMeasureList(Graph graph, ShortestPathList shortestPathList, boolean calculateAll, int singleCalculationNodeId) {
 		this.graph = graph;

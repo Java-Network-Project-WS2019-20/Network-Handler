@@ -25,7 +25,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	/**
 	 * Default Constructor
 	 * @param graph The {@link Graph} on which the calculation is done
-	 * @param shortestPathList A list of shortest {@link Path}s necessary for the calculation
+	 * @param shortestPathList An instance of {@link ShortestPathList} containing the information about the shortest {@link Path}s necessary for the calculations
 	 * @param nodeId The ID of the {@link Node} for which the calculation is done
 	 */
 	public BetweennessCentralityMeasure(Graph graph, ShortestPathList shortestPathList, int nodeId) {

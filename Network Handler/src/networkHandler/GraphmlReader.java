@@ -31,6 +31,10 @@ public class GraphmlReader {
 	private boolean parseSuccessful = false;
 	private final Logger mylog = LogManager.getLogger(GraphmlReader.class);
 
+	/**
+	 * Default Constructor
+	 * Initializes necessary attributes.
+	 */
 	public GraphmlReader() {
 		this.nodeList = new ArrayList<>();
 		this.edgeList = new ArrayList<>();
@@ -79,7 +83,15 @@ public class GraphmlReader {
 		mylog.debug("Parsed " + graphmlFile.getName() + " successfully.");
 		parseSuccessful = true;
 	}
-
+	
+	/**
+	 * The method returns information about the success of parsing the given file
+	 * @return boolean, true if parsed successfully, otherwise false
+	 */
+	public boolean isParseSuccessful() {
+		return parseSuccessful;
+	}
+	
 	/**
 	 * Parse Document object for nodes and save them into an ArrayList.
 	 * This is done by extracting all nodes into a {@link NodeList} by defining the tag element "node" as parameter in
@@ -120,10 +132,7 @@ public class GraphmlReader {
 		}
 		mylog.debug("Edges were parsed succesfully!");
 	}
-	
-	public boolean isParseSuccessful() {
-		return parseSuccessful;
-	}
+
 	
 }
 
