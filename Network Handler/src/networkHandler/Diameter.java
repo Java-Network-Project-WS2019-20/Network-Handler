@@ -35,6 +35,7 @@ public class Diameter implements GraphProperty<Double> {
 	 * <p>In case of a {@link Connectivity} value 'false' for the {@link Graph}, the value will be set to Infinity. 
 	 */
 	public void run() {
+		mylog.debug("Started calculation of Diameter.");
 		if (connectivity.getValue()) {
 			this.diameterValue = 0.0;
 			this.shortestPathList.getValue().forEach(path -> {
@@ -45,6 +46,7 @@ public class Diameter implements GraphProperty<Double> {
 		} else {
 			this.diameterValue = Double.POSITIVE_INFINITY;
 		}
+		mylog.debug("Finished calculation of Diameter");
 	}
 
 	/**
