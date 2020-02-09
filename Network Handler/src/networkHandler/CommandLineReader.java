@@ -261,13 +261,21 @@ public class CommandLineReader {
 		}
 		// if command line arguments contain -a set outputFileName to given output file name
 		// and set flag to call GraphWriter
-	    if (commandLine.hasOption("a")) {
-	    	outputFileName = commandLine.getOptionValue('a');
-	    	flagCreateOutputFile = true;
-	    	// if user does not want duplicates in shortest paths calculation to be written in output file
-			if ( (commandLine.getOptionValues("a").length == 2) && (commandLine.getOptionValues("a")[1].equals("nodup")) ) { 
-				flagShortestPathsNoDuplicates = true;
-			}
+	    try{
+	    	if (commandLine.hasOption("a")) {
+	    		outputFileName = commandLine.getOptionValue('a');
+	    		if(outputFileName.isBlank()) {
+	    			throw new NoArgumentException("");
+	    		}
+	    		flagCreateOutputFile = true;
+	    		// if user does not want duplicates in shortest paths calculation to be written in output file
+	    		if ( (commandLine.getOptionValues("a").length == 2) && (commandLine.getOptionValues("a")[1].equals("nodup")) ) { 
+	    			flagShortestPathsNoDuplicates = true;
+	    		}
+	    	}
+	    }catch(NoArgumentException e) {
+	    	mylog.error("A filename for the output is required after flag -a.\n"
+	    			+ "Get help using -h or --help\n");
 	    }
 	    // if command line arguments contain -b print BCM to sys.out	    
 	    if (commandLine.hasOption("b")) {    	
