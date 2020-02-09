@@ -70,9 +70,9 @@ public class Connectivity implements GraphProperty<Boolean> {
 	 * {@inheritDoc}
 	 */
 	public void printToConsole() {
-		String outputString = "The graph is";
+		String outputString = "The graph is ";
 		if (!getValue()) {
-		outputString = outputString + "not";
+		outputString = outputString + "not ";
 		}
 		outputString = outputString + "connected";
 		mylog.info(outputString);
