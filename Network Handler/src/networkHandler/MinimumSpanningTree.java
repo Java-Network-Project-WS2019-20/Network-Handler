@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
- * Calculates a Minimum Spanning Tree for a {@link Graph}
+ * Responsible for calculation of a Minimum Spanning Tree for a {@link Graph}.
  * 
  * @author Krzysztof
  */
@@ -16,31 +16,31 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 
 	private Graph graph;
 	private ArrayList<Edge> minimumSpanningTreeValue;
-	private int mstWeight;
+	private int totalWeight;
 	private Connectivity connectivity;
 	private final Logger mylog = LogManager.getLogger(MinimumSpanningTree.class);
 
 
 	public MinimumSpanningTree(Graph graph, Connectivity connectivity) {
 		this.graph = graph;
-		this.mstWeight = 0;
+		this.totalWeight = 0;
 		this.connectivity = connectivity;
 	}
-
+	
 	public ArrayList<Edge> getValue() {
 		return this.minimumSpanningTreeValue;
 	}
 
 	public int getMstWeight() {
-		return mstWeight;
+		return totalWeight;
 	}
 
 	public void doCalculateMstWeight() {
 		int weight = 0;
-		for (Edge e : this.minimumSpanningTreeValue) {
-			weight += e.getWeight();
+		for (Edge edge : this.minimumSpanningTreeValue) {
+			weight += edge.getWeight();
 		}
-		mstWeight = weight;
+		totalWeight = weight;
 	}
 
 	public void run() {
@@ -63,8 +63,8 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 			while (index < nodeCount - 1) {
 				Edge edge = pq.remove();
 
-				int x_set = doFindParent(parent, edge.getSource());
-				int y_set = doFindParent(parent, edge.getTarget());
+				int x_set = doFindParent(parent, edge.getSourceNodeId());
+				int y_set = doFindParent(parent, edge.getTargetNodeId());
 				// check if adding this edge creates a cycle
 				if (x_set == y_set) {
 					// Do nothing, will create a cycle
@@ -111,13 +111,11 @@ public class MinimumSpanningTree implements GraphProperty<ArrayList<Edge>> {
 
 		if (connectivity.getValue()) {
 			mylog.info("Minimum Spanning Tree: ");
-//			System.out.println("Minimum Spanning Tree: ");
 			for (Edge e : this.minimumSpanningTreeValue) {
 				e.printToConsole();
 			}
 		} else {
 			mylog.error("Minimum Spanning Tree can not be calculated. Graph is not connected");
-//			System.out.print("Minimum Spanning Tree can not be calculated. Graph is not connected.\n");
 		}
 	}
 
