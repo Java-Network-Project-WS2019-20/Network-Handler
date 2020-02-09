@@ -22,6 +22,12 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	private boolean isCalculationSuccessfull;
 	private final Logger mylog = LogManager.getLogger(BetweennessCentralityMeasure.class);
 	
+	/**
+	 * Default Constructor
+	 * @param graph
+	 * @param shortestPathList
+	 * @param nodeId
+	 */
 	public BetweennessCentralityMeasure(Graph graph, ShortestPathList shortestPathList, int nodeId) {
 		this.graph = graph;
 		this.shortestPathList = shortestPathList;
@@ -82,7 +88,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 		if(this.isCalculationSuccessfull) {
 			mylog.info("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString());
 		}else {
-			mylog.error("Calculation for Node n\" + this.nodeId +\" was not possible. Node does not exist in given graph.");
+			mylog.error("Calculation for Node n" + this.nodeId +" was not possible. Node does not exist in given graph.");
 		}
 	}
 }

@@ -4,7 +4,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * <p>This class is responsible for the calculation of the Diameter of a {@link Graph} given a {@link ShortestPathsList} and its {@link Connectivity}.
+ * <p>This class is responsible for the calculation of the Diameter of a {@link Graph} given a {@link ShortestPathList} and its {@link Connectivity}.
  * @author Krzysztof
  * @author Fabian Grun
  * @see GraphProperty
@@ -17,7 +17,11 @@ public class Diameter implements GraphProperty<Double> {
 	private final Logger mylog = LogManager.getLogger(Diameter.class);
 
 
-
+	/**
+	 * Default Constructor
+	 * @param shortestPathList
+	 * @param connectivity
+	 */
 	public Diameter(ShortestPathList shortestPathList, Connectivity connectivity) {
 		this.shortestPathList = shortestPathList;
 		this.connectivity = connectivity;

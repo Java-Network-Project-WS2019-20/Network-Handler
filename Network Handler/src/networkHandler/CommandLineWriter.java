@@ -3,7 +3,7 @@ package networkHandler;
 
 /**
  * <p>This class is responsible for calling printing methods of different {@link GraphProperty}s according to the flags set in a given {@link CommandLineReader}.
- * <p>It implements the {@link Runnable} interface to allow for use of {@link Thread}s. (This is mainly used for parallel console and file output via a {@link Graphwriter}.)
+ * <p>It implements the {@link Runnable} interface to allow for use of {@link Thread}s. (This is mainly used for parallel console and file output via a {@link GraphWriter}.)
  * @author Fabian Grun
  * @author Sebastian Monok
  * @see GraphHandler
@@ -16,6 +16,11 @@ public class CommandLineWriter implements Runnable{
 	private	GraphHandler graphHandler;
 	private	CommandLineReader commandLineReader;
 	
+	/**
+	 * Default Constructor
+	 * @param graphHandler
+	 * @param commandLineReader
+	 */
 	public CommandLineWriter (GraphHandler graphHandler, CommandLineReader commandLineReader) {
 		this.graphHandler		= graphHandler;
 		this.commandLineReader	= commandLineReader;

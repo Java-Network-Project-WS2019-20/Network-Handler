@@ -13,6 +13,13 @@ public class Edge {
 	private double weight;
 	private final Logger mylog = LogManager.getLogger(Edge.class);
 
+	/**
+	 * Default Constructor
+	 * @param edgeID
+	 * @param sourceNodeId
+	 * @param targetNodeId
+	 * @param weight
+	 */
 	public Edge(int edgeID, int sourceNodeId, int targetNodeId, int weight) {
 		this.edgeID = edgeID;
 		this.sourceNodeId = sourceNodeId;
@@ -37,6 +44,9 @@ public class Edge {
 	}
 
 	@Override
+	/**
+	 * This method created a {@link String} presentation of the edge containing all informations.
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("EdgeID: ").append(getEdgeID());
@@ -46,6 +56,9 @@ public class Edge {
 		return sb.toString();
 	}
 	
+	/**
+	 * This method prints the {@link String} presentation returned by {@link #toString()} to the console.
+	 */
 	public void printToConsole() {
 		mylog.info(this.toString());
 	}

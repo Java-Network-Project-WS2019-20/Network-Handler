@@ -19,6 +19,10 @@ public class Connectivity implements GraphProperty<Boolean> {
 	private Boolean connectivityValue;
 	private final Logger mylog = LogManager.getLogger(Connectivity.class);
 
+	/**
+	 * Default Constructor
+	 * @param graph
+	 */
 	public Connectivity(Graph graph) {
 		this.graph = graph;
 	}
@@ -31,7 +35,8 @@ public class Connectivity implements GraphProperty<Boolean> {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * <p>{@inheritDoc}
+	 * <p> This method utilizes an Depth First approach to search for connected {@link Node}s to calculate connectivity for a given {@link Graph}. 
 	 */
 	@SuppressWarnings("unchecked")
 	public void run() {
@@ -70,7 +75,7 @@ public class Connectivity implements GraphProperty<Boolean> {
 	 *                          each Node
 	 * @return boolean[] of visited nodes afterwards
 	 */
-	public boolean[] doVisitNodes(int startNodeId, boolean[] visitedNodes, LinkedList<Integer>[] adjacentListArray) {
+	private boolean[] doVisitNodes(int startNodeId, boolean[] visitedNodes, LinkedList<Integer>[] adjacentListArray) {
 		visitedNodes[startNodeId] = true;
 		// repeat for all the nodes adjacent to this node
 		for (int adjacentNodeId : adjacentListArray[startNodeId]) {

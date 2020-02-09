@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * In case of multiple calculations, separate {@link Thread}s are used for efficiency.
  * <p>It handles three different cases of calculation:
  * <p> 1.: All {@link BetweennessCentralityMeasure}s of a given {@link #graph} are calculated.
- * <p> 2.: Only a {@link #singleBetweennessCentralityMeasure} for a given {@link #singleCalculationNodeId} is calculated.
- * <p> 3.: A combination of case 1 and 2. First all {@link BetweennessCentralityMeasure}s are calculated and afterwards a {@link #singleBetweennessCentralityMeasure} is referenced separately.
+ * <p> 2.: Only a {@link #singleBetweennessCentralityMeasureValue} for a given {@link #singleCalculationNodeId} is calculated.
+ * <p> 3.: A combination of case 1 and 2. First all {@link BetweennessCentralityMeasure}s are calculated and afterwards a {@link #singleBetweennessCentralityMeasureValue} is referenced separately.
  * <p> To differ between these cases multiple constructors are implemented for ease of use.
  * @author Fabian Grun
  * @see BetweennessCentralityMeasure
@@ -30,7 +30,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 
 
 	/**
-	 * Constructor used if it is not necessary to separate a {@link #singleBetweennessCentralityMeasure} from the {@link #singleBetweennessCentralityMeasureValue}.
+	 * Constructor used if it is not necessary to separate a {@link #singleBetweennessCentralityMeasureValue} from the {@link #singleBetweennessCentralityMeasureValue}.
 	 * @param graph
 	 * @param shortestPathList
 	 */
@@ -42,7 +42,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	}
 	
 	/**
-	 * Constructor used if a {@link #singleBetweennessCentralityMeasure} is required.
+	 * Constructor used if a {@link #singleBetweennessCentralityMeasureValue} is required.
 	 * @param graph
 	 * @param shortestPathList
 	 * @param calculateAll
@@ -70,7 +70,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 
 	/**
 	 * <p>{@inheritDoc}
-	 * <p>The method first checks whether a full list of {@link BetweennessCentralityMeasure}s needs to be calculated or only a {@link #singleBetweennessCentralityMeasure}.
+	 * <p>The method first checks whether a full list of {@link BetweennessCentralityMeasure}s needs to be calculated or only a {@link #singleBetweennessCentralityMeasureValue}.
 	 * <p>Afterwards it creates and starts separate {@link Thread}s for the separate {@link BetweennessCentralityMeasure}s and waits until they are all finished before terminating.
 	 */
 	public void run() {
@@ -121,7 +121,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	}
 	
 	/**
-	 * <p>Calls the {@link BetweennessCentralityMeasure#printToConsole} method of the {@link #singleBetweennessCentralityMeasure}.
+	 * <p>Calls the {@link BetweennessCentralityMeasure#printToConsole} method of the {@link #singleBetweennessCentralityMeasureValue}.
 	 */
 	public void printToConsoleSingle() {
 		this.singleBetweennessCentralityMeasureValue.printToConsole();

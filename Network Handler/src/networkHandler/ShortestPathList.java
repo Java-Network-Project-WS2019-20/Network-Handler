@@ -11,7 +11,7 @@ import java.util.TreeSet;
  * <p>This class is responsible to calculate shortest {@link Path}s between {@link Node}s in a given {@link Graph}.
  * <p>For this calculation multiple versions are available through this class:
  * <p>1.a) calculating all shortest {@link Path}s in the graph, allowing duplicates. The result contains two versions of a {@link Path}, one for each direction {@link Node} X to {@link Node} Y and {@link Node} Y to {@link Node} X.
- * <p>1.b) calculating all shortest {@link Path}s in the graph, excluding duplicates. The result contains only one direction of a {@link Path}, with ID of origin {@link Node} < ID of destination {@link Node}.
+ * <p>1.b) calculating all shortest {@link Path}s in the graph, excluding duplicates. The result contains only one direction of a {@link Path}, with ID of origin {@link Node} smaller than ID of destination {@link Node}.
  * <p>2. calculating only shortest {@link Path}s between two given {@link Node}s.
  * <p>3. Combining Options 1 and 2, first creating a full list of {@link Path}s and separating {@link Path}s between two given {@link Node}s afterwards. Duplicates can be allowed or excluded as well, without affecting the {@link Path}s between given {@link Node}s.
  * @author Fabian Grun

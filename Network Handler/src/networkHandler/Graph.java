@@ -14,7 +14,12 @@ public class Graph {
 	private ArrayList<Edge> edgeList;
 	private ArrayList<Node> nodeList;
 
-	Graph(ArrayList<Edge> EdgeList, ArrayList<Node> NodeList) {
+	/**
+	 * Default Constructor
+	 * @param EdgeList an ArrayList of Edges as part of the graph
+	 * @param NodeList an ArrayList of Nodes as part of the graph
+	 */
+	public Graph(ArrayList<Edge> EdgeList, ArrayList<Node> NodeList) {
 		this.edgeList = EdgeList;
 		this.nodeList = NodeList;
 	}
@@ -47,6 +52,9 @@ public class Graph {
 		}
 	}
 
+	/**
+	 * This method prints the
+	 */
 	public void printToConsole() {
 		System.out.print(this.toString());
 		printAllNodes();
@@ -54,6 +62,10 @@ public class Graph {
 	}
 
 	@Override
+	/**
+	 * This method creates a {@link String} representation of the Graph containing information about the numbers of Nodes and Edges.
+	 * @return String
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Number of nodes: ").append(getNodeCount()).append("\n");
