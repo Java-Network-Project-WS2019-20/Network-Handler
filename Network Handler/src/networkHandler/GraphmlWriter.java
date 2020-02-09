@@ -191,7 +191,9 @@ public class GraphmlWriter implements Runnable {
  		graphElement.addContent(edgesElement);
  		graphElement.addContent(allShortestPathsElement);
  		graphElement.addContent(allBetweennessCentralityMeasureElement);
- 		graphElement.addContent(minimumSpanningTree);
+ 		if(graphHandler.getConnectivityValue()) {
+ 			graphElement.addContent(minimumSpanningTree);
+ 		}
  		rootElement.addContent(keyElement = new Element("key")
  		.setAttribute("id", "v_id")
  		.setAttribute("for", "node")
