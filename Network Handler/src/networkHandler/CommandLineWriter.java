@@ -3,7 +3,7 @@ package networkHandler;
 
 /**
  * <p>This class is responsible for calling printing methods of different {@link GraphProperty}s according to the flags set in a given {@link CommandLineReader}.
- * <p>It implements the {@link Runnable} interface to allow for use of {@link Thread}s. (This is mainly used for parallel console and file output via a {@link GraphWriter}.)
+ * <p>It implements the {@link Runnable} interface to allow for use of {@link Thread}s. (This is mainly used for parallel console and file output via a {@link GraphmlWriter}.)
  * @author Fabian Grun
  * @author Sebastian Monok
  * @see GraphHandler

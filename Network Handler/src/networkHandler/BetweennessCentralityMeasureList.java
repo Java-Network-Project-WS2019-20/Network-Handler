@@ -58,7 +58,7 @@ public class BetweennessCentralityMeasureList implements GraphProperty<ArrayList
 	
 	/**
 	 * {@inheritDoc}
-	 *  @return ArrayList<BetweennessCentralityMeasure>
+	 *  @return ArrayList of BetweennessCentralityMeasure
 	 */
 	public ArrayList<BetweennessCentralityMeasure> getValue() {
 		return this.betweennessCentralityMeasureListValue;
