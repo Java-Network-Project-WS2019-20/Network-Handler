@@ -7,27 +7,15 @@ public class Main {
 
 	private static final Logger mylog = LogManager.getLogger(GraphHandler.class);
 
-
 	public static void main(String[] args) throws NoArgumentException {
-
-
-		//C:\\h.graphml -a outp.graphml
-
-		//BasicConfigurator.configure();
-
-		// user must provide at least one argument = input filename to start parsing graph
 		try {
 			if (args.length > 0) {
-				
-				// start parsing cla
 				CommandLineReader commandLineReader = new CommandLineReader(args);
 				commandLineReader.doParseCommandLineArguments();	
-				
 				if(commandLineReader.getFlagReadFile()) {
 					GraphReader	graphReader = new GraphReader();
 					graphReader.setGraphmlFile(commandLineReader.getInputFileName());
 					graphReader.prepareParser();
-					
 					if (graphReader.isParseSuccessful()) {
 						GraphHandler graphHandler = new GraphHandler(graphReader.getEdgeList(), graphReader.getNodeList(), commandLineReader);
 						graphHandler.runCalculations();
@@ -55,14 +43,10 @@ public class Main {
 			} else {
 				throw new NoArgumentException();
 			}
-
 		} catch (NoArgumentException e) {
 			mylog.error("Provide at least one argument."
 					+ "\n	Use -h or --help to print usage help.");
 		}
-	
-		
-		
 	}
 }
 
