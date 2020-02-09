@@ -168,18 +168,20 @@ public class GraphmlWriter implements Runnable {
  			allBetweennessCentralityMeasureElement.addContent(betweennessCentralityMeasureElement);
  		}
         // 2.e. creating minimumSpanningTree elements
- 		for (int i=0; i < graphHandler.getMinimumSpanningTreeValue().size(); i++) {
- 			edgeElement = new Element("edge")
- 					.setAttribute("source", "n" + String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getSourceNodeId()))
-					.setAttribute("target", "n" + String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getTargetNodeId()))
-					.addContent(dataElement = new Element("data")
-					.setAttribute("key", "e_id")
-					.setText(String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getEdgeID())))
-					.addContent(dataElement = new Element("data")
-					.setAttribute("key", "e_weight")
-					.setText(String.valueOf((int) graphHandler.getMinimumSpanningTreeValue().get(i).getWeight())));
- 			minimumSpanningTree.addContent(edgeElement);	
- 		}  
+ 		if(graphHandler.getConnectivityValue()) {
+	 		for (int i=0; i < graphHandler.getMinimumSpanningTreeValue().size(); i++) {
+	 			edgeElement = new Element("edge")
+	 					.setAttribute("source", "n" + String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getSourceNodeId()))
+						.setAttribute("target", "n" + String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getTargetNodeId()))
+						.addContent(dataElement = new Element("data")
+						.setAttribute("key", "e_id")
+						.setText(String.valueOf(graphHandler.getMinimumSpanningTreeValue().get(i).getEdgeID())))
+						.addContent(dataElement = new Element("data")
+						.setAttribute("key", "e_weight")
+						.setText(String.valueOf((int) graphHandler.getMinimumSpanningTreeValue().get(i).getWeight())));
+	 			minimumSpanningTree.addContent(edgeElement);	
+	 		} 
+ 		}
         // 3. adding all children to parents to root
 		graphElement.addContent(numberOfNodes);
 		graphElement.addContent(numberOfEdges);
