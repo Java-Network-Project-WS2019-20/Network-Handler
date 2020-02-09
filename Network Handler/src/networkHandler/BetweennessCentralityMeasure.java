@@ -5,10 +5,9 @@ import java.util.Iterator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 /**
- * This class is responsible for calculating the Betweenness Centrality Measure of a {@link Node} in a {@link Graph} with help of a provided {@link ShortestPathList}.
- * The calculation is performed by calling {@link #run()}, which is inherited from the {@link Runnable} interface, therefore the class is suitable to be run as a separate {@link Thread}.
- * 
- * In case of a given {@link #nodeId} not existing in the given Graph, the calling of the {@link #printToConsole()} method will result in returning an error message informing about the wrong input,
+ * <p>This class is responsible for calculating the Betweenness Centrality Measure of a {@link Node} in a {@link Graph} with help of a provided {@link ShortestPathList}.
+ * <p>The calculation is performed by calling {@link #run()}, which is inherited from the {@link Runnable} interface, therefore the class is suitable to be run as a separate {@link Thread}.
+ * <p>In case of a given {@link #nodeId} not existing in the given Graph, the calling of the {@link #printToConsole()} method will result in returning an error message informing about the wrong input,
  * since calculation will be aborted.
  * @author Fabian Grun
  * @see GraphProperty
@@ -39,8 +38,8 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * The method first checks whether the given {@link #nodeId} exists in the given {@link Graph}.
+	 * <p>{@inheritDoc}
+	 * <p>The method first checks whether the given {@link #nodeId} exists in the given {@link Graph}.
 	 * If the nodeId is not present, calculation is aborted and {@link #calculationIsSuccessfull} set to false.
 	 * 
 	 */
@@ -76,8 +75,8 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	}
 	
 	/**
-	 * {@inheritDoc}
-	 * If the calculation was aborted, a message (marked as an error) explaining the reason is printed instead.
+	 * <p>{@inheritDoc}
+	 * <p>If the calculation was aborted, a message (marked as an error) explaining the reason is printed instead.
 	 */
 	public void printToConsole() {
 		if(this.calculationIsSuccessfull) {
