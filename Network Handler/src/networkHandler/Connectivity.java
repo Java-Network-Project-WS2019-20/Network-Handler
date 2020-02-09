@@ -35,7 +35,7 @@ public class Connectivity implements GraphProperty<Boolean> {
 	 */
 	@SuppressWarnings("unchecked")
 	public void run() {
-
+		mylog.debug("Started calculating Connectivity.");
 		// A array of linked lists of all adjacent Nodes for each Node
 		// Size of array is the number of Nodes
 		LinkedList<Integer>[] adjacentListArray = new LinkedList[this.graph.getNodeCount()];
@@ -46,8 +46,8 @@ public class Connectivity implements GraphProperty<Boolean> {
 		// Since graph is undirected, add an edge from source to target as well as
 		// target to source
 		for (Edge edge : this.graph.getEdgeList()) {
-			adjacentListArray[edge.getSource()].add(edge.getTarget());
-			adjacentListArray[edge.getTarget()].add(edge.getSource());
+			adjacentListArray[edge.getSourceNodeId()].add(edge.getTargetNodeId());
+			adjacentListArray[edge.getTargetNodeId()].add(edge.getSourceNodeId());
 		}
 		boolean[] visited = new boolean[this.graph.getNodeCount()];
 		// Calculate all reachable Nodes
@@ -58,6 +58,7 @@ public class Connectivity implements GraphProperty<Boolean> {
 			if (!visited[nodeId])
 				this.connectivityValue = false;
 		}
+		mylog.debug("Finished calculating Connectivity.");
 	}
 
 	/**
