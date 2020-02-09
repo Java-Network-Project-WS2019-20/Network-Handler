@@ -19,7 +19,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	private ShortestPathList shortestPathList;
 	private int nodeId;
 	private Double betweennessCentralityMeasureValue;
-	private boolean calculationIsSuccessfull;
+	private boolean isCalculationSuccessfull;
 	private final Logger mylog = LogManager.getLogger(BetweennessCentralityMeasure.class);
 	
 	public BetweennessCentralityMeasure(Graph graph, ShortestPathList shortestPathList, int nodeId) {
@@ -40,7 +40,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	/**
 	 * <p>{@inheritDoc}
 	 * <p>The method first checks whether the given {@link #nodeId} exists in the given {@link Graph}.
-	 * If the nodeId is not present, calculation is aborted and {@link #calculationIsSuccessfull} set to false.
+	 * If the nodeId is not present, calculation is aborted and {@link #isCalculationSuccessfull} set to false.
 	 * 
 	 */
 	public void run() {
@@ -66,10 +66,10 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 					}
 				}
 			}
-			this.calculationIsSuccessfull = true;
+			this.isCalculationSuccessfull = true;
 			mylog.debug("Successfully calculated BCM of Node n" + nodeId + ".");
 		}else {
-			this.calculationIsSuccessfull = false;
+			this.isCalculationSuccessfull = false;
 			mylog.debug("Aborted calculation for BCM of Node n" + nodeId + ". Node does not exist in given Graph.");
 		}
 	}
@@ -79,7 +79,7 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 	 * <p>If the calculation was aborted, a message (marked as an error) explaining the reason is printed instead.
 	 */
 	public void printToConsole() {
-		if(this.calculationIsSuccessfull) {
+		if(this.isCalculationSuccessfull) {
 			mylog.info("The Betweenness Centrality Measure for Node n" + this.nodeId + " is " + getValue().toString());
 		}else {
 			mylog.error("Calculation for Node n\" + this.nodeId +\" was not possible. Node does not exist in given graph.");
