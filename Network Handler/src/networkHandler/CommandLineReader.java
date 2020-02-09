@@ -334,11 +334,11 @@ public class CommandLineReader {
 	    // if user provided command line arguments without any flag
 	    String[] remainder = commandLine.getArgs();
 	    if(remainder.length > 1) {
-	    	mylog.error("Could not assign argument(s) to any option: ");
-	        for (int i=1; i < remainder.length; i++) {  	
-	        	mylog.error(remainder[i]);
-	        	mylog.error(" ");
+	    	String x = "Could not assign argument(s) to any option: ";
+	        for (int i=1; i < remainder.length; i++) {
+	        	x = x + remainder[i] + " ";
 	        }
+	        mylog.error(x);
 	    } 
 	}
 	
