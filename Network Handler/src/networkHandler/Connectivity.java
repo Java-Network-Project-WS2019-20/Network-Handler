@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import java.util.LinkedList;
 
 /**
- * Calculates whether a {@link Graph} is connected or not. Using the Depth First
+ * This class is responsible for calculating whether a {@link Graph} is connected or not, using the Depth First
  * Search Algorithm
  * 
  * @author Krzysztof
