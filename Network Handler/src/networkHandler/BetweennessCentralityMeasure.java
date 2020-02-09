@@ -57,11 +57,11 @@ public class BetweennessCentralityMeasure implements GraphProperty<Double>{
 					countsOfPathsContainingNode[nextPath.getOriginNode()][nextPath.getDestinationNode()]++;
 				}
 			}
-			for(int i = 0; i < this.graph.getNodeCount(); i++) {
-				if(i != nodeId) {
-					for(int j = i + 1; j < this.graph.getNodeCount(); j++) {
-						if(j != nodeId) {
-							this.betweennessCentralityMeasureValue = this.betweennessCentralityMeasureValue + (countsOfPathsContainingNode[i][j] / countsOfAllPaths[i][j]);
+			for(int originNodeId = 0; originNodeId < this.graph.getNodeCount(); originNodeId++) {
+				if(originNodeId != nodeId) {
+					for(int destinationNodeId = originNodeId + 1; destinationNodeId < this.graph.getNodeCount(); destinationNodeId++) {
+						if(destinationNodeId != nodeId) {
+							this.betweennessCentralityMeasureValue = this.betweennessCentralityMeasureValue + (countsOfPathsContainingNode[originNodeId][destinationNodeId] / countsOfAllPaths[originNodeId][destinationNodeId]);
 						}
 					}
 				}
