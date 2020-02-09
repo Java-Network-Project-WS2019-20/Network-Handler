@@ -22,7 +22,7 @@ public class Main {
 						Thread graphWriterThread = new Thread();
 						Thread commandLineWriterThread = new Thread();
 						if (commandLineReader.getFlagCreateOutputFile()) {
-							GraphWriter graphWriter = new GraphWriter(commandLineReader.getOutputFileName(), graphHandler);
+							GraphWriter graphWriter = new GraphWriter(commandLineReader.getInputFileName(), commandLineReader.getOutputFileName(), graphHandler);
 							graphWriter.doCheckIfFileExists();
 							graphWriterThread = new Thread(graphWriter, "File Creation Thread");
 							graphWriterThread.start();
