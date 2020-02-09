@@ -23,15 +23,15 @@ import java.util.ArrayList;
  * @author Sebastian Monok
  */
 
-public class GraphReader {
+public class GraphmlReader {
 
 	private File graphmlFile;
 	private ArrayList<networkHandler.Node> nodeList;
 	private ArrayList<Edge> edgeList;
 	private boolean parseSuccessful = false;
-	private final Logger mylog = LogManager.getLogger(GraphReader.class);
+	private final Logger mylog = LogManager.getLogger(GraphmlReader.class);
 
-	public GraphReader() {
+	public GraphmlReader() {
 		this.nodeList = new ArrayList<>();
 		this.edgeList = new ArrayList<>();
 		this.graphmlFile = null ;
@@ -52,8 +52,8 @@ public class GraphReader {
 
 	/**
 	 * Creates a parsable document. The Document object is specified with the filepath of the
-	 * graphml file which is provided by the user. The graphml file is then passed to {@link GraphReader#doParseEdges(Document)}
-	 * and {@link GraphReader#doParseEdges(Document)} to parse the document for the nodes and edges.
+	 * graphml file which is provided by the user. The graphml file is then passed to {@link GraphmlReader#doParseEdges(Document)}
+	 * and {@link GraphmlReader#doParseEdges(Document)} to parse the document for the nodes and edges.
 	 */
 	public void prepareParser(){
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -84,7 +84,7 @@ public class GraphReader {
 	 * Parse Document object for nodes and save them into an ArrayList.
 	 * This is done by extracting all nodes into a {@link NodeList} by defining the tag element "node" as parameter in
 	 * the function {@link Document#getElementsByTagName(String)}.
-	 * The {@link NodeList} is then iterated for each node and saved into {@link GraphReader#nodeList}.
+	 * The {@link NodeList} is then iterated for each node and saved into {@link GraphmlReader#nodeList}.
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
 	private void doParseNodes(Document document) {
@@ -103,7 +103,7 @@ public class GraphReader {
 	 * Parse Document object for edges and saves them into an ArrayList.
 	 * This is done by extracting all edges into a {@link NodeList} by defining the tag element "edge" as parameter in
 	 * the function {@link Document#getElementsByTagName(String)}.
-	 * The {@link NodeList} is then iterated for each edge and saved into {@link GraphReader#edgeList}.
+	 * The {@link NodeList} is then iterated for each edge and saved into {@link GraphmlReader#edgeList}.
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
 	private void doParseEdges(Document document) {
