@@ -19,13 +19,13 @@ import org.jdom2.output.XMLOutputter;
  * @author Sebastian Monok
  */
 
-public class GraphWriter implements Runnable {
+public class GraphmlWriter implements Runnable {
 	private String inputFileName;
 	private String outputFileName;
 	private Graph graph;
 	private GraphHandler graphHandler;
 	private boolean createFile;
-	private final Logger mylog = LogManager.getLogger(GraphWriter.class);
+	private final Logger mylog = LogManager.getLogger(GraphmlWriter.class);
 
 	/**
 	 * This constructs a GraphWriter which writes all graph attributes and calculations over it into a new file.
@@ -33,7 +33,7 @@ public class GraphWriter implements Runnable {
 	 * @param outputFileName The output filename (and path) of the new file
 	 * @param graphHandler The graph on which all calculations will be calculated
 	 */
-	public GraphWriter(String inputFileName, String outputFileName, GraphHandler graphHandler) {
+	public GraphmlWriter(String inputFileName, String outputFileName, GraphHandler graphHandler) {
 		this.inputFileName = inputFileName;
 		this.outputFileName = outputFileName;
 		this.graphHandler = graphHandler;
