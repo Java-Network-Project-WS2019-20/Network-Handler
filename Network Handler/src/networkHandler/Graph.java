@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class that represents a Graph. It stores all {@link Node}s and {@link Edge}s in respective
- * {@link ArrayList}s that have been created by the {@link GraphReader}
+ * {@link ArrayList}s that are provided by the {@link GraphReader}.
  * 
  * @author Krzysztof Goroll
  * @author Fabian Grun
