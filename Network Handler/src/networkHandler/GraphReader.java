@@ -18,36 +18,37 @@ import java.util.ArrayList;
 /**
  * Class is used to handle the provided graphml file from the user. The main task of this class
  * is to create an parsable document object which points to the provided graphml file from the user
- * and also to parse the document for its nodes and edges, which are then saved into ArrayLists.
+ * and also to parse the document for its {@link Node}s and {@link Edge}s, which are then saved into {@link ArrayList}s.
  * @author Khalid Butt
  * @author Sebastian Monok
  */
 
 public class GraphReader {
 
-	private File							graphmlFile;
-	private ArrayList<networkHandler.Node>	nodeList;
-	private ArrayList<Edge>					edgeList;
-	private boolean							parseSuccessful = false;
-	private final Logger					mylog = LogManager.getLogger(GraphReader.class);
+	private File graphmlFile;
+	private ArrayList<networkHandler.Node> nodeList;
+	private ArrayList<Edge> edgeList;
+	private boolean parseSuccessful = false;
+	private final Logger mylog = LogManager.getLogger(GraphReader.class);
 
-
-	// constructor
 	public GraphReader() {
-
 		this.nodeList = new ArrayList<>();
 		this.edgeList = new ArrayList<>();
 		this.graphmlFile = null ;
 
 	}
 
+	public void setGraphmlFile(String filePath) {
+		this.graphmlFile = new File(filePath);
+	}
 	
+	public ArrayList<networkHandler.Node> getNodeList() {
+		return nodeList;
+	}
 	
-	// setter - getter
-	public void setGraphmlFile(String filePath) 			{this.graphmlFile = new File(filePath);}
-	public ArrayList<networkHandler.Node> getNodeList() 	{return nodeList;}
-	public ArrayList<Edge> getEdgeList() 					{return edgeList;}
-
+	public ArrayList<Edge> getEdgeList() {
+		return edgeList;
+	}
 
 	/**
 	 * Creates a parsable document. The Document object is specified with the filepath of the
@@ -55,49 +56,29 @@ public class GraphReader {
 	 * and {@link GraphReader#doParseEdges(Document)} to parse the document for the nodes and edges.
 	 */
 	public void prepareParser(){
-
-		//Create a parsable document
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		Document document = null;
-		
 		try {
-			
 			builder = factory.newDocumentBuilder();
-			
 		} catch (ParserConfigurationException e) {
-			
 			mylog.error("Something went wrong while creating a parsable document object! \n" +e.getMessage());
 			return;
-			
 		}
-
-		
 		try {
-			
 			document = builder.parse(graphmlFile);
-			
 		} catch (SAXException e) {
-			
 			mylog.error("File content is not allowed \n" +e.getMessage());
 			return;
-			
 		} catch (IOException e) {
-
 			mylog.error("Can not open/find file \n" +e.getMessage());
 			return;
-			
 		}
-
-		
-		//Pass the parsable document to nodeParser and edgeParser method
 		doParseNodes(document);
 		doParseEdges(document);
 		mylog.debug("Parsed " + graphmlFile.getName() + " successfully.");
 		parseSuccessful = true;
-		
 	}
-
 
 	/**
 	 * Parse Document object for nodes and save them into an ArrayList.
@@ -107,27 +88,16 @@ public class GraphReader {
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
 	private void doParseNodes(Document document) {
-
-		// reading all nodes into nodesNL
-		NodeList nodesNL = document.getElementsByTagName("node");
-		
-		// parsing node information
-		for (int temp = 0; temp < nodesNL.getLength(); temp++) {
-			
-			Node nNode = nodesNL.item(temp);
-			
-			if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-				
-				Element ele = (Element) nNode;
-				nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
-				
+		NodeList nodeList = document.getElementsByTagName("node");
+		for (int temp = 0; temp < nodeList.getLength(); temp++) {
+			Node nextNode = nodeList.item(temp);
+			if (nextNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element ele = (Element) nextNode;
+				this.nodeList.add(new networkHandler.Node(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent())));
 			}
 		}
-
 		mylog.debug("Nodes were parsed succesfully!");
-
 	}
-
 
 	/**
 	 * Parse Document object for edges and saves them into an ArrayList.
@@ -137,32 +107,23 @@ public class GraphReader {
 	 * @param document The provided graphml by the user is passed to this method.
 	 */
 	private void doParseEdges(Document document) {
-		
-		// reading all edges into edgesNL
-		NodeList edgesNL = document.getElementsByTagName("edge");
-				
-		//parsing edge information
-		for (int temp = 0; temp < edgesNL.getLength(); temp++) {
-			
-			Node nEdge = edgesNL.item(temp);
-			
-			if (nEdge.getNodeType() == Node.ELEMENT_NODE) {
-				
-				Element ele = (Element) nEdge;
+		NodeList edgesNodeList = document.getElementsByTagName("edge");
+		for (int temp = 0; temp < edgesNodeList.getLength(); temp++) {
+			Node nextEdge = edgesNodeList.item(temp);
+			if (nextEdge.getNodeType() == Node.ELEMENT_NODE) {
+				Element ele = (Element) nextEdge;
 				edgeList.add(new Edge(Integer.parseInt(ele.getElementsByTagName("data").item(0).getTextContent()),
 						Integer.parseInt(ele.getAttribute("source").substring(1)),
 						Integer.parseInt(ele.getAttribute("target").substring(1)),
 						Integer.parseInt(ele.getElementsByTagName("data").item(1).getTextContent())));
-				
 			}
 		}
-
 		mylog.debug("Edges were parsed succesfully!");
-
 	}
 	
-	
-	public boolean isParseSuccessful() {return parseSuccessful;}
+	public boolean isParseSuccessful() {
+		return parseSuccessful;
+	}
 	
 }
 
