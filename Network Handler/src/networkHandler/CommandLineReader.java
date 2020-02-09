@@ -263,8 +263,8 @@ public class CommandLineReader {
 		// and set flag to call GraphWriter
 	    try{
 	    	if (commandLine.hasOption("a")) {
-	    		outputFileName = commandLine.getOptionValue('a');
-	    		if(outputFileName.isBlank()) {
+	    		outputFileName = commandLine.getOptionValue('a') +"";
+	    		if(commandLine.getOptionValue('a') == null) {
 	    			throw new NoArgumentException("");
 	    		}
 	    		flagCreateOutputFile = true;
