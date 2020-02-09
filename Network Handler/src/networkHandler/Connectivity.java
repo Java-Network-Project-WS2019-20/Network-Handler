@@ -32,23 +32,23 @@ public class Connectivity implements GraphProperty<Boolean> {
 		// A array of linked lists of all adjacent Nodes for each Node
 		// Size of array is the number of Nodes
 		LinkedList<Integer>[] adjacentListArray = new LinkedList[this.graph.getNodeCount()];
-		for (int i = 0; i < this.graph.getNodeCount(); i++) {
-			adjacentListArray[i] = new LinkedList<Integer>();
+		for (int nodeId = 0; nodeId < this.graph.getNodeCount(); nodeId++) {
+			adjacentListArray[nodeId] = new LinkedList<Integer>();
 		}
 		// Adds all edges to the nodes
 		// Since graph is undirected, add an edge from source to target as well as
 		// target to source
-		for (Edge e : this.graph.getEdgeList()) {
-			adjacentListArray[e.getSource()].add(e.getTarget());
-			adjacentListArray[e.getTarget()].add(e.getSource());
+		for (Edge edge : this.graph.getEdgeList()) {
+			adjacentListArray[edge.getSource()].add(edge.getTarget());
+			adjacentListArray[edge.getTarget()].add(edge.getSource());
 		}
 		boolean[] visited = new boolean[this.graph.getNodeCount()];
 		// Calculate all reachable Nodes
 		// If one Node is not reachable it means the graph is not connected
 		doVisitNodes(0, visited, adjacentListArray);
 		this.connectivityValue = true;
-		for (int v = 0; v < this.graph.getNodeCount(); v++) {
-			if (!visited[v])
+		for (int nodeId = 0; nodeId < this.graph.getNodeCount(); nodeId++) {
+			if (!visited[nodeId])
 				this.connectivityValue = false;
 		}
 	}
@@ -56,30 +56,31 @@ public class Connectivity implements GraphProperty<Boolean> {
 	/**
 	 * Method to calculate, which nodes are reachable from a certain node v
 	 * 
-	 * @param v                 start node
-	 * @param visited           all visited nodes
+	 * @param startNodeId
+	 * @param visitedNodes
 	 * @param adjacentListArray A array of linked lists of all adjacent Nodes for
 	 *                          each Node
-	 * @return visited nodes afterwards
+	 * @return boolean[] of visited nodes afterwards
 	 */
-	public boolean[] doVisitNodes(int v, boolean[] visited, LinkedList<Integer>[] adjacentListArray) {
-		visited[v] = true;
+	public boolean[] doVisitNodes(int startNodeId, boolean[] visitedNodes, LinkedList<Integer>[] adjacentListArray) {
+		visitedNodes[startNodeId] = true;
 		// repeat for all the nodes adjacent to this node
-		for (int x : adjacentListArray[v]) {
-			if (!visited[x])
-				doVisitNodes(x, visited, adjacentListArray);
+		for (int adjacentNodeId : adjacentListArray[startNodeId]) {
+			if (!visitedNodes[adjacentNodeId])
+				doVisitNodes(adjacentNodeId, visitedNodes, adjacentListArray);
 		}
-		return visited;
+		return visitedNodes;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void printToConsole() {
-		String x = "The graph is";
-//		System.out.print("The graph is ");
+		String outputString = "The graph is";
 		if (!getValue()) {
-//			System.out.print("not ");
-		x = x + "not";
+		outputString = outputString + "not";
 		}
-		x = x + "connected";
-		mylog.info(x);
+		outputString = outputString + "connected";
+		mylog.info(outputString);
 	}
 }
