@@ -6,6 +6,7 @@ import java.util.ArrayList;
 /**
  * <p>This class represents a path of {@link Node}s in a {@link Graph}.
  * <p>It consists of an {@link ArrayList} of {@link Node}s sorted by their order of occurrence on the path and a length.
+ * <p>Paths are also expandable by adding further {@link Node}s and adding to their length.
  * <p>This class also implements the {@link Comparable} interface for easier recursive construction by the {@link ShortestPathList} class and sorting of paths.
  * <p>Note: this class has a natural ordering that is inconsistent with equals.
  * @author Fabian Grun
@@ -53,7 +54,7 @@ public class Path implements Comparable<Path>{
 		this.length = length;
 	}
 
-	public void extend(double length, int NodeId) {
+	public void expand(double length, int NodeId) {
 		this.setLength(length);
 		this.nodes.add(NodeId);
 	}
